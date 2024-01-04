@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    font-family: Lato;
+    font-weight: bold;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ---------------------------- The nav bar style ---------------------------- */ 
+
+header {
+    background-color: black;
+    position: relative;
+    width: 100vw;
+}
+
+header>div {
+    display: inline-block;
+}
+
+.logo img{
+    margin-top: 17px;
+    margin-left: 60px;
+    height: 70px;
+    width: 190px;
+}
+
+header ul {
+    position: absolute;
+    top: 16px;
+    right: 200px;
+}
+
+header li {
+    display: inline-block;
+    margin-right: 35px;
+}
+
+header li img {
+    height: 27px;
+    width: 28px;
+}
+
+.register a{
+    position: absolute;
+    top: 31.5px;
+    right: 60px;
+    color: white;
+    background-color: #808080;
+    padding: 5px 15px;
+    border-radius: 4%;
+}
+
+/* ---------------------------- The Diaporama style ---------------------------- */ 
+#container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0;
+    text-align: center;
+}
+
+#container a img {
+    border-radius: 1%;
+    height: 500px;
+    width: auto;
+}
+
+/* ---------------------------- The Menu style ---------------------------- */
+.menu {
+    background-color: #808080;
+    text-align: center;
+}
+
+.menu li {
+    display: inline-block;
+    margin: 20px 40px 20px 40px; /* top right bottom left */
+}
+
+.menu li a {
+    color: azure;
+}
+
+/* ---------------------------- The Footer style ---------------------------- */
+footer {
+    background-color: black;
+    height: 100px;
+    width: 100vw;
+    margin-top: 70px;
+    padding-top: 20px;
+}
+
+footer ul {
+    margin: 20px;
+}
+
+footer li {
+    display: inline;
+    margin: 20px 40px 20px 40px; /* top right bottom left */
+}
+
+
+footer li a {
+    color: azure;
+}
+
+/* ---------------------------- The Zone1 style ---------------------------- */
+.zone1 {
+    text-align: center;
+    
+}
+.zone1 a img {
+    margin: 20px 40px 20px 40px;
+    display: inline-block; 
+    height: 100px;
+    width: 130px;
+}
+
+/* ---------------------------- The Zone2 style ---------------------------- */
+.zone2 {
+    margin: 30px;
+}
+fieldset {
+    display: inline-block;
+    height: auto;
+    width: auto;
+}
+
+fieldset select {
+    display: block;
+}
+
+.fildsets {
+
+    display: flex;
+    justify-content: center;
+}
+
+.comparer-button {
+    text-align: center;
+    margin: 10px;
+}
+
+/* ---------------------------- The Zone3 style ---------------------------- */
+.zone3 {
+    margin: 30px;
+}
+.title {
+    text-align: center;
+}
+
+.guide-button {
+    text-align: center;
+    margin: 10px;
+}
+
+.zone3 .comparaison-populaires {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.zone3 .cadre {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px; /* Adjust margin as needed */
+    height: fit-content;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.zone3 .nb-comparaison {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.item0.item1 {
+ 
+    border-right:  1px solid #ddd;
+}
+.item0,.item1, .item2 {
+    width: 30%; 
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.item1, .item0 {
+    margin-right: 5%; /* Adjust margin between items as needed */
+}
+
+.item0 p,.item1 p, .item2 p {
+    margin: 5px;
+}
+
+.item1 img, .item2 img {
+    height: 80px;
+    width: 120px;
+}
+
+.item0 {
+    margin-top: 85px;
+}
+
+/*************     comparateur     ***************/
+
+tr#image img {
+    height: 80px;
+    width: 120px;
+}
