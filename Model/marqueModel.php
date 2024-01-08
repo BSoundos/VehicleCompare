@@ -29,6 +29,17 @@ class marque_model {
         return $r ; 
     }
    
+    public function get_firstx_marques($x){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = "select * from marque LIMIT $x";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+    }
 
 }
 

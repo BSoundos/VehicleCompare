@@ -6,9 +6,9 @@ require_once 'Controller/modeleController.php';
 
 class zone2View {
 
-    public function Zone2Display(){
+    public function Zone2Display($i){
 
-        $marque_controller = new marque_controller();
+        $marque_controller = new marqueController();
         $marques = $marque_controller->get_Marques_controller()->fetchAll(PDO::FETCH_ASSOC);
 
         $modele_controller = new Modele_controller();
@@ -16,13 +16,12 @@ class zone2View {
         $version_controller = new Version_controller();
        
 
-
         echo "<div class='zone2'>
         <div class='title'><h3>Comparaison</h3></div>
         <form id='vehicule-form' action='index.php?action=comparateur' method='post'>
         <div class='fildsets'>" ;
 
-        for($i=0;$i<4;$i++){
+        while($i<4){
             $j = $i+1;
             echo "<fieldset id ='fieldset$j' >
             <legend>Véhicule $j</legend>";
@@ -48,6 +47,7 @@ class zone2View {
 
 
             echo "</fieldset>";
+            $i++;
         }
     
 
@@ -184,15 +184,6 @@ class zone2View {
         setupFieldsetEvents('#fieldset2', models, versions);
         setupFieldsetEvents('#fieldset3', models, versions);
         setupFieldsetEvents('#fieldset4', models, versions);
-
-
-        
-        
-        
-         
-      
-         
-        
        
 
     

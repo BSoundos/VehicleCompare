@@ -9,21 +9,21 @@ class zone1View {
 
         echo "<div class='zone1'>";
              
-        $controller = new marque_controller();
-        $r = $controller->get_Marques_controller();
+        $controller = new marqueController();
+        $r = $controller->get_firstx_marques_controller(5);
 
         $controller = new image_controller();     
         foreach($r as $row){
-            
             $image = $controller->get_image_controller($row["image_id"]);
             $imageData = $image->fetch(PDO::FETCH_ASSOC);
             echo  '<a href='.$row["lien"].'><img src='.$imageData["lien"].' ></a>';
         }
         
         echo "</div>";
-
-     
+  
     }
+
+ 
        
     
 

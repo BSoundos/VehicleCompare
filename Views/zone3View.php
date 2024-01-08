@@ -11,16 +11,16 @@ class zone3View {
 
     private $vehiculeController;
     private $versionController;
+    private $imageController;
     private $modeleController;
     private $marqueController;
-    private $imageController;
 
     public function __construct() {
         $this->vehiculeController = new Vehicule_controller();
         $this->versionController = new Version_controller();
-        $this->modeleController = new Modele_controller();
-        $this->marqueController = new Marque_controller();
         $this->imageController = new image_controller();
+        $this->modeleController = new Modele_controller();
+        $this->marqueController = new marqueController();
     }
 
     public function Zone3Display(){
@@ -39,59 +39,60 @@ class zone3View {
 
 
         echo "<div class='title'><h3>Comparaison populaires</h3></div>";
-        echo "<div class='comparaison-populaires'>";
-
-
-
+        echo "<div class='comparaison-populaires'><div class='slider'>";
+       
 
         foreach($r as $row){
             echo"    
-                        <div class='nb-comparaison'>Comparés ".$row['nb']." fois</div> 
-                        <div class='comp-container'>
+                       
                         <div class='cadre'>
-                
-                            <div class='item0'> 
-                
-                            <p>Nom: </p>
-                            <p>Version: </p>
-                            <p>Modele: </p>
-                            <p>Marque: </p>
-                            <p>Categorie: </p>
-                            <p>Annee: </p>
-                            <p>Note: </p>
-                            <p>Tarif: </p>
-                            <p>Dimensions: </p>
-                            <p>Moteur: </p>
-                            <p>Puissance: </p>
-                            <p>Consommation: </p>
-                            <p>Capacite: </p>
-                            <p>Autre Performances: </p>
-                            </div>";
-            $this->displayVehicule_byId($row['vehicule1'],"item1");
-            $this->displayVehicule_byId($row['vehicule2'],"item2");
-            echo"</div></div>";
+                        <div class='nb-comparaison'>Comparés ".$row['nb']." fois</div> 
+                        <div class='vehicules'>
+                        ";
+
+                        
+                        $vehicule1 = $this->vehiculeController->get_vehicule_byId_controller($row['vehicule1']);
+                        $vehicule1 = $vehicule1->fetch(PDO::FETCH_ASSOC);
+                        $version1 = $this->versionController->get_version_byId_controller($vehicule1['version_id']);
+                        $version1 = $version1->fetch(PDO::FETCH_ASSOC);
+                        
+                        $modele1 = $this->modeleController->get_modele_byId_controller($version1['modele_id']);
+                        $modele1 = $modele1->fetch(PDO::FETCH_ASSOC);
+                        $marque1 = $this->marqueController->get_marque_byId_controller($modele1['marque_id']);
+                        $marque1 = $marque1->fetch(PDO::FETCH_ASSOC);
+                        $this->displayVehicule_byId($vehicule1,$version1,"item1");
+
+                        echo "<p>Vs</p>";
+
+                        $vehicule2 = $this->vehiculeController->get_vehicule_byId_controller($row['vehicule2']);
+                        $vehicule2 = $vehicule2->fetch(PDO::FETCH_ASSOC);
+                        $version2 = $this->versionController->get_version_byId_controller($vehicule2['version_id']);
+                        $version2 = $version2->fetch(PDO::FETCH_ASSOC);
+                        $modele2 = $this->modeleController->get_modele_byId_controller($version2['modele_id']);
+                        $modele2 = $modele2->fetch(PDO::FETCH_ASSOC);
+                        $marque2 = $this->marqueController->get_marque_byId_controller($modele2['marque_id']);
+                        $marque2 = $marque2->fetch(PDO::FETCH_ASSOC);
+                        $this->displayVehicule_byId($vehicule2,$version2,"item2");
+
+
+            echo"</div>
+            
+            <div class='comparer-button' >
+            <button><a href='index.php?action=comparateur&compare=true&version1=".$version1['id']."&modele1=".$modele1['id']."&marque1=".$marque1['id']."&version2=".$version2['id']."&modele2=".$modele2['id']."&marque2=".$marque2['id']."'>Comparer</a></button>
+            </div>
+            </div>";
         }
-        echo "</div>";
+        echo "</div></div>
+        ";
+
+      
        
-
-        
-        
-
      
     }
 
-    public function displayVehicule_byId($id,$className){
-            
 
-            $vehicule = $this->vehiculeController->get_vehicule_byId_controller($id);
-            $vehicule = $vehicule->fetch(PDO::FETCH_ASSOC);
-            $version = $this->versionController->get_version_byId_controller($vehicule['version_id']);
-            $version = $version->fetch(PDO::FETCH_ASSOC);
-            $modele = $this->modeleController->get_modele_byId_controller($version['modele_id']);
-            $modele = $modele->fetch(PDO::FETCH_ASSOC);
-            $marque = $this->marqueController->get_marque_byId_controller($modele['marque_id']);
-            $marque = $marque->fetch(PDO::FETCH_ASSOC);
-                        
+    public function displayVehicule_byId($vehicule,$version,$className){
+            
             echo "
             <div class='$className'>";
 
@@ -100,24 +101,8 @@ class zone3View {
             echo  "<a href=''><img src=" . $image["lien"] . "></a>";
 
                         echo"
-                        <p>" . $vehicule['nom'] . "</p>
-                        <p>".$version['nom']."</p>
-                        <p>".$modele['nom']."</p>
-                        <p>".$marque['nom']."</p>
-                        <p>" . $vehicule['categorie'] . "</p>
-                        <p>" . $vehicule['annee'] . "</p>
-                        <p>" . $vehicule['note'] . "</p>
-                        <p>" . $vehicule['tarif'] . "</p>
-                        <p>" . $vehicule['dimensions'] . "</p>
-                        <p>" . $vehicule['moteur'] . "</p>
-                        <p>" . $vehicule['puissance'] . "</p>
-                        <p>" . $vehicule['consommation'] . "</p>
-                        <p>" . $vehicule['capacite'] . "</p>
-                        <p>" . $vehicule['autre_performances'] . "</p>
-                        ";
-        
-
-                        echo"
+                        <p>" .$vehicule['nom'] . "".$version['annee']."</p>
+                        
                         
 
                     </div>

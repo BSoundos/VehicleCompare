@@ -26,6 +26,13 @@ class Version_controller {
     }
 
 
+    public function get_modele_marque_byid_controller($id){
+        $mtf = new version_model();
+        $r = $mtf->get_modele_marque_byid($id);
+
+        return $r ; 
+    }
+
 
 }
 ?>

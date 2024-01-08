@@ -1,12 +1,24 @@
 <?php
 require_once 'Model/marqueModel.php';
+require_once 'Views/marqueView.php';
 
-class marque_controller {
+class marqueController {
 
+    public function marquesGenerate(){
+        $v = new marqueView();
+        $v->marquesDisplay();
+    }
 
     public function get_Marques_controller(){
         $mtf = new marque_model();
         $r = $mtf->get_Marques();
+
+        return $r ; 
+    }
+
+    public function get_firstx_marques_controller($x){
+        $mtf = new marque_model();
+        $r = $mtf->get_firstx_marques($x);
 
         return $r ; 
     }
@@ -17,6 +29,12 @@ class marque_controller {
 
         return $r ; 
     }
+
+    public function marqueDetailsGenerate($id){
+        $v = new marqueView();
+        $v->marqueDetailsDisplay($id);
+    }
+
 
 }
 ?>

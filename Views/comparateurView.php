@@ -1,6 +1,6 @@
 <?php
 // Les fichiers utilisés :
-require_once('Views/acceuilView.php');
+require_once('Controller/acceuilController.php');
 require_once('Controller/vehiculeController.php');
 
 class comparateurView {
@@ -16,26 +16,29 @@ class comparateurView {
 
     public function comparateurDisplay() {
         
-        $acceuilView = new acceuilView();
+        $c = new acceuilController();
 
         echo"<!DOCTYPE html>
         <html>";
 
-        $acceuilView->head();
-        $acceuilView->header();
-        $acceuilView->Menu();
-        echo"<section>";
+        $c->head();
+        $c->header();
+        $c->Menu();
+        
 
         
-        $acceuilView->Zone2();
-        if (isset($_POST['submit'])) {
+        $c->Zone2(0);
+        
+        if (isset($_POST['submit']) || isset($_GET['compare'])) {
             $this->handleComparison();
+            echo "<div class='comp-results'> ";
+            $this->displayComparisonResults();
+            echo "</div>";
         }
 
-        $this->displayComparisonResults();
         
-        echo"</section>";
-        //$acceuilView->footer();
+        //$c->footer();
+        
         echo"</body></html>";
     }
 
@@ -44,7 +47,7 @@ class comparateurView {
         $c = new Vehicule_controller();
         $versionController = new Version_controller();
         $modeleController = new Modele_controller();
-        $marqueController = new Marque_controller();
+        $marqueController = new marqueController();
         $imageController = new image_controller(); 
 
         $this->vehicules = array();
@@ -60,9 +63,19 @@ class comparateurView {
             $marque = isset($_POST["marque$i"]) ? $_POST["marque$i"] : null;
             $modele = isset($_POST["modele$i"]) ? $_POST["modele$i"] : null;
             $version = isset($_POST["version$i"]) ? $_POST["version$i"] : null;
+
+
+            if ($i === 1 || $i === 2){ // check for the get 
+                if ($marque === null || $modele === null || $version === null) {
+                    $marque = isset($_GET["marque$i"]) ? $_GET["marque$i"] : null;
+                    $modele = isset($_GET["modele$i"]) ? $_GET["modele$i"] : null;
+                    $version = isset($_GET["version$i"]) ? $_GET["version$i"] : null;
+                }
+            } 
+
             
             if ($marque === null || $modele === null || $version === null) {
-                // do nothing
+                // do nothing 
             } 
             else {
                 $this->numVehicules++;
@@ -102,7 +115,7 @@ class comparateurView {
                         <td></td>'; 
 
        
-                        foreach ($this->vehicules as $vehicule) {
+                    foreach ($this->vehicules as $vehicule) {
                             echo '<td>'.$vehicule['nom'].'</td>';
                        }
 
@@ -197,7 +210,7 @@ class comparateurView {
         ];
        
         echo '
-              <tr id="info">
+              <tr id="details">
                 <td colspan='.$var.'> Détails importants </td> 
               </tr>';
 

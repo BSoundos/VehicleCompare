@@ -117,3 +117,14 @@ CREATE TABLE Comparaison (
     FOREIGN KEY (vehicule2) REFERENCES Vehicule(id)
 
 );
+
+
+CREATE TABLE news_details (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    text TEXT,
+    image_id INT,
+    news_id INT,
+    FOREIGN KEY (image_id) REFERENCES Image(id),
+    FOREIGN KEY (news_id) REFERENCES News(id)
+
+);  

@@ -1,8 +1,13 @@
 <?php
 require_once 'Model/vehiculeModel.php';
-
+require_once 'Views/vehiculeView.php';
 
 class Vehicule_controller {
+
+    public function vehiculeDetailsGenerate($vehiculeId){
+        $v = new vehiculeView();
+        $v->vehiculeDetailsDisplay($vehiculeId);
+    }
 
 
     public function get_Vehicules_controller(){
@@ -25,6 +30,18 @@ class Vehicule_controller {
 
         return $r ; 
     }
+
+    public function get_vehicule_byMarqueId_controller($id){
+        $mtf = new vehicule_model();
+        $r = $mtf->get_vehicule_byMarqueId($id);
+
+        return $r ; 
+    }
+
+
+
+
+    
 
 }
 ?>

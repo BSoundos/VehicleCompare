@@ -98,6 +98,7 @@ footer {
     width: 100vw;
     margin-top: 70px;
     padding-top: 20px;
+    text-align: center;
 }
 
 footer ul {
@@ -164,55 +165,42 @@ fieldset select {
     margin: 10px;
 }
 
-.zone3 .comparaison-populaires {
+
+.zone3 .comparaison-populaires{
+    text-align: center;
+    margin: 50px;
+  }
+
+.zone3 .slider {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    justify-content:center;
 }
 
 .zone3 .cadre {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 20px; /* Adjust margin as needed */
-    height: fit-content;
-    width: 500px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.zone3 .nb-comparaison {
-    text-align: center;
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px; /* Adjust margin as needed */
-}
-
-.item0.item1 {
- 
-    border-right:  1px solid #ddd;
-}
-.item0,.item1, .item2 {
-    width: 30%; 
-    padding: 10px;
+    padding: 5px;
+    border: 2px solid #ddd; /* Cadre border style */
+    margin: 5px; /* Cadre margin */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
-.item1, .item0 {
-    margin-right: 5%; /* Adjust margin between items as needed */
+.zone3 .vehicules {
+    display: flex;
+    padding-top: 20px;
 }
 
-.item0 p,.item1 p, .item2 p {
-    margin: 5px;
+.zone3 .vehicules >p {
+    padding-top:20px;
+}
+
+.item1,.item2 {
+    margin:10px;
 }
 
 .item1 img, .item2 img {
-    height: 80px;
-    width: 120px;
-}
-
-.item0 {
-    margin-top: 85px;
+  height: 80px;
+  width: 120px;
 }
 
 /*************     comparateur     ***************/
@@ -220,4 +208,84 @@ fieldset select {
 tr#image img {
     height: 80px;
     width: 120px;
+}
+
+.comp-results {
+    margin-left :20px;
+    margin-right: 20px;
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.comp-results table {
+      border-collapse: collapse;
+      width: 100%;
+}
+
+.comp-results th, td {
+      border: 1px solid #dddddd;
+      text-align: center;
+      padding: 10px;
+}
+
+.comp-results th {
+      background-color: #f2f2f2;
+}
+
+.comp-results #info, #details {
+    font-size:larger;
+}
+
+
+/*****************************     News page     *******************************/
+.news-container {
+    margin: 40px;
+
+}
+
+.news-item {
+    padding: 5px;
+    border: 2px solid #ddd; /* Cadre border style */
+    margin: 45px; /* Cadre margin */
+    box-sizing: border-box;
+}
+
+.news-container img {
+    height:300px;
+    width:500px;
+}
+
+.news-container .paragraph-content p{
+    margin: 20px;
+}
+
+
+.news-container .image ,  .news-container h3 {
+    text-align: center;
+}
+
+/******************************   Marques page     *******************************/
+
+.marque {
+    display: inline-block;
+}
+
+.marque img {
+    height: 150px;
+    width: 180px;
+}
+
+
+.marques-details , .principales-voitures {
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.marques-details ul {
+    list-style-type: none;
+}
+
+.principales-voitures .vehicule-spec .marque {
+    margin: 20px;
 }

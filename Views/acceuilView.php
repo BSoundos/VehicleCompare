@@ -70,9 +70,9 @@ class acceuilView {
         $v->Zone1Display();
     }
 
-    public function Zone2(){
+    public function Zone2($i){
         $v = new zone2View();
-        $v->Zone2Display();
+        $v->Zone2Display($i);
     }
 
     public function Zone3(){
@@ -107,10 +107,10 @@ class acceuilView {
         $this->Menu();
         echo"<section>";
         $this->Zone1();
-        $this->Zone2();
+        $this->Zone2(0);
         $this->Zone3();
         echo"</section>";
-        $this->footer();
+        //$this->footer();
         echo"</body></html>";
     }
 

@@ -23,6 +23,7 @@ VALUES
   'https://www.nissan.fr/',27);
 
 
+
 -- Modeles
 INSERT INTO Modele (nom, marque_id)  
 VALUES
@@ -134,7 +135,8 @@ VALUES
   ('img/Renault.jpg'),
   ('img/ford.jpg'),
   ('img/fiat.jpg'),
-  ('img/nissan.jpg');
+  ('img/nissan.jpg'),
+  ('img/news1_1.jpg');
 
 -- Actualite
 INSERT INTO DiaporamaContenu (titre, contenu, date, lien, diapo, image_id)
@@ -178,4 +180,28 @@ INSERT INTO Comparaison (vehicule1, vehicule2, nb) VALUES
 (2, 5, 17),
 (3, 4, 1);
 
+INSERT INTO news_details (text,image_id,news_id) VALUES
+('La vision qu’a Masahiro Moro, actuel PDG de Mazda et ancien PDG de Mazda pour l’Amérique du Nord, repose essentiellement sur une architecture unique sur laquelle une équipe de près de 100 personnes est en train de travailler. Cette architecture sera modulable et sous-tendra les produits que lancera le constructeur d’ici 2030. Le constructeur estime que 25 % à 40 % des véhicules vendus seront électriques en 2030, se gardant d’être plus précis compte tenu de l’instabilité du marché actuel.', 18, 1), 
+('La légèreté, et la rentabilité
+Le principe de base qu’il met à l’avant-plan est l’efficacité et la légèreté. C’est, selon lui, la seule avenue pour rendre les véhicules électriques logiques, du point de vue financier. Même s’il n’a pas voulu confirmer les détails mécaniques, notamment parce qu’il estime qu’il peut se passer beaucoup de choses d’ici l’arrivée prévue en 2025, Masahiro Moro mentionne que le constructeur évalue actuellement ses options. Il envisage des moteurs électriques plus puissants et moins puissants, qui pourraient être disponibles en formule à un ou deux moteurs. L’une des préoccupations semble la taille de la batterie, parce qu’une plus grande capacité équivaut automatiquement à un prix et un poids plus élevés.Selon lui, Mazda essaiera de se différencier des autres constructeurs. Alors que nous voyons actuellement beaucoup de VUS à la ligne de toit surbaissée, pour améliorer le coefficient de pénétration dans l’air, Mazda tentera vraisemblablement de continuer à adopter une forme typique de VUS, très verticale. Des 7 ou 8 produits prévus, rien n’indique quelle quantité sera vendue chez nous.
+
+Pour finir, pour améliorer la rentabilité et séparer les coûts de fabrication, Mazda travaillera avec Toyota pour l’architecture logicielle et électronique de ses véhicules électriques. Selon Moro, les composants matériels demeureront individuels pour les deux marques, mais le partage des logiciels, pour ces produits aussi importants, permettra de limiter de 70 % à 80 % l’investissement total pour l’électrification de la gamme.', 23, 1),
+;
+
+
+INSERT INTO Image (lien)
+VALUES
+  ('img/Bentley.jpg'),
+  ('img/Audi.jpg'),
+  ('img/Hyundai.jpg'),
+  ('img/Mercedes-Benz.jpg');
+
+
+
+INSERT INTO Marque (nom, pays_origine, siege_social, annee_creation, lien, image_id)
+VALUES
+  ('Bentley', 'United Kingdom', 'Crewe, England', '1919', 'https://www.bentleymotors.com/', 29),
+  ('Audi', 'Germany', 'Ingolstadt, Germany', '1909', 'https://www.audi.com', 30),
+  ('Hyundai', 'South Korea', 'Seoul, South Korea', '1967', 'https://www.hyundai.com/fr/fr.html', 31),
+  ('Mercedes-Benz', 'Germany', 'Stuttgart, Germany', '1926', 'https://www.mercedes-benz.com/', 32);
 
