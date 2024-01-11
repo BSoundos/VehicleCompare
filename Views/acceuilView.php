@@ -4,6 +4,7 @@ require_once('Views/diapoView.php');
 require_once('Views/zone1View.php');
 require_once('Views/zone2View.php');
 require_once('Views/zone3View.php');
+require_once('Views/loginView.php');
 
 class acceuilView {
 
@@ -34,13 +35,31 @@ class acceuilView {
             </ul>
         </div>
         <div class='register'>
-            <a href=''>LOGIN</a>
-        </div>
+        ";
+
+        
+
+        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
+            echo"<a href='index.php?action=logout'>LOGOUT</a>";
+        } 
+        else {
+            echo"<button id='loginLink'>LOGIN</button>";
+            
+        } 
+
+        echo"</div>
         </header>
         ";
 
+        $this->login();
+    
+
     }
 
+    public function login(){
+        $v = new loginView();
+        $v->loginDisplay();
+    }
 
     public function Diapo(){
         $v = new diapoView();
@@ -70,9 +89,9 @@ class acceuilView {
         $v->Zone1Display();
     }
 
-    public function Zone2($i){
+    public function Zone2($i,$version,$modele,$marque){
         $v = new zone2View();
-        $v->Zone2Display($i);
+        $v->Zone2Display($i,$version,$modele,$marque);
     }
 
     public function Zone3(){
@@ -107,7 +126,7 @@ class acceuilView {
         $this->Menu();
         echo"<section>";
         $this->Zone1();
-        $this->Zone2(0);
+        $this->Zone2(0,null,null,null);
         $this->Zone3();
         echo"</section>";
         //$this->footer();

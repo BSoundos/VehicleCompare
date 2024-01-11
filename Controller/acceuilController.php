@@ -25,9 +25,9 @@ class acceuilController {
         $v->menu();
     }
 
-    public function zone2($i){
+    public function zone2($i,$version,$modele,$marque){
         $v = new acceuilView();
-        $v->zone2($i);
+        $v->zone2($i,$version,$modele,$marque);
     }
 
     public function footer(){

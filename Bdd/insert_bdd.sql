@@ -205,3 +205,18 @@ VALUES
   ('Hyundai', 'South Korea', 'Seoul, South Korea', '1967', 'https://www.hyundai.com/fr/fr.html', 31),
   ('Mercedes-Benz', 'Germany', 'Stuttgart, Germany', '1926', 'https://www.mercedes-benz.com/', 32);
 
+
+INSERT INTO Avis (commentaire, note, type, target_id,utilisateur_id,statut)
+VALUES
+    ('awesome',5,0,1,1,'en attente'),
+    ('awesome 1',4,0,1,2,'en attente'),
+    ('awesome 2',3,0,1,3,'en attente');
+
+
+INSERT INTO Avis (commentaire, note, type, target_id, utilisateur_id, statut)
+VALUES
+    ('Great car!', 4.5, 0, 1, 1, 'valide'),
+    ('Needs improvement in fuel efficiency.', 3.2, 0, 2, 2, 'en attente'),
+    ('Excellent brand!', 4.8, 1, 1, 3, 'valide'),
+    ('Average performance.', 3.0, 1, 2, 4, 'valide'),
+    ('Smooth driving experience.', 4.6, 0, 3, 5, 'en attente');

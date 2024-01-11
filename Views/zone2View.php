@@ -6,7 +6,7 @@ require_once 'Controller/modeleController.php';
 
 class zone2View {
 
-    public function Zone2Display($i){
+    public function Zone2Display($k,$version1,$modele1,$marque1){
 
         $marque_controller = new marqueController();
         $marques = $marque_controller->get_Marques_controller()->fetchAll(PDO::FETCH_ASSOC);
@@ -17,10 +17,20 @@ class zone2View {
        
 
         echo "<div class='zone2'>
-        <div class='title'><h3>Comparaison</h3></div>
-        <form id='vehicule-form' action='index.php?action=comparateur' method='post'>
-        <div class='fildsets'>" ;
+        <div class='title'><h3>Comparaison</h3></div>";
+        
+        if($k == 0){
+            echo "<form id='vehicule-form' action='index.php?action=comparateur' method='post'>";
+        } 
+        else // to trat the case when we compare other vehicules to a specific vehicule from its details page 
+        {
+            echo "<form id='vehicule-form' action='index.php?action=comparateur&compare=true&version1=$version1&modele1=$modele1&marque1=$marque1' method='post'>";
+        }
 
+        
+
+        echo "<div class='fildsets'>" ;
+        $i = 0 ; 
         while($i<4){
             $j = $i+1;
             echo "<fieldset id ='fieldset$j' >
@@ -65,6 +75,7 @@ class zone2View {
 
         
         echo "<script>
+
         let models = [];  
         let versions = []; 
         let versionContent ;  
@@ -81,9 +92,13 @@ class zone2View {
 
         echo " versions.push(".json_encode($result)."); ";
 
+        echo " var jValue = ".json_encode($k)."; ";
+
         echo "
 
-    
+        
+
+        // To enable comparaison only when at least 2 different vehicules are selected 
         function enableComparerButton() {
             const fieldsets = [
                 $('#fieldset1'),
@@ -103,13 +118,18 @@ class zone2View {
         
             const uniqueFieldsets = Array.from(new Set(selectedFieldsets));
         
-            if (uniqueFieldsets.length >= 2 && !areFieldsetsEqual(uniqueFieldsets)) {
+           
+            if (jValue === 1 ) {
+                $('.comparer-button button').prop('disabled', false);
+            }
+            else if (uniqueFieldsets.length >= 2 && !areFieldsetsEqual(uniqueFieldsets)) {
                 $('.comparer-button button').prop('disabled', false);
             } else {
                 $('.comparer-button button').prop('disabled', true);
             }
         }
         
+        // returns true if the fieldsets have each select value equal 
         function areFieldsetsEqual(fieldsets) {
             const [firstFieldset, ...restFieldsets] = fieldsets;
         
@@ -123,6 +143,8 @@ class zone2View {
             });
         }
         
+        // to set for each fieldset the events for changing the selected value without repeating code 
+        // for each fieldset 
         function setupFieldsetEvents(fieldsetSelector, models, versions) {
             const fieldset = $(fieldsetSelector);
             console.log('fieldset',fieldset);
@@ -175,11 +197,14 @@ class zone2View {
                 }
             });
             
+
+            // for each change event we check if we can enable the compare button 
             fieldset.find('.marque, .modele, .version, .annee').on('change', function () {
                 enableComparerButton();
             });
         }
         
+        console.log('Jvalue :', jValue);
         setupFieldsetEvents('#fieldset1', models, versions);
         setupFieldsetEvents('#fieldset2', models, versions);
         setupFieldsetEvents('#fieldset3', models, versions);

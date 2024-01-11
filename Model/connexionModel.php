@@ -33,6 +33,8 @@ class connexion_model {
     public function requete($c,$r){
         return $c->query($r);
     }
+
+   
 }
 
 ?>

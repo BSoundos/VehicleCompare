@@ -22,6 +22,7 @@ class marqueView {
         $this->vehicule_controller = new Vehicule_controller();
     }
 
+    // pour la page des marques 
     public function marquesDisplay(){
         echo"<!DOCTYPE html>
         <html>";
@@ -83,14 +84,14 @@ class marqueView {
         </script>";
 
 
-        echo '<select id="toutes-vehicules">
+        echo '<div class="centered"><select id="toutes-vehicules">
         <option value="" selected disabled>Choisissez une voiture</option>';
  
         foreach($result as $row){
             echo  '<option value='.$row['vehicule_id'].'>'.$row["vehicule_nom"].'</option>';
         }
 
-        echo '</select>';
+        echo '</select></div>';
 
         echo"<div id='vehicule-spec'></div>";
         
@@ -114,19 +115,19 @@ class marqueView {
                 
                 if(Id) {
                 details = '<h2><a href=' + 'index.php?action=vehicules&id=' +data[0]['vehicule_id']+'> '+ data[0]['vehicule_nom']+ '</a></h2>';
-                details += '<p> Modele :' + data[0]['modele_nom'] +'</p>';
-                details += '<p>Marque : ' + data[0]['marque_nom'] + '</p>';
-                details += '<p>Version: '+data[0]['version_nom']+'</p>';
-                details += '<p>Année : ' + data[0]['vehicule_annee'] + '</p>';
-                details += '<p>Dimensions : ' + data[0]['dimensions'] + '</p>';
-                details += '<p>Consommation : ' + data[0]['consommation'] + ' L/100km</p>';
-                details += '<p>Moteur : ' + data[0]['moteur'] + '</p>';
-                details += '<p>Puissance : ' + data[0]['puissance'] + ' ch</p>';
-                details += '<p>Transmission : ' + data[0]['autre_performances'] + '</p>'; 
-                details += '<p>Places : ' + data[0]['capacite'] + '</p>';
-                details += '<p>Catégorie : ' + data[0]['categorie'] + '</p>';
-                details += '<p>Note : ' + data[0]['note'] + '/5</p>';
-                details += '<p>Prix : ' + data[0]['tarif'] + ' DA</p>';
+                details += '<p> Modele : ' + data[0]['modele_nom'] +'</p>';
+                details += '<p>Marque :  ' + data[0]['marque_nom'] + '</p>';
+                details += '<p>Version:  '+data[0]['version_nom']+'</p>';
+                details += '<p>Année :  ' + data[0]['vehicule_annee'] + '</p>';
+                details += '<p>Dimensions :  ' + data[0]['dimensions'] + '</p>';
+                details += '<p>Consommation :  ' + data[0]['consommation'] + ' L/100km</p>';
+                details += '<p>Moteur :  ' + data[0]['moteur'] + '</p>';
+                details += '<p>Puissance :  ' + data[0]['puissance'] + ' ch</p>';
+                details += '<p>Transmission :  ' + data[0]['autre_performances'] + '</p>'; 
+                details += '<p>Places :  ' + data[0]['capacite'] + '</p>';
+                details += '<p>Catégorie :  ' + data[0]['categorie'] + '</p>';
+                details += '<p>Note :  ' + data[0]['note'] + '/5</p>';
+                details += '<p>Prix :  ' + data[0]['tarif'] + ' DA</p>';
                 }
                 
                 document.getElementById('vehicule-spec').innerHTML = details;
@@ -137,6 +138,9 @@ class marqueView {
 
     }
 
+
+
+    // pour la page des détails d'une marque 
     public function marqueDetailsDisplay($id){
 
         echo"<!DOCTYPE html>

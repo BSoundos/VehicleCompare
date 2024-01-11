@@ -27,19 +27,37 @@ class comparateurView {
         
 
         
-        $c->Zone2(0);
+        $c->Zone2(0,null,null,null);
         
-        if (isset($_POST['submit']) || isset($_GET['compare'])) {
+        // si on a envoyer le formulaire de submit ou de comparaison populaires 
+        if (isset($_POST['submit']) || isset($_GET['compare'])) { 
             $this->handleComparison();
             echo "<div class='comp-results'> ";
             $this->displayComparisonResults();
             echo "</div>";
+            $this->updateComparaison();
         }
 
         
         //$c->footer();
         
         echo"</body></html>";
+    }
+
+    private function updateComparaison() {
+  
+        $comparaison = new Comparaison_controller();
+     
+        for ($i = 1; $i <= $this->numVehicules; $i++) {
+            for ($j = $i + 1; $j <= $this->numVehicules; $j++) {
+                $id1 = $this->vehicules[$i]['id'];
+                $id2 = $this->vehicules[$j]['id'];
+        
+                $r = $comparaison->update_comparaison($id1,$id2);
+
+            }
+        }
+
     }
 
     private function handleComparison() {
@@ -65,7 +83,7 @@ class comparateurView {
             $version = isset($_POST["version$i"]) ? $_POST["version$i"] : null;
 
 
-            if ($i === 1 || $i === 2){ // check for the get 
+            if ($i === 1 || $i === 2) { // check for the get == pour les comparaison populaires 
                 if ($marque === null || $modele === null || $version === null) {
                     $marque = isset($_GET["marque$i"]) ? $_GET["marque$i"] : null;
                     $modele = isset($_GET["modele$i"]) ? $_GET["modele$i"] : null;
@@ -105,6 +123,9 @@ class comparateurView {
 
     }
 
+
+
+    // pour afficher les résultats de comparaison 
     private function displayComparisonResults() {
         
         echo '<p>numVehicules: '.$this->numVehicules.'</p>';
@@ -130,8 +151,10 @@ class comparateurView {
                         <td>Images</td>'; 
 
         
+        $z = 1 ; 
         foreach ($this->images as $imagesrc) {
-             echo '<td><img src='.$imagesrc.' ></td>';
+            echo '<td><a href="index.php?action=vehicules&id='.$this->vehicules[$z]['id'].'"><img src='.$imagesrc.' ></a></td>';
+            $z++;
         }
 
         echo '</tr>';
@@ -143,7 +166,7 @@ class comparateurView {
 
                 foreach ($this->vehicules as $vehicule) {
                     echo '<td>'.$vehicule['tarif'].' DA </td>';
-               }
+                }
 
         echo '</tr>';
 

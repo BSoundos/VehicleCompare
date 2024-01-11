@@ -78,6 +78,8 @@ class zone3View {
             echo"</div>
             
             <div class='comparer-button' >
+
+            <!--pass the two params with in the url -->
             <button><a href='index.php?action=comparateur&compare=true&version1=".$version1['id']."&modele1=".$modele1['id']."&marque1=".$marque1['id']."&version2=".$version2['id']."&modele2=".$modele2['id']."&marque2=".$marque2['id']."'>Comparer</a></button>
             </div>
             </div>";

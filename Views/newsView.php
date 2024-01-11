@@ -17,6 +17,7 @@ class newsView {
     }
 
 
+    // pour la page des news 
     public function newsDisplay() {
         
 
@@ -53,6 +54,7 @@ class newsView {
     }
 
 
+    // pour la page des détails d'un des news 
     public function newsDetailsDisplay($newsId){
         echo"<!DOCTYPE html>
         <html>";

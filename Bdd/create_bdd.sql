@@ -80,15 +80,17 @@ CREATE TABLE DiaporamaContenu (
 CREATE TABLE Avis (
     id INT PRIMARY KEY AUTO_INCREMENT,
     commentaire TEXT,
-    note DOUBLE,
-    date DATE,
-    vehicule_id INT,
+    note double,
+    type INT, -- vehivule 0 or marque 1
+    target_id INT,
     utilisateur_id INT,
     statut ENUM('valide', 'refuse', 'en attente'), 
-    FOREIGN KEY (vehicule_id) REFERENCES Vehicule(id),
     FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
 
 );  
+
+
+
 
 CREATE TABLE Favoris (
     id INT PRIMARY KEY AUTO_INCREMENT,

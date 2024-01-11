@@ -41,6 +41,43 @@ class comparaison_model {
         return $r ; 
     }
   
+    public function get_comparaison_byVehiculeId($id){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = "select * from comparaison where vehicule1=$id or vehicule2=$id LIMIT 3";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+    }
+
+    public function update_comparaison($x,$y){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = "SELECT * FROM comparaison WHERE (vehicule1=$x AND vehicule2=$y) OR (vehicule1=$y AND vehicule2=$x) ";
+
+        $r = $this->bdd->requete($c, $query);
+
+        $result = $r->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            $updateQuery = "UPDATE comparaison SET nb = nb + 1 WHERE vehicule1 = $x AND vehicule2 = $y";
+            $r = $this->bdd->requete($c, $updateQuery);
+        } else {
+            
+            $insertQuery = "INSERT INTO comparaison (vehicule1, vehicule2, nb) VALUES ($x, $y, 1)";
+            $r = $this->bdd->requete($c, $insertQuery);
+        }
+
+        $this->bdd->deconnexion($c);
+        return $r ; 
+
+    }
+
+   
 
 }
 
