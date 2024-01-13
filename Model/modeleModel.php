@@ -41,7 +41,41 @@ class modele_model {
         return $r ; 
     }
   
+    public function insert($modele){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = $c->prepare("INSERT INTO Modele
+        (nom, marque_id)
+        VALUES (?, ?)");
+    
+        $query->bindParam(1, $modele['nom']);
+        $query->bindParam(2, $modele['marque_id']);
+    
+        $query->execute();
+    
+        $query = "SELECT * FROM modele ORDER BY id DESC LIMIT 1";
+        $r = $this->bdd->requete($c, $query);
+                
+        $this->bdd->deconnexion($c);
+        return $r;      
+    }
 
+    public function supprimer($id){
+
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+
+        $query = "DELETE FROM modele WHERE id =$id";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+
+    }
+   
+    
 }
 
 

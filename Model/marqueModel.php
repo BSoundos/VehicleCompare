@@ -41,6 +41,48 @@ class marque_model {
         return $r ; 
     }
 
+
+    public function insert($marque,$imageId){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = $c->prepare("INSERT INTO Marque
+        (nom, pays_origine, siege_social, annee_creation, lien, image_id)
+        VALUES (?, ?, ?, ?, ?, ?)");
+
+        $query->bindParam(1, $marque['nom']);
+        $query->bindParam(2, $marque['pays_origine']);
+        $query->bindParam(3, $marque['siege_social']);
+        $query->bindParam(4, $marque['annee_creation']);
+        $query->bindParam(5, $marque['lien']);
+        $query->bindParam(6, $imageId);
+
+
+        $query->execute();
+
+       
+        $query = "SELECT * FROM marque ORDER BY id DESC LIMIT 1";
+        $r = $this->bdd->requete($c, $query);
+                
+        $this->bdd->deconnexion($c);
+        return $r;      
+    }
+
+    public function supprimer($id){
+
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+
+        $query = "DELETE FROM marque WHERE id =$id";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+
+    }
+   
+
 }
 
 

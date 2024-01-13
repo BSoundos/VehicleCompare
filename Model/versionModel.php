@@ -58,6 +58,43 @@ class version_model {
 
     }
 
+    public function insert($version){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = $c->prepare("INSERT INTO Version
+        (nom, annee, modele_id)
+        VALUES (?, ?, ?)");
+    
+        $query->bindParam(1, $version['nom']);
+        $query->bindParam(2, $version['annee']);
+        $query->bindParam(3, $version['modele_id']);
+    
+        $query->execute();
+    
+        $query = "SELECT * FROM version ORDER BY id DESC LIMIT 1";
+        $r = $this->bdd->requete($c, $query);
+                
+        $this->bdd->deconnexion($c);
+        return $r;      
+    }
+
+    public function supprimer($id){
+
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+
+        $query = "DELETE FROM version WHERE id=$id";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+
+    }
+   
+    
+ 
   
 
 }

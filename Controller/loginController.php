@@ -11,17 +11,22 @@ class loginController {
         $user = $user->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
-            echo "<p>Connected User</p>";
             session_start();
             
            
             $_SESSION['username'] = $username;
             $_SESSION['authenticated'] = true;
-    
-                
-            header('Location: index.php');
-            exit();
-    
+
+            if ($user['role']=== 'admin'){
+                $_SESSION['role'] = 'admin';
+                header('Location: index.php?action=admin');
+                exit();
+            }
+            else {
+                header('Location: index.php');
+                exit();
+            }
+
         } else {
             header('Location: index.php?error=incorrect');
             exit();

@@ -11,5 +11,13 @@ class image_controller {
         
         return $r ; 
     }
+
+    public function get_image_byLien_controller($lien){
+
+        $mtf = new image();
+        $r = $mtf->get_image_byLien($lien);
+        
+        return $r ; 
+    }
 }
 ?>

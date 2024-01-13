@@ -4,6 +4,12 @@ require_once 'Views/vehiculeView.php';
 
 class Vehicule_controller {
 
+    public function vehiculeCaracGenerate($vehiculeId){
+        $v = new vehiculeView();
+        $v->vehiculeCaracDisplay($vehiculeId);
+    }
+
+
     public function vehiculeDetailsGenerate($vehiculeId){
         $v = new vehiculeView();
         $v->vehiculeDetailsDisplay($vehiculeId);
@@ -24,6 +30,15 @@ class Vehicule_controller {
         return $r ; 
     }
 
+    public function get_vehicule_andids($id){
+        $mtf = new vehicule_model();
+        $r = $mtf->get_vehicule_andids($id);
+
+        return $r ; 
+    }
+
+    
+
     public function get_vehicule_byVersionId_controller($id){
         $mtf = new vehicule_model();
         $r = $mtf->get_vehicule_byVersionId($id);
@@ -38,6 +53,12 @@ class Vehicule_controller {
         return $r ; 
     }
 
+    public function get_marque_modele_version_annee_controller(){
+        $mtf = new vehicule_model();
+        $r = $mtf->get_marque_modele_version_annee();
+
+        return $r ; 
+    }
 
 
 

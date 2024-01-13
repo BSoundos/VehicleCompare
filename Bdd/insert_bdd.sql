@@ -136,7 +136,13 @@ VALUES
   ('img/ford.jpg'),
   ('img/fiat.jpg'),
   ('img/nissan.jpg'),
-  ('img/news1_1.jpg');
+  ('img/news1_1.jpg'),
+  ('img/user.png'),
+  ('img/parameter.png'),
+  ('img/avis.png'),
+  ('img/news.png'),
+  ('img/vehicule.png')
+  ;
 
 -- Actualite
 INSERT INTO DiaporamaContenu (titre, contenu, date, lien, diapo, image_id)

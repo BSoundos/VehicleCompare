@@ -130,3 +130,12 @@ CREATE TABLE news_details (
     FOREIGN KEY (news_id) REFERENCES News(id)
 
 );  
+
+
+
+CREATE TABLE parameters (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(255),
+    image_id INT,
+    FOREIGN KEY (image_id) REFERENCES Image(id)
+);  

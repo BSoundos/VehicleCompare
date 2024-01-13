@@ -16,8 +16,11 @@ class vehiculeView {
     private $marqueController;
     private $avisController;
 
+    private $admin_controller ;
+
     
     public function __construct() {
+        $this->admin_controller = new adminController();
         $this->acceuil_controller = new acceuilController();
         $this->vehicule_controller = new Vehicule_controller();
         $this->image_controller = new image_controller();
@@ -28,23 +31,11 @@ class vehiculeView {
         $this->avisController = new avisController();
     }
 
-    public function vehiculeDetailsDisplay($id){
 
 
-        $zone3View = new zone3View();
+    public function vehicule_details($result){
 
-        echo"<!DOCTYPE html>
-        <html>";
-
-        $this->acceuil_controller->head();
-        $this->acceuil_controller->header();
-        $this->acceuil_controller->Menu();
-
-        $r = $this->vehicule_controller->get_vehicule_byId_controller($id);
-        $result = $r->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            echo "<div class='vehicule-details'>";
+        echo "<div class='vehicule-details'>";
             echo "<h2>".$result['nom']."</h2>"; 
             $image = $this->image_controller->get_image_controller($result["image_id"]);
             $imageData = $image->fetch(PDO::FETCH_ASSOC);
@@ -58,8 +49,32 @@ class vehiculeView {
             }
 
     
-            echo "</div>";
+        echo "</div>";
 
+    
+    }
+    
+    public function vehiculeDetailsDisplay($id){
+
+
+        $zone3View = new zone3View();
+
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+        $this->acceuil_controller->Menu();
+
+
+        
+
+        $r = $this->vehicule_controller->get_vehicule_byId_controller($id);
+        $result = $r->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            
+            $this->vehicule_details($result);
 
             $r = $this->version_controller->get_modele_marque_byid_controller($result["version_id"]); 
             $fields= $r->fetch(PDO::FETCH_ASSOC);
@@ -208,6 +223,33 @@ class vehiculeView {
     
         
         echo"</body></html>";
+    }
+
+
+
+    public function vehiculeCaracDisplay($id){
+
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+
+        $this->admin_controller->manageLinksGenerate();
+
+        $r = $this->vehicule_controller->get_vehicule_byId_controller($id);
+        $result = $r->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            
+            $this->vehicule_details($result);
+
+        }
+
+        //$this->acceuil_controller->footer();
+
+        echo "</div></body></html>";
+
     }
 
 }

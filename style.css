@@ -409,7 +409,86 @@ textarea {
 
 
 
+/********************           Admin pages            **********************/
+.manage-links a img {
+    margin: 20px 40px 20px 40px;
+    display: inline-block; 
+    height: 130px;
+    width: 130px;
+}
+
+.manage-links {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.table-admin {
+    margin: 20px;
+    text-align: center;
+}
+
+.table-admin table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-admin th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table-admin td {
+    text-align: left;
+}
+
+.table-admin th {
+    text-align: center;
+    background-color: #f2f2f2;
+}
+
+.table-admin img {
+    height: 80px;
+    width: 120px;
+}
 
 
+/*****************             ajout        *****************/
+.ajout-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.ajout-container label {
+    display: block;
+    margin-bottom: 8px;
+}
+.ajout-container input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+.ajout-container button {
+    background-color:  rgb(199, 168, 127);
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.ajout-container button:hover {
+    background-color: rgb(115, 207, 207);
+}
 
+
+.links {
+    margin: 10px;
+}
+
+.links a {
+    margin: 20px;
+}
 
