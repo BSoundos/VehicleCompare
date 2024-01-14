@@ -45,13 +45,29 @@ class AvisAdminView {
         // only the vehicules 
         $r = $this->avisController->get_avis_vehicule_controller(); 
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
-
-
-
+    
+        // Get unique statuses from the result
+        $statuses = array_unique(array_column($r, 'statut'));
+    
         // the table 
        echo "
-       <div class='table-admin'>
-            <table>
+       <div class='table-responsive table-admin'>
+            <form method='post' action=''>
+                <div class='form'>
+                    <label for='statusFilter'>Filter by Status:</label>
+                    <select name='statusFilter' id='statusFilter'>
+                        <option value=''>All</option>";
+    
+        
+        foreach ($statuses as $status) {
+            echo "<option value='$status'>$status</option>";
+        }
+    
+        echo "</select>
+                </div>
+                <button type='submit' >Filter</button>
+            </form>
+            <table class='table'>
             <thead>
                 <tr>
                     <th>Utilisateur ID</th>
@@ -62,35 +78,35 @@ class AvisAdminView {
                 </tr>
             </thead>
             <tbody>";
-
-            foreach($r as $row){
-
-                
-                // $user_id = $row['utilisateur_id'] then get its username ?
-               
-            
-                echo"
+    
+            // Filter based on selected status
+            $filteredRows = $r;
+            if (isset($_POST['statusFilter']) && !empty($_POST['statusFilter'])) {
+                $selectedStatus = $_POST['statusFilter'];
+                $filteredRows = array_filter($r, function($row) use ($selectedStatus) {
+                    return $row['statut'] == $selectedStatus;
+                });
+            }
+    
+            foreach ($filteredRows as $row) {
+                echo "
                     <tr>
                         <td>".$row['utilisateur_id']."</td>
                         <td>".$row['target_id']."</td>
                         <td>".$row['commentaire']."</td>
                         <td>".$row['statut']."</td>
                         <td> 
-                        <a href='index.php' >Refuser commentaire</a>
-                        <a href='index.php' >Bloque utilisateur</a>
+                        <a href='index.php?action=admin&page=avis&tache=refus&id=".$row['id']."' >Refuser commentaire</a>
+                        <a href='index.php?action=admin&page=avis&tache=bloque&id=".$row['utilisateur_id']."' >Bloque utilisateur</a>
                         </td>
-                
                     </tr>";
-
             }
                 
-            echo"
+            echo "
             </tbody>
             </table></div>";
-
-
-        
     }
+    
 
    
 

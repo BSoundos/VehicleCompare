@@ -8,6 +8,8 @@ require_once 'Model/vehiculeModel.php';
 require_once 'Model/imageModel.php';
 require_once 'Model/modeleModel.php';
 require_once 'Model/marqueModel.php';
+require_once 'Controller/avisController.php';
+require_once 'Controller/utilisateurController.php';
 
 class adminManageController {
 
@@ -198,6 +200,27 @@ class adminManageController {
     }
 
 
+
+    /************************  avis *********************** */
+    public function refusComment($id){
+        // update statut to refuse
+        $ctr = new avisController();
+        $ctr->update_statut($id,'refuse');
+
+        header('Location: index.php?action=admin&page=avis');
+        exit();
+
+    }
+
+    public function bloqueUser($id){
+        // update statut to bloque
+        $ctr = new userController();
+        $ctr->update_statut($id,'bloque');
+
+        header('Location: index.php?action=admin&page=avis');
+        exit();
+
+    }
 }
 
 ?>

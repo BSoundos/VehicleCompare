@@ -4,6 +4,12 @@ require_once 'Views/avisView.php';
 
 class avisController {
 
+    public function update_statut($id,$statut){
+
+        $model = new avisModel();
+        $md = $model->update_statut($id,$statut);
+
+    }
 
 
     // add avis 

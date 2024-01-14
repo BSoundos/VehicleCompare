@@ -22,7 +22,9 @@ class newsModel {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from news";
+        $query = "SELECT news.*, Image.lien AS image_lien
+        FROM news
+        LEFT JOIN Image ON news.image_id = Image.id";
 
         $r = $this->bdd->requete($c,$query);
         
@@ -47,7 +49,23 @@ class newsModel {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from news_details where news_id=$newsId";
+        $query = "SELECT news_details.*, Image.lien AS image_lien
+        FROM news_details
+        LEFT JOIN Image ON news_details.image_id = Image.id where news_id=$newsId";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+    }
+
+    public function get_all_news_details(){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = "SELECT news_details.*, Image.lien AS image_lien
+        FROM news_details
+        LEFT JOIN Image ON news_details.image_id = Image.id";
 
         $r = $this->bdd->requete($c,$query);
         

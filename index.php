@@ -357,7 +357,33 @@ if (!isset($_GET['action'])) {
                         break;
 
                     case 'avis': 
+                        if (isset($_GET['tache'])) {
+                            $tache = $_GET['tache'];
+                            $id =  $_GET['id'];
+                            switch ($tache) {
+                                case 'refus' : 
+                                    $admin_manage->refusComment($id);
+                                    break;
+                                case 'bloque' :
+                                    $admin_manage->bloqueUser($id);
+                                    break;
+
+                            }
+                        }
+                        else {
+                        
                         $admin->avisAdminGenerate();
+                        }
+                    case 'news':
+                        if (isset($_GET['id'])) {
+                            $id =  $_GET['id'];
+                            // details
+                            $admin->newsDetailsAdminGenerate($id);
+                        }
+                        else {
+                            $admin->newsAdminGenerate();
+                        }
+
 
                 }
             }

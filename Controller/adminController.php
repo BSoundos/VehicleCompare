@@ -5,6 +5,7 @@ require_once('Views/adminPrincipalView.php');
 require_once('Views/vehiculeAdminView.php');
 require_once('Views/marqueAdminView.php');
 require_once('Views/avisAdminView.php');
+require_once('Views/newsAdminView.php');
 require_once 'Model/adminModel.php';
 
 class adminController {
@@ -28,6 +29,20 @@ class adminController {
         $v = new AvisAdminView();
         $v->avisDisplay();
     }
+
+
+    public function newsAdminGenerate(){
+        $v = new NewsAdminView();
+        $v->newsDisplay();
+    }
+
+    public function newsDetailsAdminGenerate($id){
+        $v = new NewsAdminView();
+        $v->newsDetailsDisplay($id);
+    }
+
+    
+
 
     public function deleteGenerate(){
         $v = new marqueAdminView();
