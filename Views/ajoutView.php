@@ -8,7 +8,8 @@ require_once 'Controller/imageController.php';
 require_once 'Controller/versionController.php';
 require_once 'Controller/modeleController.php';
 require_once 'Controller/marqueController.php';
-
+require_once 'Controller/avisController.php';
+require_once 'Controller/utilisateurController.php';
 
 class ajoutView {
 
@@ -21,13 +22,16 @@ class ajoutView {
 
     private $modeleController;
     private $marqueController;
+    private $avisController;
+    private $userController;
 
     private $adminManageController;
 
     private $marques;
     private $modeles;
     private $versions;
-
+    private $targets;
+    private $users;
 
     public function __construct() {
         $this->acceuil_controller = new acceuilController();
@@ -39,11 +43,17 @@ class ajoutView {
         $this->marqueController = new marqueController();
 
         $this->adminManageController = new adminManageController();
+        $this->avisController = new avisController();
+        $this->userController = new userController();
 
 
         $this->marques = $this->marqueController->get_Marques_controller();
         $this->modeles = $this->modeleController->get_Modeles_controller();
         $this->versions = $this->version_controller->get_versions_controller();
+
+        $this->users = $this->userController->get_users_controller();
+        $this->targets = $this->vehicule_controller->get_Vehicules_controller(); // only vehicules
+        
     }
 
 
@@ -55,8 +65,8 @@ class ajoutView {
         $this->acceuil_controller->header();
 
         echo "<div class='ajout-container'>
-        <h2>Ajouter $var</h2>
-        <form action='index.php?action=admin&page=$var' method='post' enctype='multipart/form-data'>";
+        <h2>Ajouter $var</h2>";
+        echo"<form action='index.php?action=admin&page=$var' method='post' enctype='multipart/form-data'>";
 
         switch($var){
             case 'marque':
@@ -65,7 +75,7 @@ class ajoutView {
                 $result = $result->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $row) {
                     foreach ($row as $field => $value) {
-                        if ($field === 'id') {
+                        if ($field === 'id' ) {
         
 
                         }
@@ -131,6 +141,55 @@ class ajoutView {
                                 
                                 foreach($this->modeles as $row){
                                     echo"<option value=".$row['id'].">".$row['nom']."</option>";
+                                }
+                    
+                                echo"
+                                
+                                </select>";
+
+                            }
+                            else {
+                                echo "<label for=".$field.">".$field.":</label>
+                                <input type='text' id=".$field." name=".$field." required>";
+                            }
+            
+                        }
+                        break;
+                    }
+
+            case 'avis':
+                $result = $this->avisController->get_avis_controller();
+                $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($result as $row) {
+                        foreach ($row as $field => $value) {
+                            if ( $field === 'id' || $field === 'type' || $field === 'statut'){
+
+
+                            }
+                            else if ($field === 'note') {
+                                echo "<label for=".$field.">".$field.":</label>
+                                <input type='number' name='note' min='1' max='5' required>";
+
+                            }
+                            else if ($field === 'target_id') {
+                                echo "<label for='target'>Vehicule:</label>
+                                <select id='target' name='target_id'>";
+                                
+                                foreach($this->targets as $row){
+                                    echo"<option value=".$row['id'].">".$row['nom']."</option>";
+                                }
+                    
+                                echo"
+                                
+                                </select>";
+
+                            }
+                            else  if ($field === 'utilisateur_id') {
+                                echo "<label for='utilisateur_id'>Utilisateur:</label>
+                                <select id='utilisateur_id' name='utilisateur_id'>";
+                                
+                                foreach($this->users as $row){
+                                    echo"<option value=".$row['id'].">".$row['nom_utilisateur']."</option>";
                                 }
                     
                                 echo"

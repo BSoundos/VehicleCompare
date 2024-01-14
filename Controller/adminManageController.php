@@ -6,6 +6,7 @@ require_once('Views/modifView.php');
 require_once 'Model/adminModel.php';
 require_once 'Model/vehiculeModel.php';
 require_once 'Model/imageModel.php';
+require_once 'Model/avisModel.php';
 require_once 'Model/modeleModel.php';
 require_once 'Model/marqueModel.php';
 require_once 'Controller/avisController.php';
@@ -83,9 +84,14 @@ class adminManageController {
                 $md = $model->insert($valeur);
                 $md = $md->fetch(PDO::FETCH_ASSOC);
                 $Id = $md['id'];
+                break; 
 
+            case 'avis': 
+                $model = new avisModel();
 
-
+                $md = $model->insert($valeur);
+                $md = $md->fetch(PDO::FETCH_ASSOC);
+                $Id = $md['id'];
                 break; 
         }
     
@@ -93,6 +99,14 @@ class adminManageController {
         header('Location: index.php?action=admin&page='.$var.'&tache=ajout');
         exit();
 
+    }
+
+    public function ajoutAvis($vehiculeavis){
+        $model = new avisModel();
+        $md = $model->insert($vehiculeavis);
+
+        header('Location: index.php?action=admin&page=avis');
+        exit();
     }
 
 

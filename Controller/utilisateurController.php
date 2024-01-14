@@ -10,6 +10,12 @@ class userController {
         $m->update_statut($id,$statut);
     }
 
+    public function get_users_controller(){
+        $mtf = new user_model();
+        $r = $mtf->get_users();
+
+        return $r ; 
+    }
 
 
 

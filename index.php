@@ -359,21 +359,63 @@ if (!isset($_GET['action'])) {
                     case 'avis': 
                         if (isset($_GET['tache'])) {
                             $tache = $_GET['tache'];
-                            $id =  $_GET['id'];
+                            if (isset($_GET['id'])){
+                                $id =  $_GET['id'];
+                            }
                             switch ($tache) {
                                 case 'refus' : 
+                                    
                                     $admin_manage->refusComment($id);
                                     break;
                                 case 'bloque' :
+                                    
                                     $admin_manage->bloqueUser($id);
                                     break;
+                                case 'ajout' : 
+                                    $admin_manage->ajoutLigneGenerate('avis');
+                                    break;
 
+                                case 'modif' : 
+                                    $Id = $_GET['id'];
+                                    $admin_manage->modifLigneGenerate('avis',$Id);
+                                    break;
+
+                                case 'supp' : 
+                                    $Id = $_GET['id'];
+                                    $admin_manage->supp($page,$Id);
+                                    break;
+                            
                             }
                         }
-                        else {
-                        
-                        $admin->avisAdminGenerate();
+                        else if (isset($_POST["submit"])) {
+                
+                            $vehiculeavis=[
+                                'note' => $_POST['note'],
+                                'commentaire' => $_POST['commentaire'],
+                                'utilisateur_id' => $_POST['utilisateur_id'],
+                                'target_id' => $_POST['target_id'] ,
+                                'statut' => 'en attente',
+                                'type' => 0                 
+                            ];
+            
+                            if (isset($_POST["id"])) {// perform update 
+
+                                $id = isset($_POST['id']) ? $_POST['id'] : '';
+                                $admin_manage->modify($id,$vehiculeavis,null);
+
+                            }
+                            else { // ajout
+
+                                $admin_manage->ajoutAvis($vehiculeavis);
+                            }
+                
+                           
                         }
+                        else {
+                                $admin->avisAdminGenerate();
+                        }
+                        break ; 
+
                     case 'news':
                         if (isset($_GET['id'])) {
                             $id =  $_GET['id'];
@@ -383,6 +425,7 @@ if (!isset($_GET['action'])) {
                         else {
                             $admin->newsAdminGenerate();
                         }
+                        break ;
 
 
                 }

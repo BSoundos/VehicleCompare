@@ -29,6 +29,10 @@ class AvisAdminView {
 
         $this->admin_controller->manageLinksGenerate();
 
+        echo "<div class='links' align='center'>
+        <a href='index.php?action=admin&page=avis&tache=ajout'>Ajouter avis</a>
+        </div>";
+
 
         $this->displayTable();
 
@@ -67,6 +71,7 @@ class AvisAdminView {
                 </div>
                 <button type='submit' >Filter</button>
             </form>
+
             <table class='table'>
             <thead>
                 <tr>
@@ -74,6 +79,7 @@ class AvisAdminView {
                     <th>Cible ID</th>
                     <th>Commentaire</th>
                     <th>Statut</th>
+                    <th>Actions</th>
                     <th>Gestion</th>
                 </tr>
             </thead>
@@ -97,7 +103,11 @@ class AvisAdminView {
                         <td>".$row['statut']."</td>
                         <td> 
                         <a href='index.php?action=admin&page=avis&tache=refus&id=".$row['id']."' >Refuser commentaire</a>
-                        <a href='index.php?action=admin&page=avis&tache=bloque&id=".$row['utilisateur_id']."' >Bloque utilisateur</a>
+                        <a href='index.php?action=admin&page=avis&tache=bloque&id=".$row['utilisateur_id']."' >Bloquer utilisateur</a>
+                        </td>
+                        <td> 
+                        <a href='index.php?action=admin&page=avis&tache=modif&id=".$row['id']."' >Modifier </a>
+                        <a href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."' >Supprimer </a>
                         </td>
                     </tr>";
             }

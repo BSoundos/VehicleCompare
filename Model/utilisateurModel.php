@@ -17,6 +17,20 @@ class user_model {
         $this->bdd->deconnexion($c);
 
     }
+
+    public function get_users(){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+
+        $query = "Select * from Utilisateur";
+
+        $r = $this->bdd->requete($c, $query);
+                
+        $this->bdd->deconnexion($c);
+        return $r; 
+
+    }
+    
     
    
     
