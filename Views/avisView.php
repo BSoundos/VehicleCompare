@@ -42,5 +42,66 @@ class avisView {
 
 
     }
+
+    public function avisDisplay2part($target_id,$type){
+        // Les 3 avis les plus appréciés : 
+
+        $x = 3 ; 
+        $avis = $this->avisController->get_best_xavis_byTargetId_controller($x,$target_id,$type);
+        $avis = $avis->fetchAll(PDO::FETCH_ASSOC);
+
+        echo "<div class='avis-apprec'>
+        <h3>Les 3 avis les plus appréciés</h3>";
+        
+        $x = 1 ; 
+        foreach($avis as $row){
+
+            echo "<div class='avis'>";
+            echo "<h5>".$row['note']." / 5 : </h5><p>".$row['commentaire']."</p>";
+            
+            echo "</div>";
+
+            $x++;
+        }
+
+        echo "<a href='index.php?action=avis&id=".$target_id."&type=0'>Voir toutes les avis</a>"; 
+        echo"</div>";
+
+
+
+        // Donner une note et un avis pour les utilisateurs connectés :
+        if (isset($_SESSION['authenticated']) && ($_SESSION['authenticated']) ) {
+            $id = $_SESSION['id'] ; 
+
+            echo "<div class='avis-ajout'>";
+            echo "
+            <form method='POST' action='index.php?action=avis&id=".$target_id."&type=0'>
+            <label for='rating'>Note (1-5):</label>
+            <input type='number'  name='note' min='1' max='5' required>
+            <br>
+
+            <label for='review'>Avis:</label>
+            <textarea name='commentaire' rows='4' required></textarea>
+            <br>
+
+            <input type='hidden' name='target_id' value=".$target_id."> 
+            <input type='hidden' name='utilisateur_id' value=".$id."> ";
+            
+            if ($type===0) { // vehicule
+                  echo"<button type='submit' name='vehiculeAvis'>Ajouter</button>";
+            }
+            else { // ==1 // marque 
+                  echo"<button type='submit' name='marqueAvis'>Ajouter</button>";
+            }
+            
+
+            echo"</form>
+            ";
+
+            echo "</div>";
+        }
+
+
+  }
 }
 

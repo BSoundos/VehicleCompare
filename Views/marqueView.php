@@ -11,6 +11,7 @@ class marqueView {
     private $marque_controller;
     private $modele_controller;
     private $vehicule_controller;
+    private $avisController;
 
     
     public function __construct() {
@@ -20,6 +21,7 @@ class marqueView {
         $this->marque_controller = new marqueController();
         $this->modele_controller = new Modele_controller();
         $this->vehicule_controller = new Vehicule_controller();
+        $this->avisController = new avisController();
     }
 
     // pour la page des marques 
@@ -177,8 +179,10 @@ class marqueView {
         $this->toutesVehicules($id);
         echo"</div>";
 
+
         
-      
+        // avis Zone *******************
+        $this->avisController->avisDisplay2part($id,1);
         
 
         

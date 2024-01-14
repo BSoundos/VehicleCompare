@@ -3,6 +3,8 @@
 // Les fichiers utilisés : 
 require_once('Views/adminPrincipalView.php');
 require_once('Views/vehiculeAdminView.php');
+require_once('Views/marqueAdminView.php');
+require_once('Views/avisAdminView.php');
 require_once 'Model/adminModel.php';
 
 class adminController {
@@ -15,6 +17,21 @@ class adminController {
     public function VehiculeAdminGenerate(){
         $v = new VehiculeAdminView();
         $v->vehiculeDisplay();
+    }
+
+    public function marqueAdminGenerate(){
+        $v = new marqueAdminView();
+        $v->marqueDisplay();
+    }
+
+    public function avisAdminGenerate(){
+        $v = new AvisAdminView();
+        $v->avisDisplay();
+    }
+
+    public function deleteGenerate(){
+        $v = new marqueAdminView();
+        $v->deleteView();
     }
 
     public function manageLinksGenerate(){

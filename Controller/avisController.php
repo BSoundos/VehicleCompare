@@ -4,6 +4,38 @@ require_once 'Views/avisView.php';
 
 class avisController {
 
+
+
+    // add avis 
+    public function ajoutVehiculeAvis($avis){
+
+        $model = new avisModel();
+        $md = $model->insert($avis);
+
+        $var = $avis['target_id'];
+        header('Location: index.php?action=vehicules&id='.$var);
+        exit();
+
+    }
+
+    public function ajoutMarqueAvis($avis){
+
+        $model = new avisModel();
+        $md = $model->insert($avis);
+
+        $var = $avis['target_id'];
+        header('Location: index.php?action=marques&id='.$var);
+        exit();
+
+    }
+
+    public function get_avis_vehicule_controller(){
+        $mtf = new avisModel();
+        $r = $mtf->get_avis_vehicule();
+
+        return $r ; 
+    }
+
     public function get_avis_controller(){
         $mtf = new avisModel();
         $r = $mtf->get_avis();
@@ -30,6 +62,14 @@ class avisController {
         $v->AvisDisplay($targetId,$type);
 
     }
+
+    public function avisDisplay2part($target_id,$type) {
+        $v = new avisView();
+        $v->avisDisplay2part($target_id,$type);
+
+    }
+
+    
 
 
     

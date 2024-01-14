@@ -101,7 +101,8 @@ class vehicule_model {
         v.version_id,
         m.id AS modele_id,
         marque.id AS marque_id,
-        ve.id AS version_id
+        ve.id AS version_id,
+        image.lien AS image_lien
     FROM 
         Vehicule v
     LEFT JOIN 
@@ -110,6 +111,8 @@ class vehicule_model {
         Modele m ON ve.modele_id = m.id
     LEFT JOIN 
         Marque marque ON m.marque_id = marque.id
+    LEFT JOIN 
+        Image image ON v.image_id = image.id
     WHERE 
         v.id = $id
     ";
@@ -232,6 +235,48 @@ class vehicule_model {
         $query->bindParam(12, $vehicule['autre_performances']);
         $query->bindParam(13, $vehicule['version_id']);
         $query->bindParam(14, $id); 
+    
+        $query->execute();
+
+   
+        $this->bdd->deconnexion($c);
+       
+    }
+    
+
+    public function update_withoutimage($id,$vehicule) {
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+    
+        $query = $c->prepare("UPDATE vehicule SET
+            nom = ?,
+            categorie = ?,
+            annee = ?,
+            note = ?,
+            tarif = ?,
+            dimensions = ?,
+            moteur = ?,
+            puissance = ?,
+            consommation = ?,
+            capacite = ?,
+            autre_performances = ?,
+            version_id = ?
+        WHERE id = ?");
+    
+        $query->bindParam(1, $vehicule['nom']);
+        $query->bindParam(2, $vehicule['categorie']);
+        $query->bindParam(3, $vehicule['annee']);
+        $query->bindParam(4, $vehicule['note']);
+        $query->bindParam(5, $vehicule['tarif']); // Corrected index
+        $query->bindParam(6, $vehicule['dimensions']);
+        $query->bindParam(7, $vehicule['moteur']);
+        $query->bindParam(8, $vehicule['puissance']);
+        $query->bindParam(9, $vehicule['consommation']);
+        $query->bindParam(10, $vehicule['capacite']);
+        $query->bindParam(11, $vehicule['autre_performances']);
+        $query->bindParam(12, $vehicule['version_id']);
+        $query->bindParam(13, $id);
+
     
         $query->execute();
 

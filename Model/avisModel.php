@@ -17,11 +17,23 @@ class avisModel {
         return $r ; 
     }
 
+    public function get_avis_vehicule(){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = "select * from avis where type=0";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+    }
+
     public function get_avis_byTargetId($id,$type){
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from avis where type=$type & target_id=$id";
+        $query = "select * from avis where type=$type AND  target_id=$id";
 
         $r = $this->bdd->requete($c,$query);
         
@@ -33,13 +45,41 @@ class avisModel {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from avis where type=$type & target_id=$id order by note desc LIMIT $x";
+        $query = "select * from avis where statut='valide' AND  type=$type AND  target_id=$id order by note desc LIMIT $x";
 
         $r = $this->bdd->requete($c,$query);
         
         $this->bdd->deconnexion($c);
         return $r ; 
     }
+
+
+    public function insert($avis){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+
+        
+        $query = $c->prepare("INSERT INTO Avis
+        (note, commentaire, type, target_id, utilisateur_id, statut)
+        VALUES (?, ?, ?, ?, ?, ?)");
+
+       
+        $query->bindParam(1, $avis['note']);
+        $query->bindParam(2, $avis['commentaire']);
+        $query->bindParam(3, $avis['type']);
+        $query->bindParam(4, $avis['target_id']);
+        $query->bindParam(5, $avis['utilisateur_id']);
+        $query->bindParam(6, $avis['statut']);
+
+
+        $query->execute();
+
+                
+        $this->bdd->deconnexion($c);
+    
+    }
+
+
 
   
 

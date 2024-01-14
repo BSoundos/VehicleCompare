@@ -3,21 +3,24 @@
 require_once('Controller/acceuilController.php');
 require_once('Controller/adminController.php');
 require_once('Controller/vehiculeController.php');
+require_once('Controller/avisController.php');
 
 
-class VehiculeAdminView {
+class AvisAdminView {
 
     private $acceuil_controller ;
     private $admin_controller ;
     private $vehicule_controller;
+    private $avisController;
 
     public function __construct() {
         $this->acceuil_controller = new acceuilController();
         $this->admin_controller = new adminController();
         $this->vehicule_controller = new Vehicule_controller();
+        $this->avisController = new avisController();
     }
 
-    public function vehiculeDisplay(){
+    public function avisDisplay(){
         echo"<!DOCTYPE html>
         <html>";
 
@@ -26,11 +29,6 @@ class VehiculeAdminView {
 
         $this->admin_controller->manageLinksGenerate();
 
-        echo "<div class='links' align='center'>
-        <a href='index.php?action=admin&page=vehicule&tache=ajout'>Ajouter véhicule</a>
-        <a href='index.php?action=admin&page=marque&tache=gestion'>Gestion des marques</a>
-        
-        </div>";
 
         $this->displayTable();
 
@@ -43,8 +41,12 @@ class VehiculeAdminView {
 
 
     public function displayTable(){
-        $r = $this->vehicule_controller->get_marque_modele_version_annee_controller(); 
+
+        // only the vehicules 
+        $r = $this->avisController->get_avis_vehicule_controller(); 
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
+
+
 
         // the table 
        echo "
@@ -52,30 +54,30 @@ class VehiculeAdminView {
             <table>
             <thead>
                 <tr>
-                    <th></th>
-                    <th>Marque</th>
-                    <th>Modèle</th>
-                    <th>Version</th>
-                    <th>Année</th>
-                    <th>Caractéristiques</th>
-                    <th>Administrer</th>
+                    <th>Utilisateur ID</th>
+                    <th>Cible ID</th>
+                    <th>Commentaire</th>
+                    <th>Statut</th>
+                    <th>Gestion</th>
                 </tr>
             </thead>
             <tbody>";
 
             foreach($r as $row){
+
+                
+                // $user_id = $row['utilisateur_id'] then get its username ?
+               
             
                 echo"
                     <tr>
-                        <td><img src='".$row['lien']."' ></td>
-                        <td>".$row['marque_nom']."</td>
-                        <td>".$row['modele_nom']."</td>
-                        <td>".$row['version_nom']."</td>
-                        <td>".$row['vehicule_annee']."</td>
-                        <td><a href='index.php?action=vehicules-carac&id=".$row['id']."'>Voir Caractéristiques</a></td>
+                        <td>".$row['utilisateur_id']."</td>
+                        <td>".$row['target_id']."</td>
+                        <td>".$row['commentaire']."</td>
+                        <td>".$row['statut']."</td>
                         <td> 
-                        <a href='index.php?action=admin&page=vehicule&tache=modif&id=".$row['id']."' >Modifier véhicule</a>
-                        <a href='index.php?action=admin&page=vehicule&tache=supp&id=".$row['id']."' >Supprimer véhicule</a>
+                        <a href='index.php' >Refuser commentaire</a>
+                        <a href='index.php' >Bloque utilisateur</a>
                         </td>
                 
                     </tr>";

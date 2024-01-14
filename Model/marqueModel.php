@@ -9,7 +9,13 @@ class marque_model {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from marque";
+        $query = "SELECT 
+        m.*,
+        i.lien AS image_lien
+        FROM 
+            marque m
+        LEFT JOIN 
+        image i ON m.image_id = i.id";
 
         $r = $this->bdd->requete($c,$query);
         
@@ -21,7 +27,16 @@ class marque_model {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from marque where id=$id";
+        $query = "
+        SELECT 
+            m.*,
+            i.lien AS image_lien
+        FROM 
+            marque m
+        LEFT JOIN 
+            image i ON m.image_id = i.id
+        WHERE 
+            m.id = $id";
 
         $r = $this->bdd->requete($c,$query);
         
@@ -81,6 +96,70 @@ class marque_model {
         return $r ; 
 
     }
+
+    public function update($id,$marque,$imageId){
+
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = $c->prepare("UPDATE Marque SET
+            nom = ?,
+            pays_origine = ?,
+            siege_social = ?,
+            annee_creation = ?,
+            lien = ?,
+            image_id = ?
+        WHERE id = ?");
+
+        $query->bindParam(1, $marque['nom']);
+        $query->bindParam(2, $marque['pays_origine']);
+        $query->bindParam(3, $marque['siege_social']);
+        $query->bindParam(4, $marque['annee_creation']);
+        $query->bindParam(5, $marque['lien']);
+        $query->bindParam(6, $imageId);
+        $query->bindParam(7, $id);
+
+
+        $query->execute();
+
+    
+                
+        $this->bdd->deconnexion($c);
+        
+
+
+    }
+
+    public function update_withoutimage($id,$marque){
+
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = $c->prepare("UPDATE Marque SET
+            nom = ?,
+            pays_origine = ?,
+            siege_social = ?,
+            annee_creation = ?,
+            lien = ?
+        WHERE id = ?");
+
+        $query->bindParam(1, $marque['nom']);
+        $query->bindParam(2, $marque['pays_origine']);
+        $query->bindParam(3, $marque['siege_social']);
+        $query->bindParam(4, $marque['annee_creation']);
+        $query->bindParam(5, $marque['lien']);
+        $query->bindParam(6, $id);
+
+
+        $query->execute();
+
+    
+                
+        $this->bdd->deconnexion($c);
+
+
+    }
+
    
 
 }

@@ -13,7 +13,7 @@ class loginController {
         if ($user) {
             session_start();
             
-           
+            $_SESSION['id'] = $user['id'];
             $_SESSION['username'] = $username;
             $_SESSION['authenticated'] = true;
 

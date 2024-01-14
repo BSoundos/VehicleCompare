@@ -74,12 +74,30 @@ if (!isset($_GET['action'])) {
         case 'avis':
             if (isset($_POST["vehiculeAvis"])){
                 // ajouter avis vehicule 
+                $vehiculeavis=[
+                    'note' => $_POST['note'],
+                    'commentaire' => $_POST['commentaire'],
+                    'utilisateur_id' => $_POST['utilisateur_id'],
+                    'target_id' => $_POST['target_id'] ,
+                    'statut' => 'en attente',
+                    'type' => 0                 
+                ];
 
-
-
+                $avis->ajoutVehiculeAvis($vehiculeavis);
+                
             }
             elseif (isset($_POST["marqueAvis"])){
                 // ajouter avis marque 
+                $marqueavis=[
+                    'note' => $_POST['note'],
+                    'commentaire' => $_POST['commentaire'],
+                    'utilisateur_id' => $_POST['utilisateur_id'],
+                    'target_id' => $_POST['target_id'] ,
+                    'statut' => 'en attente',
+                    'type' => 1                 
+                ];
+
+                $avis->ajoutMarqueAvis($marqueavis);
 
 
             }
@@ -130,7 +148,7 @@ if (!isset($_GET['action'])) {
                 $page = $_GET['page'];
                 switch ($page) {
 
-                    case 'vehicule':
+                    case 'vehicule': /*********************************  **************************** */
                         if (isset($_GET['tache'])) {
                             $tache = $_GET['tache'];
                             switch ($tache) {
@@ -152,13 +170,23 @@ if (!isset($_GET['action'])) {
                         }
                         else if (isset($_POST["submit"])) {
 
-                            $targetFolder = 'img/'; 
-                            $targetFileName = $targetFolder . basename($_FILES['image']['name']);
-                         
-                            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFileName)) {
-                               echo '<script> Console.log("File has been uploaded successfully.");</script>';
-                            } else {
-                               echo '<script> Console.log("Error uploading file.");</script>'; 
+                            if ($_FILES['image']['error'] !== 4) 
+                            // aucun fichier selectionné 
+                            // update case only (input without required)
+                            {
+                                $targetFolder = 'img/'; 
+                                $targetFileName = $targetFolder . basename($_FILES['image']['name']);
+                            
+                                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFileName)) {
+                                echo '<script> Console.log("File has been uploaded successfully.");</script>';
+                                } else {
+                                echo '<script> Console.log("Error uploading file.");</script>'; 
+                                }
+
+                                $image = $targetFileName;
+                            }
+                            else {
+                                $image = null ; 
                             }
                 
                             $vehicule=[
@@ -177,7 +205,7 @@ if (!isset($_GET['action'])) {
                                 'autre_performances' => $_POST['autre_performances']                            
                             ];
 
-                            $image = $targetFileName;
+                           
 
 
                             if (isset($_POST["id"])) {// perform update 
@@ -197,10 +225,14 @@ if (!isset($_GET['action'])) {
 
                         break ; 
 
-                    case 'marque':
+                    case 'marque': /********************************* marque **************************** */
                         if (isset($_GET['tache'])) {
                             $tache = $_GET['tache'];
                             switch ($tache) {
+                                case 'gestion' :
+                                    $admin->marqueAdminGenerate();
+                                    break; 
+
                                 case 'ajout' : 
                                     $admin_manage->ajoutLigneGenerate('marque');
                                     break;
@@ -219,13 +251,23 @@ if (!isset($_GET['action'])) {
                         else if (isset($_POST["submit"])) {
 
 
-                            $targetFolder = 'img/'; 
-                            $targetFileName = $targetFolder . basename($_FILES['image']['name']);
-                         
-                            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFileName)) {
-                               echo '<script> Console.log("File has been uploaded successfully.");</script>';
-                            } else {
-                               echo '<script> Console.log("Error uploading file.");</script>'; 
+                            if ($_FILES['image']['error'] !== 4) 
+                            // aucun fichier selectionné 
+                            // update case only (input without required)
+                            {
+                                $targetFolder = 'img/'; 
+                                $targetFileName = $targetFolder . basename($_FILES['image']['name']);
+                            
+                                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFileName)) {
+                                echo '<script> Console.log("File has been uploaded successfully.");</script>';
+                                } else {
+                                echo '<script> Console.log("Error uploading file.");</script>'; 
+                                }
+
+                                $image = $targetFileName;
+                            }
+                            else {
+                                $image = null ; 
                             }
                 
                             $marque = [
@@ -235,8 +277,6 @@ if (!isset($_GET['action'])) {
                                 'annee_creation' => isset($_POST['annee_creation']) ? $_POST['annee_creation'] : null,
                                 'lien'           => isset($_POST['lien']) ? $_POST['lien'] : null,
                             ];
-
-                            $image = $targetFileName;
 
                             if (isset($_POST["id"])) {// perform update 
 
@@ -262,6 +302,14 @@ if (!isset($_GET['action'])) {
                                 case 'ajout' : 
                                     $admin_manage->ajoutLigneGenerate('modele');
                                     break;
+                                case 'supp' :
+                                    if (!isset($_POST["id"])){
+                                        $admin->deleteGenerate();
+                                    } else {
+                                        $Id = $_POST["id"];
+                                        $admin_manage->supp($page,$Id);
+                                    }
+                                    break;
 
                             }
                         }
@@ -285,6 +333,14 @@ if (!isset($_GET['action'])) {
                                 case 'ajout' : 
                                     $admin_manage->ajoutLigneGenerate('version');
                                     break;
+                                case 'supp' :
+                                    if (!isset($_POST["id"])){
+                                        $admin->deleteGenerate();
+                                    } else {
+                                        $Id = $_POST["id"];
+                                        $admin_manage->supp($page,$Id);
+                                    }
+                                    break;
 
                             }
                         }
@@ -292,13 +348,16 @@ if (!isset($_GET['action'])) {
                             $version = [
                                 'nom'      => isset($_POST['nom']) ? $_POST['nom'] : null,
                                 'annee'      => isset($_POST['annee']) ? $_POST['annee'] : null,
-                                'modele_id'    => isset($_POST['marque_id']) ? $_POST['marque_id'] : null
+                                'modele_id'    => isset($_POST['modele_id']) ? $_POST['modele_id'] : null
                             ];
 
                             $admin_manage->ajout($page,$version,null);
         
                         }
                         break;
+
+                    case 'avis': 
+                        $admin->avisAdminGenerate();
 
                 }
             }

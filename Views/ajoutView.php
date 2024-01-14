@@ -79,6 +79,10 @@ class ajoutView {
                         }
         
                     }
+                    echo "
+                    <label><a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modéle ?</a></label>
+                    <label><a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version ?</a></label>";
+
                 }
                 break;
 
@@ -108,6 +112,7 @@ class ajoutView {
                             }
             
                         }
+                        echo " <label><a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version ?</a></label>";
                         break;
                     }
                     break;
@@ -179,26 +184,10 @@ class ajoutView {
                 </select>
 
                 <label for='marque'>Marque:</label>
-                <select id='marque' name='marque_id'>";
-                   
-                foreach($this->marques as $row){
-                    echo"<option value=".$row['id'].">".$row['nom']."</option>";
-                }
-    
-                echo"</select>
                 <label><a href='index.php?action=admin&page=marque&tache=ajout'>Ajouter une marque ?</a></label>
 
-
                 <label for='modele'>Modèle:</label>
-                <select id='modele' name='modele_id'>";
-                   
-                foreach($this->modeles as $row){
-                    echo"<option value=".$row['id'].">".$row['nom']."</option>";
-                }
-    
-                echo"
-                  
-                </select><label><a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modéle ?</a></label>
+                <label><a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modéle ?</a></label>
 
                 <label for='version'>Version:</label>
                 <select id='version' name='version_id'>";

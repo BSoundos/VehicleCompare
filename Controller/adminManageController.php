@@ -11,6 +11,7 @@ require_once 'Model/marqueModel.php';
 
 class adminManageController {
 
+    /***************          Ajout           ************ */
     // générer l'ajout d'une véhicule 
     public function ajoutGenerate(){
         $v = new ajoutView();
@@ -87,16 +88,20 @@ class adminManageController {
         }
     
 
-        header('Location: index.php?action=admin&page=vehicule');
+        header('Location: index.php?action=admin&page='.$var.'&tache=ajout');
         exit();
 
     }
 
-    public function modifLigneGenerate($var,$Id){
-        $v = new modifView();
-        $v->modifDisplay($var,$Id);
-    }
 
+
+    /***************          Modification           ************ */
+
+    // pour vehicule
+    public function modifGenerate($var){
+        $v = new modifView();
+        $v->formDisplay($var);
+    }
 
     public function modifyVehicule($id,$vehicule,$lien){
 
@@ -104,84 +109,70 @@ class adminManageController {
         $vehicule_model = new vehicule_model();
         $image_controller = new image_controller();
 
-        $image_id = $image_controller->get_image_byLien_controller($lien);
-        $image_id = $image_id->fetch(PDO::FETCH_ASSOC);
-        
-        if ($image_id){
-            // exists 
-            $imageId = $image_id['id'];
+        if ($lien === null ){ // user don't want to update image 
+            $vehicule_md = $vehicule_model->update_withoutimage($id,$vehicule);
         }
         else {
-            // add the new one 
-            $image = $image_model->insert($lien);
-            $image = $image->fetch(PDO::FETCH_ASSOC);
-            $imageId = $image['id'];
+            $image_id = $image_controller->get_image_byLien_controller($lien);
+            $image_id = $image_id->fetch(PDO::FETCH_ASSOC);
+            
+            if ($image_id){
+                // exists 
+                $imageId = $image_id['id'];
+            }
+            else {
+                // add the new one 
+                $image = $image_model->insert($lien);
+                $image = $image->fetch(PDO::FETCH_ASSOC);
+                $imageId = $image['id'];
+            }
+            $vehicule_md = $vehicule_model->update($id,$vehicule,$imageId);
         }
-
-
-        $vehicule_md = $vehicule_model->update($id,$vehicule,$imageId);
 
         header('Location: index.php?action=admin&page=vehicule');
         exit();
 
     }
 
-    public function ajout($var,$valeur,$lien){
 
+    // générer pour les autres : marque , modele , version
+    public function modifLigneGenerate($var,$Id){
+        $v = new modifView();
+        $v->modifDisplay($var,$Id);
+    }
+
+    public function modify($id,$marque,$lien){
         $image_model = new image();
-        switch($var) {
-            case 'marque': 
-                $model = new marque_model();
+        $marque_model = new marque_model();
+        $image_controller = new image_controller();
 
+        if ($lien === null ){ // user don't want to update image 
+            $marque_md = $marque_model->update_withoutimage($id,$marque);
+           
+        }
+        else {
+            $image_id = $image_controller->get_image_byLien_controller($lien);
+            $image_id = $image_id->fetch(PDO::FETCH_ASSOC);
+            
+            if ($image_id){
+                // exists 
+                $imageId = $image_id['id'];
+            }
+            else {
+                // add the new one 
                 $image = $image_model->insert($lien);
                 $image = $image->fetch(PDO::FETCH_ASSOC);
                 $imageId = $image['id'];
-
-
-                $md = $model->insert($valeur,$imageId);
-                $md = $md->fetch(PDO::FETCH_ASSOC);
-                $Id = $md['id'];
-
-                break; 
-            
-            case 'modele': 
-                $model = new modele_model();
-
-                $md = $model->insert($valeur);
-                $md = $md->fetch(PDO::FETCH_ASSOC);
-                $Id = $md['id'];
-
-
-
-                break; 
-                
-            case 'version': 
-                $model = new version_model();
-
-                $md = $model->insert($valeur);
-                $md = $md->fetch(PDO::FETCH_ASSOC);
-                $Id = $md['id'];
-
-
-
-                break; 
+            }
+            $marque_md = $marque_model->update($id,$marque,$imageId);
+           
         }
-    
 
-        header('Location: index.php?action=admin&page=vehicule&tache=ajout');
+        header('Location: index.php?action=admin&page=marque&tache=gestion');
         exit();
-
     }
 
-
-
-    public function modifGenerate($var){
-        $v = new modifView();
-        $v->formDisplay($var);
-    }
-
-
-
+    // la suppression 
     public function supp($page,$Id){
         switch($page){
             case 'vehicule':

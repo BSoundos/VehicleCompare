@@ -63,7 +63,7 @@ class modifView {
 
                 $result = $this->marqueController->get_marque_byId_controller($id);
                 $result = $result->fetchAll(PDO::FETCH_ASSOC);
-                
+
                 foreach ($result as $row) {
                     foreach ($row as $field => $value) {
                         if ($field === 'id') {
@@ -71,7 +71,8 @@ class modifView {
                         }
                         else if ($field === 'image_id') {
                             echo "<label for='image'>Image:</label>
-                            <input type='file' id='image' name='image' required>";
+                            <label><img src='".$row['image_lien']."' style='width: 120px;' ></label>
+                            <input type='file' id='image' name='image' >";
                         }
                         else {
                             echo "<label for=".$field.">".$field.":</label>
@@ -165,8 +166,10 @@ class modifView {
                  
                 </select><label><a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version ?</a></label>
 
+                
                 <label for='image'>Image:</label>
-                <input type='file' id='image' name='image' required>
+                <label><img src='".$result['image_lien']."' style='width: 120px;' ></label>
+                <input type='file' id='image' name='image'>
 
                 <label for='annee'>Annee:</label>
                 <input type='text' id='annee' name='annee' value='".$result['annee']."' required>
