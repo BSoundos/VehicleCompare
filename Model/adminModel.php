@@ -14,6 +14,7 @@ class adminModel {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }

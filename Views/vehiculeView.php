@@ -3,7 +3,7 @@
 require_once('Controller/acceuilController.php');
 require_once('Controller/vehiculeController.php');
 require_once('Controller/avisController.php');
-require_once('Views/zone3View.php');
+
 
 class vehiculeView {
 
@@ -37,10 +37,8 @@ class vehiculeView {
 
         echo "<div class='vehicule-details'>";
             echo "<h2>".$result['nom']."</h2>"; 
-            $image = $this->image_controller->get_image_controller($result["image_id"]);
-            $imageData = $image->fetch(PDO::FETCH_ASSOC);
-
-            echo '<img src='.$imageData["lien"].' >';
+         
+            echo '<img src='.$result["image_lien"].' >';
     
             foreach ($result as $field => $value) {
                 if ($field !== 'image_id' && $field !== 'version_id' && $field !== 'id'  && $field !== 'nom') {
@@ -118,7 +116,7 @@ class vehiculeView {
     public function vehiculeDetailsDisplay($id){
 
 
-        $zone3View = new zone3View();
+        
 
         echo"<!DOCTYPE html>
         <html>";
@@ -153,12 +151,8 @@ class vehiculeView {
 
         $r = $this->comparaison_controller->get_comparaison_byVehiculeId($result["id"]);
         $result2 = $r->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-
-
-
+     
+        // comp populaires Zone *******************
         echo "<div class='zone3'>
         <div class='title'><h3>Comparaison populaires</h3></div>";
         echo "<div class='comparaison-populaires'>
@@ -167,56 +161,59 @@ class vehiculeView {
 
         foreach($result2 as $row){
             echo"    
-                       
                         <div class='cadre'>
                         <div class='nb-comparaison'>Comparés ".$row['nb']." fois</div> 
                         <div class='vehicules'>
                         ";
 
                         
-                        $vehicule1 =$this->vehicule_controller->get_vehicule_byId_controller($result['id']);
-                        $vehicule1 = $vehicule1->fetch(PDO::FETCH_ASSOC);
+                        $req1 = $this->vehicule_controller->get_vehicule_andids($row['vehicule1']);
+                        $vehicule1 = $req1->fetch(PDO::FETCH_ASSOC);
+                      
                         $version1 = $this->version_controller->get_version_byId_controller($vehicule1['version_id']);
                         $version1 = $version1->fetch(PDO::FETCH_ASSOC);
                         
-                        $modele1 = $this->modeleController->get_modele_byId_controller($version1['modele_id']);
-                        $modele1 = $modele1->fetch(PDO::FETCH_ASSOC);
-                        $marque1 = $this->marqueController->get_marque_byId_controller($modele1['marque_id']);
-                        $marque1 = $marque1->fetch(PDO::FETCH_ASSOC);
-                        $zone3View->displayVehicule_byId($vehicule1,$version1,"item1");
+                        $modele1 = $vehicule1['modele_id'];
+                       
+                        $marque1 = $vehicule1['marque_id'];
+                   
+                        $this->acceuil_controller->displayVehicule_byId($vehicule1,$version1,"item1");
 
                         echo "<p>Vs</p>";
 
                         
                         if($row["vehicule2"] === $result['id'] ){
-                            $vehicule2 = $this->vehicule_controller->get_vehicule_byId_controller($row['vehicule1']);
+                            $vehicule2 = $this->vehicule_controller->get_vehicule_andids($row['vehicule1']);
                         }
                         else {
-                            $vehicule2 = $this->vehicule_controller->get_vehicule_byId_controller($row['vehicule2']);
+                            $vehicule2 = $this->vehicule_controller->get_vehicule_andids($row['vehicule2']);
                         }
                         
-                        
                         $vehicule2 = $vehicule2->fetch(PDO::FETCH_ASSOC);
+                        
                         $version2 = $this->version_controller->get_version_byId_controller($vehicule2['version_id']);
                         $version2 = $version2->fetch(PDO::FETCH_ASSOC);
-                        $modele2 = $this->modeleController->get_modele_byId_controller($version2['modele_id']);
-                        $modele2 = $modele2->fetch(PDO::FETCH_ASSOC);
-                        $marque2 = $this->marqueController->get_marque_byId_controller($modele2['marque_id']);
-                        $marque2 = $marque2->fetch(PDO::FETCH_ASSOC);
-                        $zone3View->displayVehicule_byId($vehicule2,$version2,"item2");
+                        
+                        $modele2 = $vehicule2['modele_id'];
+                       
+                        $marque2 = $vehicule2['marque_id'];
+                        
+                        $this->acceuil_controller->displayVehicule_byId($vehicule2,$version2,"item2");
 
 
             echo"</div>
             
             <div class='comparer-button' >
             <!--pass the two params with in the url -->
-            <button><a href='index.php?action=comparateur&compare=true&version1=".$version1['id']."&modele1=".$modele1['id']."&marque1=".$marque1['id']."&version2=".$version2['id']."&modele2=".$modele2['id']."&marque2=".$marque2['id']."'>Comparer</a></button>
+            <button><a href='index.php?action=comparateur&compare=true&version1=".$version1['id']."&modele1=".$modele1."&marque1=".$marque1."&version2=".$version2['id']."&modele2=".$modele2."&marque2=".$marque2."'>Comparer</a></button>
             </div>
 
             </div>";
         }
         echo "</div></div></div>
         ";     
+
+   
 
 
 

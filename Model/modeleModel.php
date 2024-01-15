@@ -13,6 +13,8 @@ class modele_model {
 
         $r = $this->bdd->requete($c,$query);
         
+        
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -24,6 +26,8 @@ class modele_model {
         $query = "select * from modele where id=$id";
 
         $r = $this->bdd->requete($c,$query);
+        
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -37,6 +41,7 @@ class modele_model {
 
         $r = $this->bdd->requete($c,$query);
         
+
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -54,11 +59,10 @@ class modele_model {
     
         $query->execute();
     
-        $query = "SELECT * FROM modele ORDER BY id DESC LIMIT 1";
-        $r = $this->bdd->requete($c, $query);
+       
                 
         $this->bdd->deconnexion($c);
-        return $r;      
+             
     }
 
     public function supprimer($id){

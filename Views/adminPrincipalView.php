@@ -33,7 +33,7 @@ class adminView {
 
         $r = $this->admin_controller->get_images_controller();
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
-
+        
         foreach($r as $row){
             echo  '<a href="index.php?action=admin&page='.$row["nom"].'"><img src='.$row["lien"].' ></a>';
         }

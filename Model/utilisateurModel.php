@@ -25,6 +25,7 @@ class user_model {
         $query = "Select * from Utilisateur";
 
         $r = $this->bdd->requete($c, $query);
+        
                 
         $this->bdd->deconnexion($c);
         return $r; 

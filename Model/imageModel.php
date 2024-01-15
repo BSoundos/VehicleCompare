@@ -13,6 +13,7 @@ class image {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -24,6 +25,7 @@ class image {
         $query = "select * from image where lien='$lien'";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 

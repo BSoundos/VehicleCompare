@@ -17,7 +17,7 @@ class VehiculeAdminView {
         $this->vehicule_controller = new Vehicule_controller();
     }
 
-    public function vehiculeDisplay(){
+    public function vehiculeDisplay($id_marque){
         echo"<!DOCTYPE html>
         <html>";
 
@@ -26,13 +26,13 @@ class VehiculeAdminView {
 
         $this->admin_controller->manageLinksGenerate();
 
-        echo "<div class='links' align='center'>
-        <a href='index.php?action=admin&page=vehicule&tache=ajout'>Ajouter véhicule</a>
-        <a href='index.php?action=admin&page=marque&tache=gestion'>Gestion des marques</a>
-        
-        </div>";
 
-        $this->displayTable();
+        echo"<div class='links' align='center'>
+        <a href='index.php?action=admin&page=vehicule&tache=ajout&id_marque=$id_marque'>Ajouter véhicule</a>
+        </div>";
+        
+
+        $this->displayTable($id_marque);
 
 
         
@@ -42,8 +42,8 @@ class VehiculeAdminView {
     }
 
 
-    public function displayTable(){
-        $r = $this->vehicule_controller->get_marque_modele_version_annee_controller(); 
+    public function displayTable($id_marque){
+        $r = $this->vehicule_controller->get_modele_version_annee_controller_bymarque($id_marque); 
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
 
         // the table 
@@ -62,12 +62,12 @@ class VehiculeAdminView {
                 </tr>
             </thead>
             <tbody>";
-
+ 
             foreach($r as $row){
             
                 echo"
                     <tr>
-                        <td><img src='".$row['lien']."' ></td>
+                        <td><img src='".$row['image_lien']."' ></td>
                         <td>".$row['marque_nom']."</td>
                         <td>".$row['modele_nom']."</td>
                         <td>".$row['version_nom']."</td>

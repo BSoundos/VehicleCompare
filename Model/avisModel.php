@@ -13,6 +13,7 @@ class avisModel {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -24,6 +25,8 @@ class avisModel {
         $query = "select * from avis where type=0";
 
         $r = $this->bdd->requete($c,$query);
+        
+       
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -37,6 +40,8 @@ class avisModel {
 
         $r = $this->bdd->requete($c,$query);
         
+       
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -48,6 +53,8 @@ class avisModel {
         $query = "select * from avis where statut='valide' AND  type=$type AND  target_id=$id order by note desc LIMIT $x";
 
         $r = $this->bdd->requete($c,$query);
+        
+       
         
         $this->bdd->deconnexion($c);
         return $r ; 

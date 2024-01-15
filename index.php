@@ -153,7 +153,8 @@ if (!isset($_GET['action'])) {
                             $tache = $_GET['tache'];
                             switch ($tache) {
                                 case 'ajout' : 
-                                    $admin_manage->ajoutGenerate();
+                                    $id_marque = $_GET['id_marque'];
+                                    $admin_manage->ajoutGenerate($id_marque);
                                     break;
 
                                 case 'modif' : 
@@ -220,7 +221,8 @@ if (!isset($_GET['action'])) {
                             }
                         }
                         else {
-                            $admin->VehiculeAdminGenerate();
+                            $id_marque = $_GET['id_marque'];
+                            $admin->VehiculeAdminGenerate($id_marque);
                         }
 
                         break ; 
@@ -229,9 +231,6 @@ if (!isset($_GET['action'])) {
                         if (isset($_GET['tache'])) {
                             $tache = $_GET['tache'];
                             switch ($tache) {
-                                case 'gestion' :
-                                    $admin->marqueAdminGenerate();
-                                    break; 
 
                                 case 'ajout' : 
                                     $admin_manage->ajoutLigneGenerate('marque');
@@ -290,6 +289,11 @@ if (!isset($_GET['action'])) {
                             }
                 
                            
+                        }
+                        else {
+                            
+                            $admin->marqueAdminGenerate();
+                                 
                         }
 
 

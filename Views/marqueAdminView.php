@@ -32,6 +32,7 @@ class marqueAdminView{
         $this->admin_controller->manageLinksGenerate();
 
         echo "<div class='links' align='center'>
+        <a href='index.php?action=admin&page=marque&tache=ajout'>Ajouter une marque</a>
         <a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modele</a>
         <a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version</a>
         <a href='index.php?action=admin&page=version&tache=supp'>Supprimer un modele ou une version</a>
@@ -52,7 +53,6 @@ class marqueAdminView{
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
 
 
-
         // the table 
        echo "
        <div class='table-admin'>
@@ -62,7 +62,7 @@ class marqueAdminView{
                     <th></th>";
                     foreach ($r as $row) {
                         foreach ($row as $field => $value) {
-                            if ($field === 'id' || $field === 'image_lien') {
+                            if ($field === 'id' || $field === 'image_lien'  || $field === 'image_id') {
             
     
                             }
@@ -73,7 +73,10 @@ class marqueAdminView{
                         }
                         break;
                     }
-                echo "</tr>
+                echo "
+                <th>Gestion marque</th>
+                <th>Gestion vehicules</th>
+                </tr>
             </thead>
             <tbody>";
 
@@ -90,6 +93,9 @@ class marqueAdminView{
                         <td> 
                         <a href='index.php?action=admin&page=marque&tache=modif&id=".$row['id']."' >Modifier marque</a>
                         <a href='index.php?action=admin&page=marque&tache=supp&id=".$row['id']."' >Supprimer marque</a>
+                        </td>
+                        <td>
+                        <a href='index.php?action=admin&page=vehicule&id_marque=".$row['id']."' >Gestion vehicules</a>
                         </td>
                 
                     </tr>";
@@ -119,7 +125,7 @@ class marqueAdminView{
             <label for='select-models'>Sélectionner un modele à supprimer :</label>
             <select id='select-models' name='id'>";
                 
-                    $r = $this->modeleController->get_Modeles_controller();
+                    $modeles = $this->modeleController->get_Modeles_controller();
                     $modeles = $r->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($modeles as $modele) {
                         echo '<option value='.$modele['id'].'>'.$modele['nom'].'</option>';
@@ -133,7 +139,7 @@ class marqueAdminView{
             <label for='version_select'>Sélectionner une version à supprimer :</label>
             <select id='version_select' name='id'>";
                 
-                    $r = $this->version_controller->get_versions_controller();
+                    $modeles = $this->version_controller->get_versions_controller();
                     $modeles = $r->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($modeles as $modele) {
                         echo '<option value='.$modele['id'].'>'.$modele['nom'].'</option>';

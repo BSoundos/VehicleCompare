@@ -9,9 +9,12 @@ class newsModel {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from news where diapo=TRUE";
+        $query = "SELECT news.*, Image.lien AS image_lien
+        FROM news
+        LEFT JOIN Image ON news.image_id = Image.id AND diapo=TRUE";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -28,6 +31,7 @@ class newsModel {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -37,9 +41,12 @@ class newsModel {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from news where id=$id";
+        $query = "SELECT news.*, Image.lien AS image_lien
+        FROM news
+        LEFT JOIN Image ON news.image_id = Image.id where id=$id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -55,6 +62,7 @@ class newsModel {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -68,6 +76,7 @@ class newsModel {
         LEFT JOIN Image ON news_details.image_id = Image.id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 

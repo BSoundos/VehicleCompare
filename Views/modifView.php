@@ -108,7 +108,7 @@ class modifView {
         echo "
         <div class='ajout-container'>
             <h2>Modifier Vehicule</h2>
-            <form action='index.php?action=admin&page=vehicule' method='post' enctype='multipart/form-data'>
+            <form action='index.php?action=admin&page=vehicule&id_marque=".$result['marque_id']."' method='post' enctype='multipart/form-data'>
                 <input type='hidden' name='id' value='".$result['id']."'  >  
             
                 <label for='nom'>Nom:</label>

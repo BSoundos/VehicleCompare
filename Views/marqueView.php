@@ -42,14 +42,11 @@ class marqueView {
         
         <div class='zone1'>";
 
-        $controller = new image_controller();     
+       
         foreach($result as $row){
 
-            
-            $image = $controller->get_image_controller($row["image_id"]);
-            $imageData = $image->fetch(PDO::FETCH_ASSOC);
             echo " <div class='marque'>";
-            echo  '<a href="index.php?action=marques&id='.$row['id'].'"><img src='.$imageData["lien"].' ></a>';
+            echo  '<a href="index.php?action=marques&id='.$row['id'].'"><img src='.$row["image_lien"].' ></a>';
             echo  '<h4>'.$row["nom"].'</h4></div>';
         }
                 
@@ -77,8 +74,8 @@ class marqueView {
     public function toutesVehicules($id){
 
 
-        $r = $this->vehicule_controller->get_vehicule_byMarqueId_controller($id);
-        $result = $r->fetchAll(PDO::FETCH_ASSOC);
+        $result = $this->vehicule_controller->get_vehicule_byMarqueId_controller($id);
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
 
         echo " <script>
         let vehicules = [];    

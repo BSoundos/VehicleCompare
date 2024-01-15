@@ -11,15 +11,10 @@ class diapoView {
         $r = $controller->get_Diaporama_controller();
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
 
-        // get the first image 
-        $controller = new image_controller();
-        $image = $controller->get_image_controller($r[0]["image_id"]);
-        $imageData = $image->fetch(PDO::FETCH_ASSOC);
-
         // display the first image with its link 
         echo 
         "<div id='container'>
-            <a href=".$r[0]["lien"]."><img src=".$imageData["lien"]." ></a>
+            <a href='index.php?action=news&id=".$r[0]['id']."'><img src=".$r[0]["image_lien"]." ></a>
         </div>"; 
              
         
@@ -34,12 +29,9 @@ class diapoView {
 
 
         for ($i = 0; $i < count($r); $i++) {
-            echo " news.push('".$r[$i]["lien"]."');" ;
+            echo " news.push('index.php?action=news&id=".$r[$i]['id']."');" ;
 
-            $image = $controller->get_image_controller($r[$i]["image_id"]);
-            $imageData = $image->fetch(PDO::FETCH_ASSOC);
-
-            echo " images.push('".$imageData["lien"]."');";
+            echo " images.push('".$r[$i]["image_lien"]."');";
 
         }
         

@@ -69,10 +69,10 @@ class AvisAdminView {
     
         echo "</select>
                 </div>
-                <button type='submit' >Filter</button>
+                
             </form>
 
-            <table class='table'>
+            <table id='myTable' class='table'>
             <thead>
                 <tr>
                     <th>Utilisateur ID</th>
@@ -115,6 +115,22 @@ class AvisAdminView {
             echo "
             </tbody>
             </table></div>";
+
+            echo "
+            <script> $(document).ready(function () {
+                // Initialize DataTable
+                $('#myTable').DataTable();
+    
+              
+                $('#statusFilter').on('change', function () {
+                   
+                    $('form').submit();
+                });
+            });
+              
+            </script>
+            
+            ";
     }
     
 

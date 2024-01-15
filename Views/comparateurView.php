@@ -100,10 +100,6 @@ class comparateurView {
                 $vehicule = $c->get_vehicule_byVersionId_controller($version);
                 $vehicule = $vehicule->fetch(PDO::FETCH_ASSOC);
 
-                $image = $imageController->get_image_controller($vehicule["image_id"]);
-                $imageData = $image->fetch(PDO::FETCH_ASSOC);
-    
-
                 $version = $versionController->get_version_byId_controller($version);
                 $version = $version->fetch(PDO::FETCH_ASSOC);
                 $modele = $modeleController->get_modele_byId_controller($modele);
@@ -111,11 +107,13 @@ class comparateurView {
                 $marque = $marqueController->get_marque_byId_controller($marque);
                 $marque = $marque->fetch(PDO::FETCH_ASSOC);
                 
+              
+                
                 $this->vehicules[$i] = $vehicule;
                 $this->marques[$i] = $marque;
                 $this->modeles[$i] = $modele;
                 $this->versions[$i] = $version;
-                $this->images[$i] = $imageData["lien"];
+                $this->images[$i] = $vehicule["image_lien"];
 
             }
             

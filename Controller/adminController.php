@@ -15,9 +15,9 @@ class adminController {
         $v->pagePrincipalDisplay();
     }
 
-    public function VehiculeAdminGenerate(){
+    public function VehiculeAdminGenerate($id_marque){
         $v = new VehiculeAdminView();
-        $v->vehiculeDisplay();
+        $v->vehiculeDisplay($id_marque);
     }
 
     public function marqueAdminGenerate(){

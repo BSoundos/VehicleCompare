@@ -35,9 +35,16 @@ class Comparaison_controller {
 
     public function update_comparaison($x,$y){
         $mtf = new comparaison_model();
-        $r = $mtf->update_comparaison($x,$y);
+        $r = $mtf->exist($x,$y);
 
-        return $r ; 
+        if ($r){
+            $res = $mtf->update_comparaison($x,$y);
+        }
+        else {
+            $res = $mtf->insert_comparaison($x,$y);
+        }
+
+        return $res ; 
     }
 
 

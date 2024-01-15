@@ -60,6 +60,15 @@ class Vehicule_controller {
         return $r ; 
     }
 
+    public function get_modele_version_annee_controller_bymarque($id_marque){
+        $mtf = new vehicule_model();
+        $r = $mtf->get_modele_version_annee_bymarque($id_marque);
+
+        return $r ; 
+    }
+
+
+
 
 
     

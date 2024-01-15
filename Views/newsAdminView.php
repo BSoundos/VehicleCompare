@@ -118,7 +118,6 @@ class NewsAdminView {
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
 
 
-
         // the table 
        echo "
        <div class='table-admin'>

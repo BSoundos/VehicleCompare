@@ -13,6 +13,7 @@ class version_model {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -25,6 +26,7 @@ class version_model {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -36,6 +38,7 @@ class version_model {
         $query = "select * from version where modele_id=$id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -52,6 +55,7 @@ class version_model {
                     WHERE V.id =$id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -91,6 +95,24 @@ class version_model {
         $this->bdd->deconnexion($c);
         return $r ; 
 
+    }
+
+    public function get_version_byMarqueId($id){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+
+        $query = "SELECT V.id AS id, V.nom AS nom
+                FROM Version V
+                JOIN Modele MO ON V.modele_id = MO.id
+                JOIN Marque M ON MO.marque_id = M.id
+                WHERE M.id = $id";
+       
+
+        $r = $this->bdd->requete($c,$query);
+        
+
+        $this->bdd->deconnexion($c);
+        return $r ; 
     }
    
     

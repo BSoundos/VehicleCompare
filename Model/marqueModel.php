@@ -19,6 +19,8 @@ class marque_model {
 
         $r = $this->bdd->requete($c,$query);
         
+     
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -40,6 +42,8 @@ class marque_model {
 
         $r = $this->bdd->requete($c,$query);
         
+     
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -48,9 +52,16 @@ class marque_model {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from marque LIMIT $x";
+        $query = "select  m.*,
+                        i.lien AS image_lien
+                    FROM 
+                        marque m
+                    LEFT JOIN 
+                        image i ON m.image_id = i.id LIMIT $x";
 
         $r = $this->bdd->requete($c,$query);
+        
+     
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -75,12 +86,9 @@ class marque_model {
 
         $query->execute();
 
-       
-        $query = "SELECT * FROM marque ORDER BY id DESC LIMIT 1";
-        $r = $this->bdd->requete($c, $query);
                 
         $this->bdd->deconnexion($c);
-        return $r;      
+   
     }
 
     public function supprimer($id){
@@ -93,7 +101,7 @@ class marque_model {
         $r = $this->bdd->requete($c,$query);
         
         $this->bdd->deconnexion($c);
-        return $r ; 
+        
 
     }
 

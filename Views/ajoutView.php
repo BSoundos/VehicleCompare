@@ -73,9 +73,10 @@ class ajoutView {
 
                 $result = $this->marqueController->get_firstx_marques_controller(1);
                 $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                
                 foreach ($result as $row) {
                     foreach ($row as $field => $value) {
-                        if ($field === 'id' ) {
+                        if ($field === 'id' || $field === 'image_lien' ) {
         
 
                         }
@@ -100,6 +101,7 @@ class ajoutView {
 
                     $result = $this->modeleController->get_Modeles_controller();
                     $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                  
                     foreach ($result as $row) {
                         foreach ($row as $field => $value) {
                             if ($field === 'id') {
@@ -129,7 +131,8 @@ class ajoutView {
 
             case 'version':
                 $result = $this->version_controller->get_versions_controller();
-                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                  
                     foreach ($result as $row) {
                         foreach ($row as $field => $value) {
                             if ($field === 'id') {
@@ -156,10 +159,12 @@ class ajoutView {
                         }
                         break;
                     }
+                break;
 
             case 'avis':
                 $result = $this->avisController->get_avis_controller();
                 $result = $result->fetchAll(PDO::FETCH_ASSOC);
+               
                     foreach ($result as $row) {
                         foreach ($row as $field => $value) {
                             if ( $field === 'id' || $field === 'type' || $field === 'statut'){
@@ -205,7 +210,7 @@ class ajoutView {
                         }
                         break;
                     }
-            
+                break ;
         }
 
         echo "<button name='submit' type='submit'>Submit</button>
@@ -216,7 +221,7 @@ class ajoutView {
         echo "</div></body></html>";
     }
 
-    public function formDisplay(){
+    public function formDisplay($id_marque){
 
         echo"<!DOCTYPE html>
         <html>";
@@ -224,14 +229,14 @@ class ajoutView {
         $this->acceuil_controller->head();
         $this->acceuil_controller->header();
 
-
+        $modeles = $this->modeleController->get_modele_byMarqueId_controller($id_marque);
+        $versions = $this->version_controller->get_version_byMarqueId_controller($id_marque);
        
-
 
         echo "
         <div class='ajout-container'>
             <h2>Ajouter Vehicule</h2>
-            <form action='index.php?action=admin&page=vehicule' method='post' enctype='multipart/form-data'>
+            <form action='index.php?action=admin&page=vehicule&id_marque=".$id_marque."' method='post' enctype='multipart/form-data'>
                 <label for='nom'>Nom:</label>
                 <input type='text' id='nom' name='nom' required>
         
@@ -242,16 +247,26 @@ class ajoutView {
                     <option value='Vélo'>Vélo</option>
                 </select>
 
-                <label for='marque'>Marque:</label>
-                <label><a href='index.php?action=admin&page=marque&tache=ajout'>Ajouter une marque ?</a></label>
+                <input type='hidden' id='id_marque' name='marque_id' value=".$id_marque."  required>
 
                 <label for='modele'>Modèle:</label>
                 <label><a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modéle ?</a></label>
+                <select id='modele' name='modele_id'>";
+                   
+                foreach($modeles as $row){
+                    if ($result['modele_id']===$row['id']) {
+                        echo"<option value=".$row['id']."  selected   >".$row['nom']."</option>";
+                    }
+                    else {
+                    echo"<option value=".$row['id'].">".$row['nom']."</option>";}
+                }
+                echo "</select>
 
+                
                 <label for='version'>Version:</label>
                 <select id='version' name='version_id'>";
                    
-                foreach($this->versions as $row){
+                foreach($versions as $row){
                     echo"<option value=".$row['id'].">".$row['nom']."</option>";
                 }
     

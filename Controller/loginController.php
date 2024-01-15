@@ -53,7 +53,7 @@ class loginController {
         $loginView = new loginView();
         $loginView->loginDisplay();
     }
-
+   
 
 
 }

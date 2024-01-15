@@ -16,9 +16,9 @@ class adminManageController {
 
     /***************          Ajout           ************ */
     // générer l'ajout d'une véhicule 
-    public function ajoutGenerate(){
+    public function ajoutGenerate($id_marque){
         $v = new ajoutView();
-        $v->formDisplay();
+        $v->formDisplay($id_marque);
     }
 
     // l'ajout d'unevéhicule 
@@ -36,7 +36,7 @@ class adminManageController {
         $vehicule_md = $vehicule_md->fetch(PDO::FETCH_ASSOC);
         $vehiculeId = $vehicule_md['id'];
 
-        header('Location: index.php?action=admin&page=vehicule');
+        header('Location: index.php?action=admin&page=vehicule&id_marque='.$vehicule['marque_id']);
         exit();
 
     }
@@ -62,8 +62,7 @@ class adminManageController {
 
 
                 $md = $model->insert($valeur,$imageId);
-                $md = $md->fetch(PDO::FETCH_ASSOC);
-                $Id = $md['id'];
+              
 
                 break; 
             
@@ -71,8 +70,7 @@ class adminManageController {
                 $model = new modele_model();
 
                 $md = $model->insert($valeur);
-                $md = $md->fetch(PDO::FETCH_ASSOC);
-                $Id = $md['id'];
+             
 
 
 
@@ -82,16 +80,14 @@ class adminManageController {
                 $model = new version_model();
 
                 $md = $model->insert($valeur);
-                $md = $md->fetch(PDO::FETCH_ASSOC);
-                $Id = $md['id'];
+              
                 break; 
 
             case 'avis': 
                 $model = new avisModel();
 
                 $md = $model->insert($valeur);
-                $md = $md->fetch(PDO::FETCH_ASSOC);
-                $Id = $md['id'];
+              
                 break; 
         }
     
@@ -145,7 +141,7 @@ class adminManageController {
             $vehicule_md = $vehicule_model->update($id,$vehicule,$imageId);
         }
 
-        header('Location: index.php?action=admin&page=vehicule');
+        header('Location: index.php?action=admin&page=vehicule&id_marque='.$vehicule['marque_id']);
         exit();
 
     }
@@ -184,7 +180,7 @@ class adminManageController {
            
         }
 
-        header('Location: index.php?action=admin&page=marque&tache=gestion');
+        header('Location: index.php?action=admin&page=marque');
         exit();
     }
 
@@ -209,7 +205,8 @@ class adminManageController {
         }
 
         $md = $model->supprimer($Id);
-        header('Location: index.php?action=admin&page=vehicule');
+        header('Location: index.php?action=admin');
+        
 
     }
 

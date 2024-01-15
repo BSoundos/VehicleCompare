@@ -11,12 +11,10 @@ class zone1View {
              
         $controller = new marqueController();
         $r = $controller->get_firstx_marques_controller(5);
-
-        $controller = new image_controller();     
+ 
         foreach($r as $row){
-            $image = $controller->get_image_controller($row["image_id"]);
-            $imageData = $image->fetch(PDO::FETCH_ASSOC);
-            echo  '<a href='.$row["lien"].'><img src='.$imageData["lien"].' ></a>';
+           
+            echo  '<a href='.$row["lien"].'><img src='.$row["image_lien"].' ></a>';
         }
         
         echo "</div>";

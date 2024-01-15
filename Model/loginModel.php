@@ -12,6 +12,7 @@ class LoginModel {
         $query = "select * from utilisateur where nom_utilisateur='$username' AND mot_de_passe='$password' ";
 
         $r = $this->bdd->requete($c,$query);
+        
                 
         $this->bdd->deconnexion($c);
         return $r;
@@ -32,6 +33,7 @@ class LoginModel {
        
         $query = "SELECT * FROM utilisateur ORDER BY id DESC LIMIT 1";
         $r = $this->bdd->requete($c, $query);
+        
                 
         $this->bdd->deconnexion($c);
         return $r;      

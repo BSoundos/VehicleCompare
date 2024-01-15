@@ -1,10 +1,8 @@
 <?php
 // Les fichiers utilisés : 
-require_once('Views/diapoView.php');
-require_once('Views/zone1View.php');
-require_once('Views/zone2View.php');
-require_once('Views/zone3View.php');
-require_once('Views/loginView.php');
+require_once('Controller/diaporamaController.php');
+require_once('Controller/acceuilController.php');
+require_once('Controller/loginController.php');
 
 class acceuilView {
 
@@ -14,9 +12,11 @@ class acceuilView {
         <head>
             <meta charset='utf-8'>
             <title>Comparateur de véhicules</title>
-            <link href='style.css' rel='stylesheet' type='text/css' />
+            <link href='style.css' rel='stylesheet' type='text/css'/>
+            <link rel='stylesheet' type='text/css' href='https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css'>
             <script src='https://code.jquery.com/jquery-3.6.4.min.js'></script>
-        </head>
+            <script type='text/javascript' charset='utf8' src='https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js'></script>
+            </head>
         ";
     }
 
@@ -57,13 +57,13 @@ class acceuilView {
     }
 
     public function login(){
-        $v = new loginView();
-        $v->loginDisplay();
+        $c = new loginController();
+        $c->loginGenerate();
     }
 
     public function Diapo(){
-        $v = new diapoView();
-        $v->DiapoDisplay();
+        $c = new diaporama_controller();
+        $c->diapoGenerate();
     }
 
     public function Menu(){
@@ -85,18 +85,18 @@ class acceuilView {
     }
 
     public function Zone1(){
-        $v = new zone1View();
-        $v->Zone1Display();
+        $c = new acceuilController();
+        $c->zone1();
     }
 
     public function Zone2($i,$version,$modele,$marque){
-        $v = new zone2View();
-        $v->Zone2Display($i,$version,$modele,$marque);
+        $c = new acceuilController();
+        $c->zone2($i,$version,$modele,$marque);
     }
 
     public function Zone3(){
-        $v = new zone3View();
-        $v->Zone3Display();
+        $c = new acceuilController();
+        $c->zone3();
     }
 
     public function footer(){

@@ -9,9 +9,15 @@ class vehicule_model {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from vehicule";
+        $query = "select  v.*,
+        i.lien AS image_lien
+        FROM 
+            vehicule v
+        LEFT JOIN 
+        image i ON v.image_id = i.id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -21,9 +27,13 @@ class vehicule_model {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from vehicule where id=$id";
+        $query = "SELECT v.*, i.lien AS image_lien
+        FROM vehicule v
+        LEFT JOIN image i ON v.image_id = i.id
+        WHERE v.id = $id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -33,9 +43,15 @@ class vehicule_model {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from vehicule where version_id=$id";
+        $query = "select  v.*,
+        i.lien AS image_lien
+        FROM 
+            vehicule v
+        LEFT JOIN 
+        image i ON v.image_id = i.id where version_id=$id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -72,6 +88,7 @@ class vehicule_model {
                 WHERE M.id = $id";
 
         $r = $this->bdd->requete($c,$query);
+        
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -119,6 +136,7 @@ class vehicule_model {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -131,7 +149,7 @@ class vehicule_model {
         
         $query = "SELECT
         Vehicule.id AS id,
-        Image.lien AS lien,
+        Image.lien AS image_lien,
         Marque.nom AS marque_nom,
         Marque.id AS marque_id,
         Modele.nom AS modele_nom,
@@ -145,11 +163,39 @@ class vehicule_model {
 
         $r = $this->bdd->requete($c,$query);
         
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
 
 
+    public function get_modele_version_annee_bymarque($id_marque){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = "SELECT
+        Vehicule.id AS id,
+        Image.lien AS image_lien,
+        Marque.nom AS marque_nom,
+        Marque.id AS marque_id,
+        Modele.nom AS modele_nom,
+        Version.nom AS version_nom,
+        Vehicule.annee AS vehicule_annee
+        FROM Vehicule
+        JOIN Image ON Vehicule.image_id = Image.id
+        JOIN Version ON Vehicule.version_id = Version.id
+        JOIN Modele ON Version.modele_id = Modele.id
+        JOIN Marque ON Modele.marque_id = Marque.id
+        WHERE Marque.id = $id_marque"; 
+    
+    
+        $r = $this->bdd->requete($c, $query);
+        
+        
+        $this->bdd->deconnexion($c);
+        return $r; 
+    }
+    
 
 
 

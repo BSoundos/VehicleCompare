@@ -13,6 +13,8 @@ class comparaison_model {
 
         $r = $this->bdd->requete($c,$query);
         
+       
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -24,6 +26,8 @@ class comparaison_model {
         $query = "select * from comparaison where id=$id";
 
         $r = $this->bdd->requete($c,$query);
+        
+       
         
         $this->bdd->deconnexion($c);
         return $r ; 
@@ -37,6 +41,8 @@ class comparaison_model {
 
         $r = $this->bdd->requete($c,$query);
         
+       
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
@@ -49,28 +55,44 @@ class comparaison_model {
 
         $r = $this->bdd->requete($c,$query);
         
+       
+        
         $this->bdd->deconnexion($c);
         return $r ; 
     }
 
-    public function update_comparaison($x,$y){
+    public function exist($x,$y){
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
         $query = "SELECT * FROM comparaison WHERE (vehicule1=$x AND vehicule2=$y) OR (vehicule1=$y AND vehicule2=$x) ";
 
-        $r = $this->bdd->requete($c, $query);
+        $result = $this->bdd->requete($c, $query);
+        
+        $this->bdd->deconnexion($c);
+        return $result ; 
 
-        $result = $r->fetch(PDO::FETCH_ASSOC);
+    }
 
-        if ($result) {
-            $updateQuery = "UPDATE comparaison SET nb = nb + 1 WHERE vehicule1 = $x AND vehicule2 = $y";
-            $r = $this->bdd->requete($c, $updateQuery);
-        } else {
+    public function update_comparaison($x,$y){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+ 
+        $updateQuery = "UPDATE comparaison SET nb = nb + 1 WHERE (vehicule1=$x AND vehicule2=$y) OR (vehicule1=$y AND vehicule2=$x) ";
+        $r = $this->bdd->requete($c, $updateQuery);
+           
+
+        $this->bdd->deconnexion($c);
+        return $r ; 
+
+    }
+
+    public function insert_comparaison($x,$y){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
             
-            $insertQuery = "INSERT INTO comparaison (vehicule1, vehicule2, nb) VALUES ($x, $y, 1)";
-            $r = $this->bdd->requete($c, $insertQuery);
-        }
+        $insertQuery = "INSERT INTO comparaison (vehicule1, vehicule2, nb) VALUES ($x, $y, 1)";
+        $r = $this->bdd->requete($c, $insertQuery);
 
         $this->bdd->deconnexion($c);
         return $r ; 

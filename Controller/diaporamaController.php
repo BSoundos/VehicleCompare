@@ -1,5 +1,6 @@
 <?php
 require_once 'Model/newsModel.php';
+require_once('Views/diapoView.php');
 
 class diaporama_controller {
 
@@ -10,6 +11,12 @@ class diaporama_controller {
 
         return $r ; 
     }
+
+    public function diapoGenerate(){
+        $v = new diapoView();
+        $v->DiapoDisplay();
+    }
+   
 
  
 }

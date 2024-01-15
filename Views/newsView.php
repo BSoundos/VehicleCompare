@@ -38,9 +38,8 @@ class newsView {
             echo "<div class='news-item' >";
             echo "<div class='paragraph-content'><h3>".$row['titre']."</h3>";
             echo "<p>".$row['contenu']." <a href='index.php?action=news&id=".$row['id']."'>Read More</a> </p></div>";
-            $image = $this->image_controller->get_image_controller($row["image_id"]);
-            $imageData = $image->fetch(PDO::FETCH_ASSOC);
-            echo  '<div class="image"><img src='.$imageData["lien"].' ></div></div>';
+          
+            echo  '<div class="image"><img src='.$row["image_lien"].' ></div></div>';
         }
 
         echo "</div>";
@@ -73,9 +72,8 @@ class newsView {
             echo "<div class='news-item' >";
             echo "<div class='paragraph-content'>";
             echo "<p>".$row['text']."</p></div>";
-            $image = $this->image_controller->get_image_controller($row["image_id"]);
-            $imageData = $image->fetch(PDO::FETCH_ASSOC);
-            echo  '<div class="image"><img src='.$imageData["lien"].' ></div></div>';
+        
+            echo  '<div class="image"><img src='.$row["image_lien"].' ></div></div>';
         }
 
         echo "</div>";
