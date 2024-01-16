@@ -52,7 +52,7 @@ class marqueView {
                 
 
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
 
@@ -183,7 +183,7 @@ class marqueView {
         
 
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
         
         echo"</body></html>";
 

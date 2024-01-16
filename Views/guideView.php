@@ -45,7 +45,7 @@ class GuideView {
         echo "</div>";
 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</body></html>";
 

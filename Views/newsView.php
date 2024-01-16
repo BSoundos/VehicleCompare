@@ -47,7 +47,7 @@ class newsView {
         
 
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
         
         echo"</body></html>";
     }
@@ -81,7 +81,7 @@ class newsView {
         
 
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
         
         echo"</body></html>";
 

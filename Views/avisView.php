@@ -57,7 +57,7 @@ class avisView {
                 
 
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
 
@@ -86,6 +86,7 @@ class avisView {
         echo "<a href='index.php?action=vehicules&id=".$vehicule['id']."'>Voir description de cette vehicule.</a>";
 
         echo"
+        <h1>Toutes les avis de cette véhicule :</h1>
         <div id='reviews-container' class='all-avis'>
     
         </div>
@@ -128,7 +129,7 @@ class avisView {
         </script>
 
         ";
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
 
@@ -211,7 +212,7 @@ class avisView {
         $r = $this->vehicule_controller->get_vehicule_byMarqueId_controller($id_marque);
         $result = $r->fetchAll(PDO::FETCH_ASSOC);
 
-        echo "<div class='all-vehicules'>";
+        echo "<div class='favoris-vehicules'>";
 
         foreach ($result as $row){
             echo "<div class='vehicule' >";

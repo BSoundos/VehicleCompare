@@ -158,11 +158,11 @@ class vehiculeView {
 
 
         if ($r){
-        echo "<div><button id='favorisSupp'>Supprimer de Favoris</button></div>";
-        echo "<div><button style='display: none;' id='favoris'>Ajouter à Favoris</button></div>";
+        echo "<div class='centered'><button id='favorisSupp'><img src='img/rem_fav.png'></button></div>";
+        echo "<div class='centered'><button style='display: none;' id='favoris'><img src='img/add_fav.png'></button></div>";
         }else {
-        echo "<div><button id='favoris'>Ajouter à Favoris</button></div>";
-        echo "<div><button style='display: none;' id='favorisSupp'>Supprimer de Favoris</button></div>";
+        echo "<div class='centered'><button id='favoris'><img src='img/add_fav.png'></button></div>";
+        echo "<div class='centered'><button style='display: none;' id='favorisSupp'><img src='img/rem_fav.png'></button></div>";
         }
 
         echo "
@@ -285,7 +285,7 @@ class vehiculeView {
 
 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "
         <script>
@@ -330,7 +330,7 @@ class vehiculeView {
 
         }
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
 

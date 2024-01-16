@@ -39,7 +39,7 @@ class comparateurView {
         }
 
         
-        //$c->footer();
+        $c->footer();
         
         echo"</body></html>";
     }

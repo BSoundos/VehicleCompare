@@ -43,7 +43,7 @@ class marqueAdminView{
 
 
         $this->admin_controller->jQueryForTables();
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -152,7 +152,7 @@ class marqueAdminView{
         
         </div>";
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
 

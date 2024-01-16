@@ -24,7 +24,7 @@ class acceuilView {
         echo"      
         <header>
         <div class='logo'>
-            <img src='img/logo.png' alt='logo image'>
+        <a href='index.php'><img src='img/logo.png' alt='logo image'></a>
         </div>
         <div class='social-links'>
             <ul>
@@ -41,7 +41,7 @@ class acceuilView {
 
         if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
             echo"<a href='index.php?action=logout'>LOGOUT</a></div>";
-            echo"<a href='index.php?action=profile'>Profile</a>";
+            echo"<a id='profile' href='index.php?action=profile'>Profile</a>";
         } 
         else {
             echo"<button id='loginLink'>LOGIN</button></div>";
@@ -130,7 +130,8 @@ class acceuilView {
         $this->Zone2(0,null,null,null);
         $this->Zone3();
         echo"</section>";
-        //$this->footer();
+        
+        $this->footer();
         echo"</body></html>";
     }
 

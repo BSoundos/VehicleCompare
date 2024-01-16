@@ -89,7 +89,7 @@ class modifView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -132,7 +132,7 @@ class modifView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -177,7 +177,7 @@ class modifView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -294,7 +294,7 @@ class modifView {
 
         
         
-         //$this->acceuil_controller->footer();
+         $this->acceuil_controller->footer();
 
          echo "</div></body></html>";
 

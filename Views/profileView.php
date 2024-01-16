@@ -37,11 +37,15 @@ class ProfileView {
         $r = $r->fetch(PDO::FETCH_ASSOC);
 
 
-        echo "<div class='infos'>";
+        echo "<div class='contact-info'>";
+
+        echo "<h1>Informations personnelles:</h1>";
 
         echo "<p>username : ".$r['nom_utilisateur']." </p>";
         echo "<p>nom : ".$r['nom']."</p>";
         echo "<p>prenom : ".$r['prenom']."</p>";
+
+        echo "<h1>Liste des véhicules favoris:</h1>";
 
 
         echo "</div>";
@@ -67,7 +71,7 @@ class ProfileView {
 
 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</body></html>";
 

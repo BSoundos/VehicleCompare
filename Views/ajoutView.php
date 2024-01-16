@@ -102,7 +102,7 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -156,7 +156,7 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -210,7 +210,7 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -283,7 +283,7 @@ class ajoutView {
     //     echo "<button name='submit' type='submit'>Submit</button>
     //     </form></div>"; 
 
-    //     //$this->acceuil_controller->footer();
+    //     $this->acceuil_controller->footer();
 
     //     echo "</div></body></html>";
     // }
@@ -330,7 +330,7 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -377,7 +377,7 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -471,7 +471,7 @@ class ajoutView {
 
         
         
-         //$this->acceuil_controller->footer();
+         $this->acceuil_controller->footer();
 
          echo "</div></body></html>";
 

@@ -36,7 +36,7 @@ class AvisAdminView {
 
 
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }

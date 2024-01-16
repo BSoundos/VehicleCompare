@@ -30,26 +30,20 @@ class ContactView {
 
 
     
-        echo "<h1>Contact Us</h1>";
+        
         
         echo "
-        <form action='index.php?action=contact&send=1' method='post'>
-            <label for='name'>Your Name:</label>
-            <input type='text' id='name' name='name' required>
-
-            <label for='email'>Your Email:</label>
-            <input type='email' id='email' name='email' required>
-
-            <label for='message'>Your Message:</label>
-            <textarea id='message' name='message' rows='4' required></textarea>
-
-            <button type='submit'>Submit</button>
-        </form>
+        <div class='contact-info'>
+        <h1>Contact Us</h1>
+        <p>Email: <a href='mailto:ks_benni@esi.dz'>VehiculeCompInfo@gmail.com</a></p>
+        <p>Phone: 0567553322</p>
+        <p>Address:Algerie , Alger</p>
+        </div>
        
        ";
 
 
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</body></html>";
 

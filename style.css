@@ -55,12 +55,24 @@ header li img {
 .register button , .register a  {
     position: absolute;
     top: 31.5px;
-    right: 60px;
+    right: 100px;
+    color: white;
+    background-color: #808080;
+    padding: 5px 15px;
+    border-radius: 4%;
+    margin-right:5px;
+}
+
+#profile {
+    position: absolute;
+    top: 31.5px;
+    right: 20px;
     color: white;
     background-color: #808080;
     padding: 5px 15px;
     border-radius: 4%;
 }
+
 
 /* ---------------------------- The Diaporama style ---------------------------- */ 
 #container {
@@ -356,7 +368,8 @@ select {
   }
 
 .modal button:hover {
-    background-color: #fad7c9;
+    color: black;
+    background-color: #ccc;
   }
 
 .modal  select {
@@ -498,5 +511,33 @@ textarea {
 }
 
 /*****************************/
+.contact-info {
+    text-align:center;
+    margin-top: 60px;
+    margin-bottom: 150px;
+}
+
+.contact-info p {
+    margin: 10px;
+}
+
+.favoris-vehicules img {
+    width: 500px;
+}
+
+.favoris-vehicules {
+    
+    margin-left: 50px;
+}
+
+.favoris-vehicules  .vehicule{
+    margin-bottom:50px;
+}
+
+.centered img {
+    height: 30px;
+    width: 30px;
+
+}
 
 

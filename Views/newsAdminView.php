@@ -39,7 +39,7 @@ class NewsAdminView {
 
         $this->admin_controller->jQueryForTables();
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
@@ -122,7 +122,7 @@ class NewsAdminView {
         $this->admin_controller->jQueryForTables();
 
         
-        //$this->acceuil_controller->footer();
+        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
 
