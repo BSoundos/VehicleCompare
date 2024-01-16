@@ -8,7 +8,14 @@ require_once('Controller/vehiculeController.php');
 require_once('Controller/avisController.php');
 require_once('Controller/loginController.php');
 require_once('Controller/adminController.php');
-require_once('Controller/adminManageController.php');
+require_once('Controller/adminAjoutController.php');
+require_once('Controller/adminModifController.php');
+require_once('Controller/adminSuppController.php');
+require_once('Controller/adminAutreController.php');
+require_once('Controller/profileController.php');
+require_once('Controller/conseilController.php');
+require_once('Controller/contactController.php');
+
 
 
 $acceuil = new acceuilController();
@@ -19,7 +26,16 @@ $vehicules = new Vehicule_controller();
 $avis = new avisController();
 $login = new loginController();
 $admin = new adminController();
-$admin_manage = new adminManageController();
+$admin_ajout = new adminAjoutController();
+$admin_modif = new adminModifController();
+$admin_supp = new adminSuppController();
+$admin_manage = new adminAutreController();
+$profile = new ProfileController();
+$guide = new ConseilController();
+$contact = new ContactController();
+
+
+
 
 session_start();
 
@@ -34,6 +50,23 @@ if (!isset($_GET['action'])) {
 } else {
     $page = $_GET['action'];
     switch ($page) {
+        case 'contact':
+            if(isset($_GET['send'])){
+                $name = $_POST["name"];
+                $email = $_POST["email"];
+                $message = $_POST["message"];
+
+                $contact->sendEmail($name,$email,$message);
+            }
+            else{
+                $contact->ContactDisplay();
+            }
+
+            break;
+
+        case 'guide': 
+            $guide->guideDisplay();
+            break;
 
         case 'comparateur':
             $comparateur->comparateurGenerate();  
@@ -72,42 +105,46 @@ if (!isset($_GET['action'])) {
             break ;
 
         case 'avis':
-            if (isset($_POST["vehiculeAvis"])){
-                // ajouter avis vehicule 
-                $vehiculeavis=[
-                    'note' => $_POST['note'],
-                    'commentaire' => $_POST['commentaire'],
-                    'utilisateur_id' => $_POST['utilisateur_id'],
-                    'target_id' => $_POST['target_id'] ,
-                    'statut' => 'en attente',
-                    'type' => 0                 
-                ];
+            if (isset($_GET['load'])){
+                $avis->load();
+               
 
-                $avis->ajoutVehiculeAvis($vehiculeavis);
-                
             }
-            elseif (isset($_POST["marqueAvis"])){
-                // ajouter avis marque 
-                $marqueavis=[
-                    'note' => $_POST['note'],
-                    'commentaire' => $_POST['commentaire'],
-                    'utilisateur_id' => $_POST['utilisateur_id'],
-                    'target_id' => $_POST['target_id'] ,
-                    'statut' => 'en attente',
-                    'type' => 1                 
-                ];
-
-                $avis->ajoutMarqueAvis($marqueavis);
-
+            elseif (isset($_GET['page'])){
+                $avis->paginate();
+               
 
             }
             elseif (isset($_GET['id']) && isset($_GET['type'])) {
-                // afficher la page des avis 
+                // afficher la page des avis // still mazal
                 $targetId = $_GET['id'];
                 $type = $_GET['type'];
-                $avis->avisGenerate($targetId,$type);
+                $avis->avisDetailsGenerate($targetId,$type);
             }
-            
+            elseif (isset($_GET['marque_id'])){
+                // afficher la liste des voitures de cette marque (images + noms)
+                // when an image is clicked ==> avisDetailsGenerate
+                $id_marque = $_GET['marque_id'];
+                $avis->avisInsideDisplay($id_marque);
+
+
+            }
+            elseif (isset($_POST["vehiculeAvis"])){
+                // ajouter avis vehicule 
+
+                $avis->ajoutVehiculeAvis($_POST);
+                 
+            }
+            elseif (isset($_POST["marqueAvis"])){
+                // ajouter avis marque 
+
+                $avis->ajoutMarqueAvis($_POST);
+
+            }
+            else {
+                $avis->avisPageDisplay();
+            }
+        
             break ;
         
         case 'login':
@@ -121,6 +158,28 @@ if (!isset($_GET['action'])) {
         case 'logout':
         
             $login->logoutUser();
+            break;
+        
+        case 'profile':
+            if (isset($_SESSION['id']) && isset($_GET['supp']) && isset($_GET['vehicule_id'])){
+                // supp favoris
+                $vehicules->suppFavoris($_GET['vehicule_id'],$_SESSION['id']);
+                
+            }
+            elseif (isset($_SESSION['id']) && isset($_GET['add']) && isset($_GET['vehicule_id'])){
+                // ajouter aux favoris 
+                $vehicules->ajouterFavoris($_GET['vehicule_id'],$_SESSION['id']);
+
+            }
+            elseif(isset($_SESSION['id'])){ // connected user 
+                $id = $_SESSION['id'];// the user access 
+                $profile->profileGenerate($id);
+                    
+            }
+            
+                
+            
+            
             break;
 
         case 'subscribe':
@@ -144,6 +203,9 @@ if (!isset($_GET['action'])) {
             break;
         
         case 'admin':
+        
+        if (isset($_SESSION['role'])){
+        
             if (isset($_GET['page'])) {
                 $page = $_GET['page'];
                 switch ($page) {
@@ -154,17 +216,18 @@ if (!isset($_GET['action'])) {
                             switch ($tache) {
                                 case 'ajout' : 
                                     $id_marque = $_GET['id_marque'];
-                                    $admin_manage->ajoutGenerate($id_marque);
+                                    $admin_ajout->ajoutGenerate($id_marque);
                                     break;
 
                                 case 'modif' : 
                                     $Id = $_GET['id'];
-                                    $admin_manage->modifGenerate($Id);
+                                    $admin_modif->modifGenerate($Id);
                                     break;
 
                                 case 'supp' : 
                                     $Id = $_GET['id'];
-                                    $admin_manage->supp($page,$Id);
+                                    $id_marque = $_GET['id_marque'];
+                                    $admin_supp->suppVehicule($Id,$id_marque);
                                     break;
 
                             }
@@ -212,12 +275,12 @@ if (!isset($_GET['action'])) {
                             if (isset($_POST["id"])) {// perform update 
 
                                 $id = isset($_POST['id']) ? $_POST['id'] : '';
-                                $admin_manage->modifyVehicule($id,$vehicule,$image);
+                                $admin_modif->modifyVehicule($id,$vehicule,$image);
 
                             }
                             else { // ajout
                 
-                                $admin_manage->ajoutVehicule($vehicule,$image);
+                                $admin_ajout->ajoutVehicule($vehicule,$image);
                             }
                         }
                         else {
@@ -233,16 +296,16 @@ if (!isset($_GET['action'])) {
                             switch ($tache) {
 
                                 case 'ajout' : 
-                                    $admin_manage->ajoutLigneGenerate('marque');
+                                    $admin_ajout->ajoutMarqueGenerate();
                                     break;
                                 case 'modif' : 
                                     $Id = $_GET['id'];
-                                    $admin_manage->modifLigneGenerate('marque',$Id);
+                                    $admin_modif->modifMarqueGenerate($Id);
                                     break;
 
                                 case 'supp' : 
                                     $Id = $_GET['id'];
-                                    $admin_manage->supp($page,$Id);
+                                    $admin_supp->suppMarque($Id);
                                     break;
 
                             }
@@ -280,12 +343,12 @@ if (!isset($_GET['action'])) {
                             if (isset($_POST["id"])) {// perform update 
 
                                 $id = isset($_POST['id']) ? $_POST['id'] : '';
-                                $admin_manage->modify($id,$marque,$image);
+                                $admin_modif->modifyMarque($id,$marque,$image);
 
                             }
                             else { // ajout
 
-                                $admin_manage->ajout($page,$marque,$image);
+                                $admin_ajout->ajoutMarque($marque,$image);
                             }
                 
                            
@@ -304,14 +367,14 @@ if (!isset($_GET['action'])) {
                             $tache = $_GET['tache'];
                             switch ($tache) {
                                 case 'ajout' : 
-                                    $admin_manage->ajoutLigneGenerate('modele');
+                                    $admin_ajout->ajoutModeleGenerate();
                                     break;
                                 case 'supp' :
                                     if (!isset($_POST["id"])){
                                         $admin->deleteGenerate();
                                     } else {
                                         $Id = $_POST["id"];
-                                        $admin_manage->supp($page,$Id);
+                                        $admin_supp->suppModele($Id);
                                     }
                                     break;
 
@@ -323,7 +386,7 @@ if (!isset($_GET['action'])) {
                                 'marque_id'    => isset($_POST['marque_id']) ? $_POST['marque_id'] : null
                             ];
 
-                            $admin_manage->ajout($page,$modele,null);
+                            $admin_ajout->ajoutModele($modele);
         
                         }
 
@@ -335,14 +398,14 @@ if (!isset($_GET['action'])) {
                             $tache = $_GET['tache'];
                             switch ($tache) {
                                 case 'ajout' : 
-                                    $admin_manage->ajoutLigneGenerate('version');
+                                    $admin_ajout->ajoutVersionGenerate();
                                     break;
                                 case 'supp' :
                                     if (!isset($_POST["id"])){
                                         $admin->deleteGenerate();
                                     } else {
                                         $Id = $_POST["id"];
-                                        $admin_manage->supp($page,$Id);
+                                        $admin_supp->suppVersion($Id);
                                     }
                                     break;
 
@@ -355,7 +418,7 @@ if (!isset($_GET['action'])) {
                                 'modele_id'    => isset($_POST['modele_id']) ? $_POST['modele_id'] : null
                             ];
 
-                            $admin_manage->ajout($page,$version,null);
+                            $admin_ajout->ajoutVersion($version);
         
                         }
                         break;
@@ -375,45 +438,24 @@ if (!isset($_GET['action'])) {
                                     
                                     $admin_manage->bloqueUser($id);
                                     break;
-                                case 'ajout' : 
-                                    $admin_manage->ajoutLigneGenerate('avis');
-                                    break;
-
-                                case 'modif' : 
-                                    $Id = $_GET['id'];
-                                    $admin_manage->modifLigneGenerate('avis',$Id);
-                                    break;
 
                                 case 'supp' : 
                                     $Id = $_GET['id'];
-                                    $admin_manage->supp($page,$Id);
+                                    $admin_supp->suppAvis($Id);
                                     break;
+
+                                case 'valide' : 
+                                    $Id = $_GET['id'];
+                                    $admin_manage->valideAvis($id);
+                                    break;
+
+                                case 'filter' : 
+                                    $admin_manage->filterAvis();
+                                    
+
+                                    break ; 
                             
                             }
-                        }
-                        else if (isset($_POST["submit"])) {
-                
-                            $vehiculeavis=[
-                                'note' => $_POST['note'],
-                                'commentaire' => $_POST['commentaire'],
-                                'utilisateur_id' => $_POST['utilisateur_id'],
-                                'target_id' => $_POST['target_id'] ,
-                                'statut' => 'en attente',
-                                'type' => 0                 
-                            ];
-            
-                            if (isset($_POST["id"])) {// perform update 
-
-                                $id = isset($_POST['id']) ? $_POST['id'] : '';
-                                $admin_manage->modify($id,$vehiculeavis,null);
-
-                            }
-                            else { // ajout
-
-                                $admin_manage->ajoutAvis($vehiculeavis);
-                            }
-                
-                           
                         }
                         else {
                                 $admin->avisAdminGenerate();
@@ -421,23 +463,184 @@ if (!isset($_GET['action'])) {
                         break ; 
 
                     case 'news':
-                        if (isset($_GET['id'])) {
-                            $id =  $_GET['id'];
-                            // details
-                            $admin->newsDetailsAdminGenerate($id);
+                        if (isset($_GET['tache'])) {
+                            $tache = $_GET['tache'];
+                            if (isset($_GET['id'])){
+                                $Id = $_GET['id'];
+                            }
+                            switch ($tache) {
+
+                                case 'ajout' : 
+                                    $admin_ajout->ajoutNewsGenerate();
+                                    break;
+
+                                case 'modif' : 
+                                   
+                                    $admin_modif->modifNewsGenerate($Id);
+                                    break;
+
+                                case 'supp' : 
+                                  
+                                    $admin_supp->suppNews($Id);
+                                    break;
+                            }
+                        }
+                        else if (isset($_POST["submit"])) {
+
+
+                            if ($_FILES['image']['error'] !== 4) 
+                            // aucun fichier selectionné 
+                            // update case only (input without required)
+                            {
+                                $targetFolder = 'img/'; 
+                                $targetFileName = $targetFolder . basename($_FILES['image']['name']);
+                            
+                                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFileName)) {
+                                echo '<script> Console.log("File has been uploaded successfully.");</script>';
+                                } else {
+                                echo '<script> Console.log("Error uploading file.");</script>'; 
+                                }
+
+                                $image = $targetFileName;
+                            }
+                            else {
+                                $image = null ; 
+                            }
+                
+                            $news = [
+                                'diapo'  =>  isset($_POST['diapo']) ? $_POST['diapo'] : null,
+                                'titre'  => isset($_POST['titre']) ? $_POST['titre'] : null,
+                                'date'   => isset($_POST['date']) ? $_POST['date'] : null,
+                                'contenu'   => isset($_POST['contenu']) ? $_POST['contenu'] : null,
+                                'lien'           => isset($_POST['lien']) ? $_POST['lien'] : null,
+                            ];
+
+                            if (isset($_POST["id"])) {// perform update 
+
+                                $id = isset($_POST['id']) ? $_POST['id'] : '';
+                                $admin_modif->modifyNews($id,$news,$image);
+
+                            }
+                            else { // ajout
+
+                                $admin_ajout->ajoutNews($news,$image);
+                            }
                         }
                         else {
                             $admin->newsAdminGenerate();
                         }
                         break ;
 
+                    case 'newsdetails':
+                        if (isset($_GET['tache'])) {
+                            $tache = $_GET['tache'];
+                            if (isset($_GET['id'])){
+                                $Id = $_GET['id'];
+                            }
+                            switch ($tache) {
 
+                                case 'ajout' : 
+                                    $admin_ajout->ajoutNewsDetailsGenerate($Id);
+                                    break;
+
+                                case 'modif' : 
+                                   
+                                    $admin_modif->modifNewsDetailsGenerate($Id);
+                                    break;
+
+                                case 'supp' : 
+                                    $id_news = $_GET['id_news'];
+                                    $admin_supp->suppNewsDetails($Id,$id_news);
+                                    break;
+                            }
+                        }
+                        else if (isset($_POST["submit"])) {
+
+
+                            if ($_FILES['image']['error'] !== 4) 
+                            // aucun fichier selectionné 
+                            // update case only (input without required)
+                            {
+                                $targetFolder = 'img/'; 
+                                $targetFileName = $targetFolder . basename($_FILES['image']['name']);
+                            
+                                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFileName)) {
+                                echo '<script> Console.log("File has been uploaded successfully.");</script>';
+                                } else {
+                                echo '<script> Console.log("Error uploading file.");</script>'; 
+                                }
+
+                                $image = $targetFileName;
+                            }
+                            else {
+                                $image = null ; 
+                            }
+                
+                            $news = [
+                                'text'  =>  isset($_POST['text']) ? $_POST['text'] : null,
+                                'news_id' => isset($_POST['news_id']) ? $_POST['news_id'] : null,
+                            ];
+
+                            if (isset($_POST["id"])) {// perform update 
+
+                                $id = isset($_POST['id']) ? $_POST['id'] : '';
+                                $admin_modif->modifyNewsDetails($id,$news,$image);
+
+                            }
+                            else { // ajout
+                              
+                                $admin_ajout->ajoutNewsDetails($news,$image);
+                            }
+                        }
+                        else {
+                            if (isset($_GET['id'])){
+                                $Id = $_GET['id'];
+                            }
+                            $admin->newsDetailsAdminGenerate($Id);
+                        }
+                        break;
+                    
+
+                    case 'user':
+                        if (isset($_GET['tache'])) {
+                            $tache = $_GET['tache'];
+                            if (isset($_GET['id'])){
+                                $id =  $_GET['id'];
+                            }
+                            switch ($tache) {
+                                case 'valide' : 
+                                    
+                                    $admin_manage->valideUser($id);
+                                    break;
+                                case 'bloque' :
+                                    
+                                    $admin_manage->bloqueUser($id);
+                                    break;
+
+                                case 'filter' : 
+                                    $admin_manage->filterUser();
+                                    break ; 
+                            
+                            }
+                        }
+                        else {
+                                $admin->usersAdminGenerate();
+                        }
+                        break ; 
+
+                      
                 }
             }
             else {
                 $admin->pagePrincipalGenerate();
             }
-            break; 
+        
+        }
+        else 
+        {
+            $acceuil->acceuilGenerate();
+        }
+             
 
     }
 }

@@ -2,12 +2,13 @@
 // Les fichiers utilisés : 
 require_once('Controller/acceuilController.php');
 require_once('Controller/adminController.php');
-require_once('Controller/adminManageController.php');
+
 require_once('Controller/vehiculeController.php');
 require_once 'Controller/imageController.php';
 require_once 'Controller/versionController.php';
 require_once 'Controller/modeleController.php';
 require_once 'Controller/marqueController.php';
+require_once 'Controller/newsController.php';
 
 
 class modifView {
@@ -21,8 +22,9 @@ class modifView {
 
     private $modeleController;
     private $marqueController;
+    private $newsController;
 
-    private $adminManageController;
+  
 
     private $marques;
     private $modeles;
@@ -38,7 +40,7 @@ class modifView {
         $this->modeleController = new Modele_controller();
         $this->marqueController = new marqueController();
 
-        $this->adminManageController = new adminManageController();
+        $this->newsController = new newsController();
 
 
         $this->marques = $this->marqueController->get_Marques_controller();
@@ -47,7 +49,7 @@ class modifView {
     }
 
 
-    public function modifDisplay($var,$id){
+    public function modifMarqueDisplay($id){
         echo"<!DOCTYPE html>
         <html>";
 
@@ -55,11 +57,10 @@ class modifView {
         $this->acceuil_controller->header();
 
         echo "<div class='ajout-container'>
-        <h2>Modifier $var</h2>
-        <form action='index.php?action=admin&page=$var' method='post' enctype='multipart/form-data'>";
+        <h2>Modifier Marque</h2>
+        <form action='index.php?action=admin&page=marque' method='post' enctype='multipart/form-data'>";
 
-        switch($var){
-            case 'marque':
+       
 
                 $result = $this->marqueController->get_marque_byId_controller($id);
                 $result = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -81,9 +82,9 @@ class modifView {
         
                     }
                 }
-                break;
             
-        }
+            
+        
 
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
@@ -92,6 +93,96 @@ class modifView {
 
         echo "</div></body></html>";
     }
+
+    public function modifNewsDisplay($Id){
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+
+        echo "<div class='ajout-container'>
+        <h2>Modifier News</h2>
+        <form action='index.php?action=admin&page=news' method='post' enctype='multipart/form-data'>";
+
+        $result = $this->newsController->get_news_byId_controller($Id);
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($result as $row) {
+                    foreach ($row as $field => $value) {
+                        if ($field === 'id') {
+                            echo "<input type='hidden' name='id' value='".$value."'  >  ";
+                        }
+                        else if ($field === 'image_id') {
+                            echo "<label for='image'>Image:</label>
+                            <label><img src='".$row['image_lien']."' style='width: 120px;' ></label>
+                            <input type='file' id='image' name='image' >";
+                        }
+                        else {
+                            echo "<label for=".$field.">".$field.":</label>
+                            <input type='text' id=".$field." name=".$field." value='".$value."'  required>";
+                        }
+        
+                    }
+                }
+            
+            
+        
+
+        echo "<button name='submit' type='submit'>Submit</button>
+        </form></div>"; 
+
+        //$this->acceuil_controller->footer();
+
+        echo "</div></body></html>";
+    }
+
+
+
+    public function modifNewsDetailsDisplay($Id){
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+
+        echo "<div class='ajout-container'>
+        <h2>Modifier News</h2>
+        <form action='index.php?action=admin&page=newsdetails' method='post' enctype='multipart/form-data'>";
+
+        $result = $this->newsController->get_newsdetails_byId_controller($Id);
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($result as $row) {
+                    foreach ($row as $field => $value) {
+                        if ($field === 'id') {
+                            echo "<input type='hidden' name='id' value='".$value."'  >  ";
+                        }
+                        else if ($field === 'image_id') {
+                            echo "<label for='image'>Image:</label>
+                            <label><img src='".$row['image_lien']."' style='width: 120px;' ></label>
+                            <input type='file' id='image' name='image' >";
+                        }
+                        else {
+                            echo "<label for=".$field.">".$field.":</label>
+                            <input type='text' id=".$field." name=".$field." value='".$value."'  required>";
+                        }
+        
+                    }
+                }
+            
+            
+        
+
+        echo "<button name='submit' type='submit'>Submit</button>
+        </form></div>"; 
+
+        //$this->acceuil_controller->footer();
+
+        echo "</div></body></html>";
+    }
+
+
 
     public function formDisplay($id){
 

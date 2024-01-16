@@ -29,10 +29,15 @@ class NewsAdminView {
 
         $this->admin_controller->manageLinksGenerate();
 
+        echo "<div class='links' align='center'>
+        <a href='index.php?action=admin&page=news&tache=ajout'>Ajouter une news</a>
+       
+        </div>";
+
 
         $this->displayTable();
 
-
+        $this->admin_controller->jQueryForTables();
         
         //$this->acceuil_controller->footer();
 
@@ -51,7 +56,7 @@ class NewsAdminView {
             // the table 
            echo "
            <div class='table-admin'>
-                <table>
+                <table id='myTable'>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -61,6 +66,9 @@ class NewsAdminView {
                         <th>Date</th>
                         <th>Lien</th>
                         <th>Details</th>
+                        <th> 
+                        Gestion
+                        </th>
                     </tr>
                 </thead>
                 <tbody>";
@@ -76,7 +84,11 @@ class NewsAdminView {
                             <td>".$row['date']."</td>
                             <td>".$row['lien']."</td>
                             <td> 
-                            <a href='index.php?action=admin&page=news&id=".$row['id']."' >Voir details</a>
+                            <a href='index.php?action=admin&page=newsdetails&id=".$row['id']."' >Voir details</a>
+                            </td>
+                            <td> 
+                            <a href='index.php?action=admin&page=news&id=".$row['id']."&tache=modif' ><img src='img/edit.png'></a>
+                            <a href='index.php?action=admin&page=news&id=".$row['id']."&tache=supp' ><img src='img/delete.png'></a>
                             </td>
                     
                         </tr>";
@@ -101,9 +113,13 @@ class NewsAdminView {
 
         $this->admin_controller->manageLinksGenerate();
 
+        echo "<div class='links' align='center'>
+        <a href='index.php?action=admin&page=newsdetails&tache=ajout&id=$id'>Ajouter un newsDetails</a>
+        </div>";
 
         $this->displayTableDetails($id);
 
+        $this->admin_controller->jQueryForTables();
 
         
         //$this->acceuil_controller->footer();
@@ -118,10 +134,10 @@ class NewsAdminView {
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
 
 
-        // the table 
-       echo "
-       <div class='table-admin'>
-            <table>
+            // the table 
+            echo "
+            <div class='table-admin'>
+            <table id='myTable'>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -143,7 +159,8 @@ class NewsAdminView {
                         <td><img src =".$row['image_lien']." ></td>
         
                         <td> 
-                        <a href='index.php?action=admin&page=newsdetails&id=".$row['id']."' >gestion</a>
+                        <a href='index.php?action=admin&page=newsdetails&id=".$row['id']."&tache=supp&id_news=".$row['news_id']."' ><img src='img/delete.png'></a>
+                        <a href='index.php?action=admin&page=newsdetails&id=".$row['id']."&tache=modif' ><img src='img/edit.png'></a>
                         </td>
                 
                     </tr>";
@@ -152,11 +169,8 @@ class NewsAdminView {
                 
             echo"
             </tbody>
-            </table></div>";
-
-
-        
-}
+            </table></div>";        
+    }
 
    
 

@@ -23,7 +23,7 @@ class loginController {
                 exit();
             }
             else {
-                header('Location: index.php');
+                header('Location: index.php?action=profile&id='.$user['id']);
                 exit();
             }
 

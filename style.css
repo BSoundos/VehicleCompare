@@ -452,6 +452,11 @@ textarea {
 }
 
 
+#myTable td a img {
+    height: 30px;
+    width: 30px;
+}
+
 /*****************             ajout        *****************/
 .ajout-container {
     max-width: 600px;
@@ -491,4 +496,7 @@ textarea {
 .links a {
     margin: 20px;
 }
+
+/*****************************/
+
 

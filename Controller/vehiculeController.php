@@ -1,5 +1,6 @@
 <?php
 require_once 'Model/vehiculeModel.php';
+require_once 'Model/favorisModel.php';
 require_once 'Views/vehiculeView.php';
 
 class Vehicule_controller {
@@ -68,9 +69,44 @@ class Vehicule_controller {
     }
 
 
+    public function ajouterFavoris($target,$id){
+
+        $m = new FavorisModel();
+        $m->ajouterFavoris($target,$id);
+
+        // header to vehicule details
+        header('Location: index.php?action=vehicules&id='.$target);
+
+
+    }
+
+
+    public function suppFavoris($target,$id){
+
+        $m = new FavorisModel();
+        $m->suppFavoris($target,$id);
+
+        // header to vehicule details
+        header('Location: index.php?action=vehicules&id='.$target);
+        
+
+    }
 
 
 
+    public function getFavoris($vehicule_id,$utilisateur_id){
+        $m = new FavorisModel();
+        $r = $m->getFavoris($vehicule_id,$utilisateur_id);
+
+        return $r ; 
+    }
+
+    public function getFavoris_byUserID($utilisateur_id){
+        $m = new FavorisModel();
+        $r = $m->getFavoris_byUserID($utilisateur_id);
+
+        return $r ; 
+    }
     
 
 }

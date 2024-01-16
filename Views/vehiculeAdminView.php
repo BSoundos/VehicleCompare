@@ -17,6 +17,7 @@ class VehiculeAdminView {
         $this->vehicule_controller = new Vehicule_controller();
     }
 
+
     public function vehiculeDisplay($id_marque){
         echo"<!DOCTYPE html>
         <html>";
@@ -34,6 +35,8 @@ class VehiculeAdminView {
 
         $this->displayTable($id_marque);
 
+        $this->admin_controller->jQueryForTables();
+
 
         
         //$this->acceuil_controller->footer();
@@ -49,7 +52,7 @@ class VehiculeAdminView {
         // the table 
        echo "
        <div class='table-admin'>
-            <table>
+            <table id='myTable'>
             <thead>
                 <tr>
                     <th></th>
@@ -74,8 +77,8 @@ class VehiculeAdminView {
                         <td>".$row['vehicule_annee']."</td>
                         <td><a href='index.php?action=vehicules-carac&id=".$row['id']."'>Voir Caractéristiques</a></td>
                         <td> 
-                        <a href='index.php?action=admin&page=vehicule&tache=modif&id=".$row['id']."' >Modifier véhicule</a>
-                        <a href='index.php?action=admin&page=vehicule&tache=supp&id=".$row['id']."' >Supprimer véhicule</a>
+                        <a href='index.php?action=admin&page=vehicule&tache=modif&id=".$row['id']."' ><img src='img/edit.png'></a>
+                        <a href='index.php?action=admin&page=vehicule&tache=supp&id=".$row['id']."&id_marque=$id_marque' ><img src='img/delete.png'></a>
                         </td>
                 
                     </tr>";
@@ -85,6 +88,7 @@ class VehiculeAdminView {
             echo"
             </tbody>
             </table></div>";
+
 
 
         

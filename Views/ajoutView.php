@@ -2,13 +2,13 @@
 // Les fichiers utilisés : 
 require_once('Controller/acceuilController.php');
 require_once('Controller/adminController.php');
-require_once('Controller/adminManageController.php');
 require_once('Controller/vehiculeController.php');
 require_once 'Controller/imageController.php';
 require_once 'Controller/versionController.php';
 require_once 'Controller/modeleController.php';
 require_once 'Controller/marqueController.php';
 require_once 'Controller/avisController.php';
+require_once 'Controller/newsController.php';
 require_once 'Controller/utilisateurController.php';
 
 class ajoutView {
@@ -24,8 +24,9 @@ class ajoutView {
     private $marqueController;
     private $avisController;
     private $userController;
+    private $newsController;
 
-    private $adminManageController;
+
 
     private $marques;
     private $modeles;
@@ -42,9 +43,10 @@ class ajoutView {
         $this->modeleController = new Modele_controller();
         $this->marqueController = new marqueController();
 
-        $this->adminManageController = new adminManageController();
+      
         $this->avisController = new avisController();
         $this->userController = new userController();
+        $this->newsController = new newsController();
 
 
         $this->marques = $this->marqueController->get_Marques_controller();
@@ -57,7 +59,7 @@ class ajoutView {
     }
 
 
-    public function ajoutDisplay($var){
+    public function ajoutDisplayMarque(){
         echo"<!DOCTYPE html>
         <html>";
 
@@ -65,153 +67,37 @@ class ajoutView {
         $this->acceuil_controller->header();
 
         echo "<div class='ajout-container'>
-        <h2>Ajouter $var</h2>";
-        echo"<form action='index.php?action=admin&page=$var' method='post' enctype='multipart/form-data'>";
+        <h2>Ajouter marque</h2>";
+        echo"<form action='index.php?action=admin&page=marque' method='post' enctype='multipart/form-data'>";
 
-        switch($var){
-            case 'marque':
+       
 
-                $result = $this->marqueController->get_firstx_marques_controller(1);
-                $result = $result->fetchAll(PDO::FETCH_ASSOC);
-                
-                foreach ($result as $row) {
-                    foreach ($row as $field => $value) {
-                        if ($field === 'id' || $field === 'image_lien' ) {
+        $result = $this->marqueController->get_firstx_marques_controller(1);
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
         
+        foreach ($result as $row) {
+            foreach ($row as $field => $value) {
+                if ($field === 'id' || $field === 'image_lien' ) {
 
-                        }
-                        else if ($field === 'image_id') {
-                            echo "<label for='image'>Image:</label>
-                            <input type='file' id='image' name='image' required>";
-                        }
-                        else {
-                            echo "<label for=".$field.">".$field.":</label>
-                            <input type='text' id=".$field." name=".$field." required>";
-                        }
-        
-                    }
-                    echo "
-                    <label><a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modéle ?</a></label>
-                    <label><a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version ?</a></label>";
 
                 }
-                break;
+                else if ($field === 'image_id') {
+                    echo "<label for='image'>Image:</label>
+                    <input type='file' id='image' name='image' required>";
+                }
+                else {
+                    echo "<label for=".$field.">".$field.":</label>
+                    <input type='text' id=".$field." name=".$field." required>";
+                }
 
-            case 'modele':
+            }
+            echo "
+            <label><a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modéle ?</a></label>
+            <label><a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version ?</a></label>";
 
-                    $result = $this->modeleController->get_Modeles_controller();
-                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
-                  
-                    foreach ($result as $row) {
-                        foreach ($row as $field => $value) {
-                            if ($field === 'id') {
-    
-                            }
-                            else if ($field === 'marque_id') {
-                                echo"<label for='marque'>Marque:</label>
-                                    <select id='marque' name='marque_id'>";
-                   
-                                    foreach($this->marques as $row){
-                                        echo"<option value=".$row['id'].">".$row['nom']."</option>";
-                                    }
-    
-                                echo"</select>";
-
-                            }
-                            else {
-                                echo "<label for=".$field.">".$field.":</label>
-                                <input type='text' id=".$field." name=".$field." required>";
-                            }
-            
-                        }
-                        echo " <label><a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version ?</a></label>";
-                        break;
-                    }
-                    break;
-
-            case 'version':
-                $result = $this->version_controller->get_versions_controller();
-                $result = $result->fetchAll(PDO::FETCH_ASSOC);
-                  
-                    foreach ($result as $row) {
-                        foreach ($row as $field => $value) {
-                            if ($field === 'id') {
-    
-                            }
-                            else if ($field === 'modele_id') {
-                                echo "<label for='modele'>Modèle:</label>
-                                <select id='modele' name='modele_id'>";
-                                
-                                foreach($this->modeles as $row){
-                                    echo"<option value=".$row['id'].">".$row['nom']."</option>";
-                                }
-                    
-                                echo"
-                                
-                                </select>";
-
-                            }
-                            else {
-                                echo "<label for=".$field.">".$field.":</label>
-                                <input type='text' id=".$field." name=".$field." required>";
-                            }
-            
-                        }
-                        break;
-                    }
-                break;
-
-            case 'avis':
-                $result = $this->avisController->get_avis_controller();
-                $result = $result->fetchAll(PDO::FETCH_ASSOC);
-               
-                    foreach ($result as $row) {
-                        foreach ($row as $field => $value) {
-                            if ( $field === 'id' || $field === 'type' || $field === 'statut'){
-
-
-                            }
-                            else if ($field === 'note') {
-                                echo "<label for=".$field.">".$field.":</label>
-                                <input type='number' name='note' min='1' max='5' required>";
-
-                            }
-                            else if ($field === 'target_id') {
-                                echo "<label for='target'>Vehicule:</label>
-                                <select id='target' name='target_id'>";
-                                
-                                foreach($this->targets as $row){
-                                    echo"<option value=".$row['id'].">".$row['nom']."</option>";
-                                }
-                    
-                                echo"
-                                
-                                </select>";
-
-                            }
-                            else  if ($field === 'utilisateur_id') {
-                                echo "<label for='utilisateur_id'>Utilisateur:</label>
-                                <select id='utilisateur_id' name='utilisateur_id'>";
-                                
-                                foreach($this->users as $row){
-                                    echo"<option value=".$row['id'].">".$row['nom_utilisateur']."</option>";
-                                }
-                    
-                                echo"
-                                
-                                </select>";
-
-                            }
-                            else {
-                                echo "<label for=".$field.">".$field.":</label>
-                                <input type='text' id=".$field." name=".$field." required>";
-                            }
-            
-                        }
-                        break;
-                    }
-                break ;
         }
+
+        
 
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
@@ -220,6 +106,282 @@ class ajoutView {
 
         echo "</div></body></html>";
     }
+
+
+
+    public function ajoutDisplayModele(){
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+
+        echo "<div class='ajout-container'>
+        <h2>Ajouter modele</h2>";
+        echo"<form action='index.php?action=admin&page=modele' method='post' enctype='multipart/form-data'>";
+
+        $result = $this->modeleController->get_Modeles_controller();
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($result as $row) {
+            foreach ($row as $field => $value) {
+                if ($field === 'id') {
+
+                }
+                else if ($field === 'marque_id') {
+                    echo"<label for='marque'>Marque:</label>
+                        <select id='marque' name='marque_id'>";
+        
+                        foreach($this->marques as $row){
+                            echo"<option value=".$row['id'].">".$row['nom']."</option>";
+                        }
+
+                    echo"</select>";
+
+                }
+                else {
+                    echo "<label for=".$field.">".$field.":</label>
+                    <input type='text' id=".$field." name=".$field." required>";
+                }
+
+            }
+            echo " <label><a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version ?</a></label>";
+            break;
+        }
+
+        
+
+        
+
+        echo "<button name='submit' type='submit'>Submit</button>
+        </form></div>"; 
+
+        //$this->acceuil_controller->footer();
+
+        echo "</div></body></html>";
+    }
+
+
+    public function ajoutDisplayVersion(){
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+
+        echo "<div class='ajout-container'>
+        <h2>Ajouter version</h2>";
+        echo"<form action='index.php?action=admin&page=version' method='post' enctype='multipart/form-data'>";
+
+       
+
+        $result = $this->newsController->get_news_controller();
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
+          
+        foreach ($result as $row) {
+            foreach ($row as $field => $value) {
+                if ($field === 'id') {
+
+                }
+                else if ($field === 'modele_id') {
+                    echo "<label for='modele'>Modèle:</label>
+                    <select id='modele' name='modele_id'>";
+                    
+                    foreach($this->modeles as $row){
+                        echo"<option value=".$row['id'].">".$row['nom']."</option>";
+                    }
+        
+                    echo"
+                    
+                    </select>";
+
+                }
+                else {
+                    echo "<label for=".$field.">".$field.":</label>
+                    <input type='text' id=".$field." name=".$field." required>";
+                }
+
+            }
+            break;
+        }
+
+        
+
+        echo "<button name='submit' type='submit'>Submit</button>
+        </form></div>"; 
+
+        //$this->acceuil_controller->footer();
+
+        echo "</div></body></html>";
+    }
+
+
+    // public function ajoutDisplayAvis(){
+    //     echo"<!DOCTYPE html>
+    //     <html>";
+
+    //     $this->acceuil_controller->head();
+    //     $this->acceuil_controller->header();
+
+    //     echo "<div class='ajout-container'>
+    //     <h2>Ajouter avis</h2>";
+    //     echo"<form action='index.php?action=admin&page=avis' method='post' enctype='multipart/form-data'>";
+
+       
+
+    //     $result = $this->avisController->get_avis_controller();
+    //     $result = $result->fetchAll(PDO::FETCH_ASSOC);
+       
+    //     foreach ($result as $row) {
+    //         foreach ($row as $field => $value) {
+    //             if ( $field === 'id' || $field === 'type' || $field === 'statut'){
+
+
+    //             }
+    //             else if ($field === 'note') {
+    //                 echo "<label for=".$field.">".$field.":</label>
+    //                 <input type='number' name='note' min='1' max='5' required>";
+
+    //             }
+    //             else if ($field === 'target_id') {
+    //                 echo "<label for='target'>Vehicule:</label>
+    //                 <select id='target' name='target_id'>";
+                    
+    //                 foreach($this->targets as $row){
+    //                     echo"<option value=".$row['id'].">".$row['nom']."</option>";
+    //                 }
+        
+    //                 echo"
+                    
+    //                 </select>";
+
+    //             }
+    //             else  if ($field === 'utilisateur_id') {
+    //                 echo "<label for='utilisateur_id'>Utilisateur:</label>
+    //                 <select id='utilisateur_id' name='utilisateur_id'>";
+                    
+    //                 foreach($this->users as $row){
+    //                     echo"<option value=".$row['id'].">".$row['nom_utilisateur']."</option>";
+    //                 }
+        
+    //                 echo"
+                    
+    //                 </select>";
+
+    //             }
+    //             else {
+    //                 echo "<label for=".$field.">".$field.":</label>
+    //                 <input type='text' id=".$field." name=".$field." required>";
+    //             }
+
+    //         }
+    //         break;
+    //     }
+
+        
+
+    //     echo "<button name='submit' type='submit'>Submit</button>
+    //     </form></div>"; 
+
+    //     //$this->acceuil_controller->footer();
+
+    //     echo "</div></body></html>";
+    // }
+
+
+    
+    public function ajoutDisplayNews(){
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+
+        echo "<div class='ajout-container'>
+        <h2>Ajouter News</h2>";
+        echo"<form action='index.php?action=admin&page=news' method='post' enctype='multipart/form-data'>";
+
+        $result = $this->newsController->get_news_controller();
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($result as $row) {
+            foreach ($row as $field => $value) {
+                if ($field === 'id' || $field === 'image_lien') {
+
+
+                }
+                else if ($field === 'image_id') {
+                    echo "<label for='image'>Image:</label>
+                    <input type='file' id='image' name='image' required>";
+                }
+                else {
+                    echo "<label for=".$field.">".$field.":</label>
+                    <input type='text' id=".$field." name=".$field." required>";
+                }
+
+            }
+            break;
+        }
+
+        
+
+        
+
+        echo "<button name='submit' type='submit'>Submit</button>
+        </form></div>"; 
+
+        //$this->acceuil_controller->footer();
+
+        echo "</div></body></html>";
+    }
+
+
+    public function ajoutDisplayNewsDetails($newsId){
+        echo"<!DOCTYPE html>
+        <html>";
+
+        $this->acceuil_controller->head();
+        $this->acceuil_controller->header();
+
+        echo "<div class='ajout-container'>
+        <h2>Ajouter News</h2>";
+        echo"<form action='index.php?action=admin&page=newsdetails' method='post' enctype='multipart/form-data'>";
+
+        $result = $this->newsController->get_news_details($newsId);
+        $result = $result->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($result as $row) {
+            foreach ($row as $field => $value) {
+                if ($field === 'id' || $field === 'image_lien' || $field === 'news_id') {
+
+
+                }
+                else if ($field === 'image_id') {
+                    echo "<label for='image'>Image:</label>
+                    <input type='file' id='image' name='image' required>";
+                }
+                else {
+                    echo "<label for=".$field.">".$field.":</label>
+                    <input type='text' id=".$field." name=".$field." required>";
+                }
+
+            }
+            break;
+        }
+
+        
+       
+        echo "<input type='hidden' name='news_id' value='".$newsId."'  >  ";
+        
+        
+        echo "<button name='submit' type='submit'>Submit</button>
+        </form></div>"; 
+
+        //$this->acceuil_controller->footer();
+
+        echo "</div></body></html>";
+    }
+
 
     public function formDisplay($id_marque){
 

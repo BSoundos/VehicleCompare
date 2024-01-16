@@ -81,6 +81,8 @@ class vehiculeView {
           // Donner une note et un avis pour les utilisateurs connectés :
           if (isset($_SESSION['authenticated']) && ($_SESSION['authenticated']) ) {
               $id = $_SESSION['id'] ; 
+
+              
   
               echo "<div class='avis-ajout'>";
               echo "
@@ -108,10 +110,15 @@ class vehiculeView {
               ";
   
               echo "</div>";
+
+             
           }
   
 
     }
+
+
+
     
     public function vehiculeDetailsDisplay($id){
 
@@ -141,6 +148,67 @@ class vehiculeView {
 
         $this->acceuil_controller->zone2(1,$fields["version_id"],$fields["modele_id"],$fields["marque_id"]);
 
+
+        if (isset($_SESSION['authenticated']) && ($_SESSION['authenticated']) ) {
+
+       
+        $id_user = $_SESSION['id'] ; 
+        $r = $this->vehicule_controller->getFavoris($id,$id_user);
+        $r = $r->fetch(PDO::FETCH_ASSOC);
+
+
+        if ($r){
+        echo "<div><button id='favorisSupp'>Supprimer de Favoris</button></div>";
+        echo "<div><button style='display: none;' id='favoris'>Ajouter à Favoris</button></div>";
+        }else {
+        echo "<div><button id='favoris'>Ajouter à Favoris</button></div>";
+        echo "<div><button style='display: none;' id='favorisSupp'>Supprimer de Favoris</button></div>";
+        }
+
+        echo "
+        <script>
+        $(document).ready(function() {
+            function updateButtons(isFavorite) {
+                if (isFavorite) {
+                    $('#favorisSupp').show();
+                    $('#favoris').hide();
+                } else {
+                    $('#favorisSupp').hide();
+                    $('#favoris').show();
+                }
+            }
+        
+       
+           
+        
+            $('#favoris').click(function() {
+                $.ajax({
+                    url: 'index.php?action=profile',
+                    type: 'GET',
+                    data: { vehicule_id : ".json_encode($id)." , add: 1 },
+                    success: function(response) {
+                        // Update buttons after successful addition
+                        updateButtons(true);
+                    }
+                });
+            });
+        
+            $('#favorisSupp').click(function() {
+                $.ajax({
+                    url: 'index.php?action=profile',
+                    type: 'GET',
+                    data: { vehicule_id : ".json_encode($id)." , supp: 1 },
+                    success: function(response) {
+                        // Update buttons after successful removal
+                        updateButtons(false);
+                    }
+                });
+            });
+        });
+        
+        </script>";
+      
+        }
 
 
         // avis Zone *******************
@@ -229,6 +297,9 @@ class vehiculeView {
                 hiddenFieldset.style.display = 'none'; 
             }
 
+            
+            
+           
             
 
         </script>

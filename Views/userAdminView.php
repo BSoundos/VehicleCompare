@@ -2,25 +2,24 @@
 // Les fichiers utilisés : 
 require_once('Controller/acceuilController.php');
 require_once('Controller/adminController.php');
-require_once('Controller/vehiculeController.php');
-require_once('Controller/avisController.php');
+require_once('Controller/utilisateurController.php');
 
 
-class AvisAdminView {
+class UserAdminView {
 
     private $acceuil_controller ;
     private $admin_controller ;
     private $vehicule_controller;
-    private $avisController;
+    private $userController;
 
     public function __construct() {
         $this->acceuil_controller = new acceuilController();
         $this->admin_controller = new adminController();
         $this->vehicule_controller = new Vehicule_controller();
-        $this->avisController = new avisController();
+        $this->userController = new userController();
     }
 
-    public function avisDisplay(){
+    public function usersDisplay(){
         echo"<!DOCTYPE html>
         <html>";
 
@@ -44,7 +43,7 @@ class AvisAdminView {
 
     public function filter(){
 
-        $r = $this->avisController->get_avis_vehicule_controller(); 
+        $r = $this->userController->get_nonAdmin_users_controller(); 
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
 
         $htmlContent = '';
@@ -58,37 +57,57 @@ class AvisAdminView {
             foreach ($filteredRows as $row) {
                 $htmlContent .= "
                 <tr>
-                    <td>".$row['utilisateur_id']."</td>
-                    <td>".$row['target_id']."</td>
-                    <td>".$row['commentaire']."</td>
-                    <td>".$row['statut']."</td>
-                    <td> 
-                        <a href='index.php?action=admin&page=avis&tache=refus&id=".$row['id']."'><img src='img/refuse.png'></a>
-                        <a href='index.php?action=admin&page=avis&tache=bloque&id=".$row['utilisateur_id']."'><img src='img/block.png'></a>
-                        <a href='index.php?action=admin&page=avis&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>
-                    </td>
-                    <td> 
-                        <a href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img src='img/delete.png'></a>
-                    </td>
-                </tr>";
+                        <td>".$row['id']."</td>
+                        <td>".$row['nom']."</td>
+                        <td>".$row['prenom']."</td>
+                        <td>".$row['sexe']."</td>
+                        <td>".$row['date_de_naissance']."</td>
+                        <td>".$row['nom_utilisateur']."</td>
+                        <td>".$row['statut']."</td>
+                        <td>
+                        <a href='index.php' >Voir profile</a>
+                        </td>
+
+                        <td>" ;
+                        if($row['statut'] === 'valide'){
+
+                        }
+                        else {
+                            $htmlContent .="<a href='index.php?action=admin&page=user&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>";
+                        }
+                      
+                        $htmlContent .="<a href='index.php?action=admin&page=user&tache=bloque&id=".$row['id']."' ><img src='img/block.png'></a>
+                        </td>
+                       
+                    </tr>";
             }
         } else {
             // If no filter is applied, return the original table content
             foreach ($r as $row) {
                 $htmlContent .= "
-                    <tr>
-                        <td>".$row['utilisateur_id']."</td>
-                        <td>".$row['target_id']."</td>
-                        <td>".$row['commentaire']."</td>
+                <tr>
+                        <td>".$row['id']."</td>
+                        <td>".$row['nom']."</td>
+                        <td>".$row['prenom']."</td>
+                        <td>".$row['sexe']."</td>
+                        <td>".$row['date_de_naissance']."</td>
+                        <td>".$row['nom_utilisateur']."</td>
                         <td>".$row['statut']."</td>
-                        <td> 
-                        <a href='index.php?action=admin&page=avis&tache=refus&id=".$row['id']."'><img src='img/refuse.png'></a>
-                        <a href='index.php?action=admin&page=avis&tache=bloque&id=".$row['utilisateur_id']."'><img src='img/block.png'></a>
-                        <a href='index.php?action=admin&page=avis&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>
-                    </td>
-                    <td> 
-                        <a href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img src='img/delete.png'></a>
-                    </td>
+                        <td>
+                        <a href='index.php' >Voir profile</a>
+                        </td>
+
+                        <td>" ;
+                        if($row['statut'] === 'valide'){
+
+                        }
+                        else {
+                            $htmlContent .= "<a href='index.php?action=admin&page=user&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>";
+                        }
+                      
+                        $htmlContent .="<a href='index.php?action=admin&page=user&tache=bloque&id=".$row['id']."' ><img src='img/block.png'></a>
+                        </td>
+                       
                     </tr>";
             }
         }
@@ -101,7 +120,7 @@ class AvisAdminView {
     public function displayTable(){
 
         // only the vehicules 
-        $r = $this->avisController->get_avis_vehicule_controller(); 
+        $r = $this->userController->get_nonAdmin_users_controller(); 
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
     
         // Get unique statuses from the result
@@ -130,10 +149,13 @@ class AvisAdminView {
             <thead>
                 <tr>
                     <th>Utilisateur ID</th>
-                    <th>Cible ID</th>
-                    <th>Commentaire</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Sexe</th>
+                    <th>Date de naissance</th>
+                    <th>Nom utilisateur</th>
                     <th>Statut</th>
-                    <th>Actions</th>
+                    <th>Profile</th>
                     <th>Gestion</th>
                 </tr>
             </thead>
@@ -145,18 +167,25 @@ class AvisAdminView {
             foreach ($filteredRows as $row) {
                 echo "
                     <tr>
-                        <td>".$row['utilisateur_id']."</td>
-                        <td>".$row['target_id']."</td>
-                        <td>".$row['commentaire']."</td>
+                        <td>".$row['id']."</td>
+                        <td>".$row['nom']."</td>
+                        <td>".$row['prenom']."</td>
+                        <td>".$row['sexe']."</td>
+                        <td>".$row['date_de_naissance']."</td>
+                        <td>".$row['nom_utilisateur']."</td>
                         <td>".$row['statut']."</td>
-                        <td> 
-                        <a href='index.php?action=admin&page=avis&tache=refus&id=".$row['id']."'><img src='img/refuse.png'></a>
-                        <a href='index.php?action=admin&page=avis&tache=bloque&id=".$row['utilisateur_id']."'><img src='img/block.png'></a>
-                        <a href='index.php?action=admin&page=avis&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>
-                    </td>
-                    <td> 
-                        <a href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img src='img/delete.png'></a>
-                    </td>
+                        <td>
+                        <a href='index.php' >Voir profile</a>
+                        </td>
+
+                        <td>" ;
+                        if($row['statut'] !== 'valide'){
+                            echo "<a href='index.php?action=admin&page=user&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>";
+                        }
+
+                        echo"<a href='index.php?action=admin&page=user&tache=bloque&id=".$row['id']."' ><img src='img/block.png'></a>
+                        </td>
+                       
                     </tr>";
             }
                 
@@ -175,7 +204,7 @@ class AvisAdminView {
 
                         $.ajax({
                             type: 'POST',
-                            url: 'index.php?action=admin&page=avis&tache=filter', 
+                            url: 'index.php?action=admin&page=user&tache=filter', 
                             data: { statusFilter: selectedStatus },
                             success: function (data) {
                                 $('#myTable').DataTable().destroy();

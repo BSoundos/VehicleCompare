@@ -43,6 +43,21 @@ class adminView {
 
     }
 
+
+    public function jQueryForTables(){
+        echo "
+            <script>
+                $(document).ready(function () {
+                    
+                    $('#myTable').DataTable();
+
+                    
+                });
+            </script>
+            ";
+    }
+
+
 }
 
 ?>

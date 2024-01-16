@@ -6,6 +6,7 @@ require_once('Views/vehiculeAdminView.php');
 require_once('Views/marqueAdminView.php');
 require_once('Views/avisAdminView.php');
 require_once('Views/newsAdminView.php');
+require_once('Views/userAdminView.php');
 require_once 'Model/adminModel.php';
 
 class adminController {
@@ -36,13 +37,15 @@ class adminController {
         $v->newsDisplay();
     }
 
+    public function usersAdminGenerate(){
+        $v = new UserAdminView();
+        $v->usersDisplay();
+    }
+
     public function newsDetailsAdminGenerate($id){
         $v = new NewsAdminView();
         $v->newsDetailsDisplay($id);
     }
-
-    
-
 
     public function deleteGenerate(){
         $v = new marqueAdminView();
@@ -52,6 +55,11 @@ class adminController {
     public function manageLinksGenerate(){
         $v = new adminView();
         $v->manageLinks();
+    }
+
+    public function jQueryForTables(){
+        $v = new adminView();
+        $v->jQueryForTables();
     }
 
     public function get_images_controller(){

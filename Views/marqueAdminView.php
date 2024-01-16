@@ -32,17 +32,17 @@ class marqueAdminView{
         $this->admin_controller->manageLinksGenerate();
 
         echo "<div class='links' align='center'>
-        <a href='index.php?action=admin&page=marque&tache=ajout'>Ajouter une marque</a>
-        <a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter un modele</a>
-        <a href='index.php?action=admin&page=version&tache=ajout'>Ajouter une version</a>
-        <a href='index.php?action=admin&page=version&tache=supp'>Supprimer un modele ou une version</a>
+        <a href='index.php?action=admin&page=marque&tache=ajout'>Ajouter marque</a>
+        <a href='index.php?action=admin&page=modele&tache=ajout'>Ajouter modele</a>
+        <a href='index.php?action=admin&page=version&tache=ajout'>Ajouter version</a>
+        <a href='index.php?action=admin&page=version&tache=supp'>Supprimer modele/version</a>
         
         </div>";
 
         $this->displayTable();
 
 
-        
+        $this->admin_controller->jQueryForTables();
         //$this->acceuil_controller->footer();
 
         echo "</div></body></html>";
@@ -56,7 +56,7 @@ class marqueAdminView{
         // the table 
        echo "
        <div class='table-admin'>
-            <table>
+            <table id='myTable'>
             <thead>
                 <tr>
                     <th></th>";
@@ -91,8 +91,8 @@ class marqueAdminView{
                         <td>".$row['annee_creation']."</td>
                         <td><a href='".$row['lien']."'>lien</a></td>
                         <td> 
-                        <a href='index.php?action=admin&page=marque&tache=modif&id=".$row['id']."' >Modifier marque</a>
-                        <a href='index.php?action=admin&page=marque&tache=supp&id=".$row['id']."' >Supprimer marque</a>
+                        <a href='index.php?action=admin&page=marque&tache=modif&id=".$row['id']."' ><img src='img/edit.png'></a>
+                        <a href='index.php?action=admin&page=marque&tache=supp&id=".$row['id']."' ><img src='img/delete.png'></a>
                         </td>
                         <td>
                         <a href='index.php?action=admin&page=vehicule&id_marque=".$row['id']."' >Gestion vehicules</a>
@@ -126,7 +126,7 @@ class marqueAdminView{
             <select id='select-models' name='id'>";
                 
                     $modeles = $this->modeleController->get_Modeles_controller();
-                    $modeles = $r->fetchAll(PDO::FETCH_ASSOC);
+                    $modeles = $modeles->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($modeles as $modele) {
                         echo '<option value='.$modele['id'].'>'.$modele['nom'].'</option>';
                     }
@@ -140,7 +140,7 @@ class marqueAdminView{
             <select id='version_select' name='id'>";
                 
                     $modeles = $this->version_controller->get_versions_controller();
-                    $modeles = $r->fetchAll(PDO::FETCH_ASSOC);
+                    $modeles = $modeles->fetchAll(PDO::FETCH_ASSOC);
                     foreach ($modeles as $modele) {
                         echo '<option value='.$modele['id'].'>'.$modele['nom'].'</option>';
                     }

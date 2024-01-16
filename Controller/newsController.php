@@ -17,6 +17,20 @@ class newsController {
     }
 
 
+    public function get_news_byId_controller($id){
+        $mtf = new newsModel();
+        $r = $mtf->get_news_byId($id);
+
+        return $r ; 
+    }
+
+    public function get_newsdetails_byId_controller($id){
+        $mtf = new newsModel();
+        $r = $mtf->get_newsdetails_byId($id);
+
+        return $r ; 
+    }
+
     public function get_news_controller(){
         $mtf = new newsModel();
         $r = $mtf->get_news();

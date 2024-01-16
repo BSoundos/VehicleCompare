@@ -9,7 +9,7 @@ class avisModel {
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from avis";
+        $query = "select * from avis where statut='valide'";
 
         $r = $this->bdd->requete($c,$query);
         
@@ -18,7 +18,7 @@ class avisModel {
         return $r ; 
     }
 
-    public function get_avis_vehicule(){
+    public function get_avis_vehicule_all(){
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
@@ -32,11 +32,26 @@ class avisModel {
         return $r ; 
     }
 
+
+    public function get_avis_marque(){
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+        
+        $query = "select * from avis where type=1 and statut='valide'";
+
+        $r = $this->bdd->requete($c,$query);
+        
+       
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
+    }
+
     public function get_avis_byTargetId($id,$type){
         $this->bdd = new connexion_model(); 
         $c = $this->bdd->connexion();
         
-        $query = "select * from avis where type=$type AND  target_id=$id";
+        $query = "select * from avis where type=$type AND  target_id=$id and statut='valide' ";
 
         $r = $this->bdd->requete($c,$query);
         
@@ -96,6 +111,20 @@ class avisModel {
         $query->execute();
 
         $this->bdd->deconnexion($c);
+
+    }
+
+    public function supprimer($id){
+
+        $this->bdd = new connexion_model(); 
+        $c = $this->bdd->connexion();
+
+        $query = "DELETE FROM avis WHERE id =$id";
+
+        $r = $this->bdd->requete($c,$query);
+        
+        $this->bdd->deconnexion($c);
+        return $r ; 
 
     }
 

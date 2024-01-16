@@ -40,14 +40,15 @@ class acceuilView {
         
 
         if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
-            echo"<a href='index.php?action=logout'>LOGOUT</a>";
+            echo"<a href='index.php?action=logout'>LOGOUT</a></div>";
+            echo"<a href='index.php?action=profile'>Profile</a>";
         } 
         else {
-            echo"<button id='loginLink'>LOGIN</button>";
+            echo"<button id='loginLink'>LOGIN</button></div>";
             
         } 
 
-        echo"</div>
+        echo"
         </header>
         ";
 
