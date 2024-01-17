@@ -22,7 +22,7 @@ class zone2View {
         if($k == 0){
             echo "<form id='vehicule-form' action='index.php?action=comparateur' method='post'>";
         } 
-        else // to trat the case when we compare other vehicules to a specific vehicule from its details page 
+        else // to treat the case when we compare other vehicules to a specific vehicule from its details page 
         {
             echo "<form id='vehicule-form' action='index.php?action=comparateur&compare=true&version1=$version1&modele1=$modele1&marque1=$marque1' method='post'>";
         }

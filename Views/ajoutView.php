@@ -59,6 +59,7 @@ class ajoutView {
     }
 
 
+    // formulaire d'ajout d'une marque 
     public function ajoutDisplayMarque(){
         echo"<!DOCTYPE html>
         <html>";
@@ -70,7 +71,6 @@ class ajoutView {
         <h2>Ajouter marque</h2>";
         echo"<form action='index.php?action=admin&page=marque' method='post' enctype='multipart/form-data'>";
 
-       
 
         $result = $this->marqueController->get_firstx_marques_controller(1);
         $result = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -102,13 +102,12 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
 
 
-
+    // formulaire d'ajout d'un modele 
     public function ajoutDisplayModele(){
         echo"<!DOCTYPE html>
         <html>";
@@ -156,12 +155,13 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
 
 
+    // formulaire d'ajout d'une version 
     public function ajoutDisplayVersion(){
         echo"<!DOCTYPE html>
         <html>";
@@ -175,7 +175,7 @@ class ajoutView {
 
        
 
-        $result = $this->newsController->get_news_controller();
+        $result = $this->version_controller->get_versions_controller();
         $result = $result->fetchAll(PDO::FETCH_ASSOC);
           
         foreach ($result as $row) {
@@ -210,86 +210,14 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
 
 
-    // public function ajoutDisplayAvis(){
-    //     echo"<!DOCTYPE html>
-    //     <html>";
 
-    //     $this->acceuil_controller->head();
-    //     $this->acceuil_controller->header();
-
-    //     echo "<div class='ajout-container'>
-    //     <h2>Ajouter avis</h2>";
-    //     echo"<form action='index.php?action=admin&page=avis' method='post' enctype='multipart/form-data'>";
-
-       
-
-    //     $result = $this->avisController->get_avis_controller();
-    //     $result = $result->fetchAll(PDO::FETCH_ASSOC);
-       
-    //     foreach ($result as $row) {
-    //         foreach ($row as $field => $value) {
-    //             if ( $field === 'id' || $field === 'type' || $field === 'statut'){
-
-
-    //             }
-    //             else if ($field === 'note') {
-    //                 echo "<label for=".$field.">".$field.":</label>
-    //                 <input type='number' name='note' min='1' max='5' required>";
-
-    //             }
-    //             else if ($field === 'target_id') {
-    //                 echo "<label for='target'>Vehicule:</label>
-    //                 <select id='target' name='target_id'>";
-                    
-    //                 foreach($this->targets as $row){
-    //                     echo"<option value=".$row['id'].">".$row['nom']."</option>";
-    //                 }
-        
-    //                 echo"
-                    
-    //                 </select>";
-
-    //             }
-    //             else  if ($field === 'utilisateur_id') {
-    //                 echo "<label for='utilisateur_id'>Utilisateur:</label>
-    //                 <select id='utilisateur_id' name='utilisateur_id'>";
-                    
-    //                 foreach($this->users as $row){
-    //                     echo"<option value=".$row['id'].">".$row['nom_utilisateur']."</option>";
-    //                 }
-        
-    //                 echo"
-                    
-    //                 </select>";
-
-    //             }
-    //             else {
-    //                 echo "<label for=".$field.">".$field.":</label>
-    //                 <input type='text' id=".$field." name=".$field." required>";
-    //             }
-
-    //         }
-    //         break;
-    //     }
-
-        
-
-    //     echo "<button name='submit' type='submit'>Submit</button>
-    //     </form></div>"; 
-
-    //     $this->acceuil_controller->footer();
-
-    //     echo "</div></body></html>";
-    // }
-
-
-    
+    // formulaire d'ajout d'une news 
     public function ajoutDisplayNews(){
         echo"<!DOCTYPE html>
         <html>";
@@ -330,12 +258,12 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
 
-
+    // formulaire d'ajout d'une news details 
     public function ajoutDisplayNewsDetails($newsId){
         echo"<!DOCTYPE html>
         <html>";
@@ -377,12 +305,12 @@ class ajoutView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
 
-
+    // formulaire d'ajout d'une vehicule d'une marque 
     public function formDisplay($id_marque){
 
         echo"<!DOCTYPE html>
@@ -471,7 +399,7 @@ class ajoutView {
 
         
         
-         $this->acceuil_controller->footer();
+         
 
          echo "</div></body></html>";
 

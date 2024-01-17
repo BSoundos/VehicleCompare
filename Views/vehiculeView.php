@@ -10,7 +10,7 @@ class vehiculeView {
     private $acceuil_controller ;
     private $vehicule_controller ; 
     private $version_controller ; 
-    private $image_controller ; 
+ 
 
     private $modeleController;
     private $marqueController;
@@ -23,7 +23,7 @@ class vehiculeView {
         $this->admin_controller = new adminController();
         $this->acceuil_controller = new acceuilController();
         $this->vehicule_controller = new Vehicule_controller();
-        $this->image_controller = new image_controller();
+      
         $this->version_controller = new Version_controller();
         $this->comparaison_controller = new Comparaison_controller();
         $this->modeleController = new Modele_controller();
@@ -35,7 +35,7 @@ class vehiculeView {
 
     public function vehicule_details($result){
 
-        echo "<div class='vehicule-details'>";
+        echo "<div class='vehicule_details'>";
             echo "<h2>".$result['nom']."</h2>"; 
          
             echo '<img src='.$result["image_lien"].' >';
@@ -318,8 +318,6 @@ class vehiculeView {
 
         $this->acceuil_controller->head();
         $this->acceuil_controller->header();
-
-        $this->admin_controller->manageLinksGenerate();
 
         $r = $this->vehicule_controller->get_vehicule_byId_controller($id);
         $result = $r->fetch(PDO::FETCH_ASSOC);

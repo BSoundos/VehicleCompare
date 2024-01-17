@@ -79,6 +79,66 @@ class ProfileView {
 
     }
 
+    public function profileForAdminGenerate($id){
+        // infos personnelle 
+        echo"<!DOCTYPE html>
+        <html>";
+
+
+        $this->acceuil_controller->head();
+        echo"<body>";
+        $this->acceuil_controller->header();
+        $this->acceuil_controller->Menu();
+
+
+        $r = $this->user_controller->get_user_byID($id);
+        $r = $r->fetch(PDO::FETCH_ASSOC);
+
+
+        echo "<div class='contact-info'>";
+
+        echo "<h1>Informations personnelles:</h1>";
+
+        echo "<p>username : ".$r['nom_utilisateur']." </p>";
+        echo "<p>nom : ".$r['nom']."</p>";
+        echo "<p>prenom : ".$r['prenom']."</p>";
+
+        echo "<h1>Liste des véhicules favoris:</h1>";
+
+
+        echo "</div>";
+
+
+
+        $r = $this->vehicule_controller->getFavoris_byUserID($id);
+        $r = $r->fetchAll(PDO::FETCH_ASSOC);
+
+
+        echo "<div class='favoris-vehicules'>";
+        foreach ($r as $row){
+            echo "<div class='vehicule' >";
+
+            echo "<p>".$row['nom']."</p>";
+            echo "<img src=".$row['image_lien']." ><br>";
+            echo "<a href='index.php?action=vehicules&id=".$row['id']."'>Voir description de cette vehicule.</a>";
+    
+            echo"</div>";
+
+        }
+        echo "</div>";
+
+
+
+        $this->acceuil_controller->footer();
+
+        echo "</body></html>";
+
+
+
+    }
+
+    
+
 
 }
 

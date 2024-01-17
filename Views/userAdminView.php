@@ -35,7 +35,7 @@ class UserAdminView {
 
 
         
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
@@ -65,7 +65,7 @@ class UserAdminView {
                         <td>".$row['nom_utilisateur']."</td>
                         <td>".$row['statut']."</td>
                         <td>
-                        <a href='index.php' >Voir profile</a>
+                        <a href='index.php?action=adminseeprofile&id=".$row['id']."' >Voir profile</a>
                         </td>
 
                         <td>" ;
@@ -94,7 +94,7 @@ class UserAdminView {
                         <td>".$row['nom_utilisateur']."</td>
                         <td>".$row['statut']."</td>
                         <td>
-                        <a href='index.php' >Voir profile</a>
+                        <a href='index.php?action=adminseeprofile&id=".$row['id']."' >Voir profile</a>
                         </td>
 
                         <td>" ;
@@ -175,7 +175,7 @@ class UserAdminView {
                         <td>".$row['nom_utilisateur']."</td>
                         <td>".$row['statut']."</td>
                         <td>
-                        <a href='index.php' >Voir profile</a>
+                        <a href='index.php?action=adminseeprofile&id=".$row['id']."' >Voir profile</a>
                         </td>
 
                         <td>" ;

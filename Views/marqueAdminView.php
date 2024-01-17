@@ -41,9 +41,10 @@ class marqueAdminView{
 
         $this->displayTable();
 
+        
 
         $this->admin_controller->jQueryForTables();
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
@@ -92,7 +93,7 @@ class marqueAdminView{
                         <td><a href='".$row['lien']."'>lien</a></td>
                         <td> 
                         <a href='index.php?action=admin&page=marque&tache=modif&id=".$row['id']."' ><img src='img/edit.png'></a>
-                        <a href='index.php?action=admin&page=marque&tache=supp&id=".$row['id']."' ><img src='img/delete.png'></a>
+                        <a id='deleteLink' href='index.php?action=admin&page=marque&tache=supp&id=".$row['id']."' ><img onclick='showConfirmation()'  src='img/delete.png'></a>
                         </td>
                         <td>
                         <a href='index.php?action=admin&page=vehicule&id_marque=".$row['id']."' >Gestion vehicules</a>
@@ -152,7 +153,7 @@ class marqueAdminView{
         
         </div>";
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
 

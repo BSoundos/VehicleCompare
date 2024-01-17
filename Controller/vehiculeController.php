@@ -54,6 +54,14 @@ class Vehicule_controller {
         return $r ; 
     }
 
+    public function get_principale_vehicule_byMarqueId($id){
+        $mtf = new vehicule_model();
+        $r = $mtf->get_principale_vehicule_byMarqueId($id);
+
+        return $r ; 
+    }
+
+
     public function get_marque_modele_version_annee_controller(){
         $mtf = new vehicule_model();
         $r = $mtf->get_marque_modele_version_annee();

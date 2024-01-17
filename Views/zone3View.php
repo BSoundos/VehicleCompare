@@ -11,14 +11,14 @@ class zone3View {
 
     private $vehiculeController;
     private $versionController;
-    private $imageController;
+
     private $modeleController;
     private $marqueController;
 
     public function __construct() {
         $this->vehiculeController = new Vehicule_controller();
         $this->versionController = new Version_controller();
-        $this->imageController = new image_controller();
+       
         $this->modeleController = new Modele_controller();
         $this->marqueController = new marqueController();
     }
@@ -29,7 +29,7 @@ class zone3View {
         echo "<div class='zone3'>";
         
         echo "<div class='guide-button' >
-            <button><a>Guide d'achat</a></button>
+            <button><a href='index.php?action=guide'>Guide d'achat</a></button>
         </div>";
 
 

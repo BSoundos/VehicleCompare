@@ -67,10 +67,12 @@ header li img {
     position: absolute;
     top: 31.5px;
     right: 20px;
-    color: white;
-    background-color: #808080;
     padding: 5px 15px;
-    border-radius: 4%;
+}
+
+#profile img {
+    height: 30px;
+    width: 30px;
 }
 
 
@@ -124,7 +126,7 @@ footer li {
 
 
 footer li a {
-    color: azure;
+    color: white;
 }
 
 /* ---------------------------- The Zone1 style ---------------------------- */
@@ -432,6 +434,7 @@ textarea {
 
 .manage-links {
     margin-top: 100px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -469,6 +472,16 @@ textarea {
     height: 30px;
     width: 30px;
 }
+
+
+.vehicule_details {
+    margin: 20px;
+}
+
+.vehicule_details img {
+    margin-bottom: 20px;
+}
+
 
 /*****************             ajout        *****************/
 .ajout-container {

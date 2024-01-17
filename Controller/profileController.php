@@ -12,6 +12,11 @@ class ProfileController {
         $v = new ProfileView();
         $v->profileDisplay($id);
     }
+
+    public function profileForAdminGenerate($id){
+        $v = new ProfileView();
+        $v->profileForAdminGenerate($id);
+    }
 }
 
 ?>
