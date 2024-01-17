@@ -22,11 +22,12 @@ class adminView {
 
         $this->manageLinks();
         
-        $this->acceuil_controller->footer();
 
         echo "</div></body></html>";
     }
 
+
+    // Afficher les 5 images avec les liens pour les taches de gestions 
     public function manageLinks(){
 
         echo"<div class='manage-links'>";
@@ -40,10 +41,10 @@ class adminView {
 
         echo"</div>";
 
-
     }
 
 
+    // Pour les fonctions de triages et de recherche
     public function jQueryForTables(){
         echo "
             <script>

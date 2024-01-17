@@ -29,19 +29,15 @@ class AvisAdminView {
 
         $this->admin_controller->manageLinksGenerate();
 
-      
-
-
         $this->displayTable();
 
+        echo "</div>";
 
-        
-        $this->acceuil_controller->footer();
-
-        echo "</div></body></html>";
+        echo"</body></html>";
     }
 
 
+    // fonction utilisée pour le filtrage
     public function filter(){
 
         $r = $this->avisController->get_avis_vehicule_controller(); 
@@ -68,7 +64,7 @@ class AvisAdminView {
                         <a href='index.php?action=admin&page=avis&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>
                     </td>
                     <td> 
-                        <a href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img src='img/delete.png'></a>
+                        <a id='deleteLink' href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img onclick='showConfirmation()'  src='img/delete.png'></a>
                     </td>
                 </tr>";
             }
@@ -87,7 +83,7 @@ class AvisAdminView {
                         <a href='index.php?action=admin&page=avis&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>
                     </td>
                     <td> 
-                        <a href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img src='img/delete.png'></a>
+                        <a id='deleteLink' href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img onclick='showConfirmation()' src='img/delete.png'></a>
                     </td>
                     </tr>";
             }
@@ -104,7 +100,7 @@ class AvisAdminView {
         $r = $this->avisController->get_avis_vehicule_controller(); 
         $r = $r->fetchAll(PDO::FETCH_ASSOC);
     
-        // Get unique statuses from the result
+        // get unique statuses 
         $statuses = array_unique(array_column($r, 'statut'));
     
         // the table 
@@ -155,7 +151,7 @@ class AvisAdminView {
                         <a href='index.php?action=admin&page=avis&tache=valide&id=".$row['id']."' ><img src='img/validate.png'></a>
                     </td>
                     <td> 
-                        <a href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img src='img/delete.png'></a>
+                        <a id='deleteLink' href='index.php?action=admin&page=avis&tache=supp&id=".$row['id']."'><img  onclick='showConfirmation()'  src='img/delete.png'></a>
                     </td>
                     </tr>";
             }
@@ -164,6 +160,7 @@ class AvisAdminView {
             </tbody>
             </table></div>";
 
+            // pour le filtrage
             echo "
             <script>
                 $(document).ready(function () {

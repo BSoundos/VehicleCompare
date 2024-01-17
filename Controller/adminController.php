@@ -62,6 +62,7 @@ class adminController {
         $v->jQueryForTables();
     }
 
+
     public function get_images_controller(){
         $mtf = new adminModel();
         $r = $mtf->get_images();

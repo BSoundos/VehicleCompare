@@ -85,13 +85,19 @@ class avisView {
         echo "<img src=".$vehicule['image_lien']." ><br>";
         echo "<a href='index.php?action=vehicules&id=".$vehicule['id']."'>Voir description de cette vehicule.</a>";
 
+        // if connected u can add avis 
+        $this->addAvis($vehicule['id'],0);
+
+        
+        
+
         echo"
         <h1>Toutes les avis de cette véhicule :</h1>
         <div id='reviews-container' class='all-avis'>
     
         </div>
     
-        <div id='pagination' class='pagination'>
+        <div id='pagination' class='pagination centered'>
       
         </div>
         ";
@@ -100,6 +106,7 @@ class avisView {
         echo"</div>";
 
 
+        // pour la pagination
         echo " 
 
         <script>
@@ -143,13 +150,10 @@ class avisView {
 
         $totalReviews = count($avis);
 
-        // Define the number of reviews to show per page
         $reviewsPerPage = 5;
 
-        // Calculate the total number of pages
         $totalPages = ceil($totalReviews / $reviewsPerPage);
 
-        // Get the current page number from the query string
         $pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
 
         // Display pagination links
@@ -169,19 +173,14 @@ class avisView {
   
         $avis =   isset($_GET['avis']) ? $_GET['avis'] : [];
 
-        // Calculate the total number of reviews
         $totalReviews = count($avis);
 
-        // Define the number of reviews to show per page
         $reviewsPerPage = 5;
 
-        // Get the current page number from the query string
         $pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
 
-        // Calculate the starting index for the reviews on the current page
         $startIndex = ($pageNumber - 1) * $reviewsPerPage;
 
-        // Get the reviews for the current page
         $reviewsForPage = array_slice($avis, $startIndex, $reviewsPerPage);
 
         // Display the reviews for the current page
@@ -230,35 +229,8 @@ class avisView {
 
     }
 
-
-
-    public function avisDisplay2part($target_id,$type){
-        // Les 3 avis les plus appréciés : 
-
-        $x = 3 ; 
-        $avis = $this->avisController->get_best_xavis_byTargetId_controller($x,$target_id,$type);
-        $avis = $avis->fetchAll(PDO::FETCH_ASSOC);
-
-        echo "<div class='avis-apprec'>
-        <h3>Les 3 avis les plus appréciés</h3>";
-        
-        $x = 1 ; 
-        foreach($avis as $row){
-
-            echo "<div class='avis'>";
-            echo "<h5>".$row['note']." / 5 : </h5><p>".$row['commentaire']."</p>";
-            
-            echo "</div>";
-
-            $x++;
-        }
-
-        echo "<a href='index.php?action=avis&id=".$target_id."&type=0'>Voir toutes les avis</a>"; 
-        echo"</div>";
-
-
-
-        // Donner une note et un avis pour les utilisateurs connectés :
+    
+    public function addAvis($target_id,$type){
         if (isset($_SESSION['authenticated']) && ($_SESSION['authenticated']) ) {
             $id = $_SESSION['id'] ; 
 
@@ -289,6 +261,37 @@ class avisView {
 
             echo "</div>";
         }
+    }
+
+
+    public function avisDisplay2part($target_id,$type){
+        // Les 3 avis les plus appréciés : 
+
+        $x = 3 ; 
+        $avis = $this->avisController->get_best_xavis_byTargetId_controller($x,$target_id,$type);
+        $avis = $avis->fetchAll(PDO::FETCH_ASSOC);
+
+        echo "<div class='avis-apprec'>
+        <h3>Les 3 avis les plus appréciés</h3>";
+        
+        $x = 1 ; 
+        foreach($avis as $row){
+
+            echo "<div class='avis'>";
+            echo "<h5>".$row['note']." / 5 : </h5><p>".$row['commentaire']."</p>";
+            
+            echo "</div>";
+
+            $x++;
+        }
+
+        echo "<a href='index.php?action=avis&id=".$target_id."&type=0'>Voir toutes les avis</a>"; 
+        echo"</div>";
+
+
+
+        // Donner une note et un avis pour les utilisateurs connectés :
+        $this->addAvis($target_id,$type);
 
 
     }

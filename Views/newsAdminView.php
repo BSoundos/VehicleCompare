@@ -39,7 +39,8 @@ class NewsAdminView {
 
         $this->admin_controller->jQueryForTables();
         
-        $this->acceuil_controller->footer();
+        
+        
 
         echo "</div></body></html>";
     }
@@ -88,7 +89,7 @@ class NewsAdminView {
                             </td>
                             <td> 
                             <a href='index.php?action=admin&page=news&id=".$row['id']."&tache=modif' ><img src='img/edit.png'></a>
-                            <a href='index.php?action=admin&page=news&id=".$row['id']."&tache=supp' ><img src='img/delete.png'></a>
+                            <a id='deleteLink'  href='index.php?action=admin&page=news&id=".$row['id']."&tache=supp' ><img  onclick='showConfirmation()'  src='img/delete.png'></a>
                             </td>
                     
                         </tr>";
@@ -120,9 +121,10 @@ class NewsAdminView {
         $this->displayTableDetails($id);
 
         $this->admin_controller->jQueryForTables();
+        
 
         
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
 
@@ -159,7 +161,7 @@ class NewsAdminView {
                         <td><img src =".$row['image_lien']." ></td>
         
                         <td> 
-                        <a href='index.php?action=admin&page=newsdetails&id=".$row['id']."&tache=supp&id_news=".$row['news_id']."' ><img src='img/delete.png'></a>
+                        <a id='deleteLink'  href='index.php?action=admin&page=newsdetails&id=".$row['id']."&tache=supp&id_news=".$row['news_id']."' ><img  onclick='showConfirmation()'  src='img/delete.png'></a>
                         <a href='index.php?action=admin&page=newsdetails&id=".$row['id']."&tache=modif' ><img src='img/edit.png'></a>
                         </td>
                 

@@ -39,54 +39,49 @@ $contact = new ContactController();
 
 session_start();
 
+
+// Si les informations d'authentification ne sont pas correctes
 if (isset($_GET['error']) && $_GET['error'] === 'incorrect') {
     echo "<script>alert('Nom d\'utilisateur ou mot de passe incorrect.');</script>";
 }
 
 
-// Création d'un routeur.
+// Création d'un routeur :
 if (!isset($_GET['action'])) {
-    $acceuil->acceuilGenerate();
+    $acceuil->acceuilGenerate(); 
 } else {
     $page = $_GET['action'];
     switch ($page) {
-        case 'contact':
-            if(isset($_GET['send'])){
-                $name = $_POST["name"];
-                $email = $_POST["email"];
-                $message = $_POST["message"];
-
-                $contact->sendEmail($name,$email,$message);
-            }
-            else{
-                $contact->ContactDisplay();
-            }
-
+        case 'contact': 
+           
+            $contact->ContactDisplay();
             break;
 
-        case 'guide': 
+        case 'guide':
+
             $guide->guideDisplay();
             break;
 
         case 'comparateur':
+
             $comparateur->comparateurGenerate();  
             break; 
 
         case 'news':
             if (isset($_GET['id'])) {
                 $newsId = $_GET['id'];
-                $news->newsDetailsGenerate($newsId);
+                $news->newsDetailsGenerate($newsId); // affichage de la page de newsDetails du news ayant id=$newsId
             } else {
-                $news->newsGenerate();
+                $news->newsGenerate(); // affichage de la page contenant toutes les news 
             }
             break ;
 
         case 'marques': 
             if (isset($_GET['id'])) {
                 $marqueId = $_GET['id'];
-                $marques->marqueDetailsGenerate($marqueId);
+                $marques->marqueDetailsGenerate($marqueId); // page details d'une marque 
             } else {
-                $marques->marquesGenerate(); 
+                $marques->marquesGenerate(); // page principale de toutes les marques
             }
             break ;
              
@@ -100,33 +95,17 @@ if (!isset($_GET['action'])) {
         case 'vehicules-carac':
             if (isset($_GET['id'])) {
                 $vehiculeId = $_GET['id'];
-                $vehicules->vehiculeCaracGenerate($vehiculeId);
+                $vehicules->vehiculeCaracGenerate($vehiculeId); // les caractéristique d'une véhicule
             }
             break ;
 
         case 'avis':
-            if (isset($_GET['load'])){
+            if (isset($_GET['load'])){ // for loading les avis 
                 $avis->load();
-               
-
+    
             }
-            elseif (isset($_GET['page'])){
+            elseif (isset($_GET['page'])){ // for pagination links 
                 $avis->paginate();
-               
-
-            }
-            elseif (isset($_GET['id']) && isset($_GET['type'])) {
-                // afficher la page des avis // still mazal
-                $targetId = $_GET['id'];
-                $type = $_GET['type'];
-                $avis->avisDetailsGenerate($targetId,$type);
-            }
-            elseif (isset($_GET['marque_id'])){
-                // afficher la liste des voitures de cette marque (images + noms)
-                // when an image is clicked ==> avisDetailsGenerate
-                $id_marque = $_GET['marque_id'];
-                $avis->avisInsideDisplay($id_marque);
-
 
             }
             elseif (isset($_POST["vehiculeAvis"])){
@@ -139,6 +118,19 @@ if (!isset($_GET['action'])) {
                 // ajouter avis marque 
 
                 $avis->ajoutMarqueAvis($_POST);
+
+            }
+            elseif (isset($_GET['id']) && isset($_GET['type'])) {
+                // afficher la page des avis 
+                $targetId = $_GET['id'];
+                $type = $_GET['type'];
+                $avis->avisDetailsGenerate($targetId,$type);
+            }
+            elseif (isset($_GET['marque_id'])){
+                // afficher la liste des voitures de cette marque et voir avis d'une voiture choisi
+                $id_marque = $_GET['marque_id'];
+                $avis->avisInsideDisplay($id_marque);
+
 
             }
             else {
@@ -159,7 +151,12 @@ if (!isset($_GET['action'])) {
         
             $login->logoutUser();
             break;
-        
+
+        case 'adminseeprofile':
+            $id = $_GET['id'];// the user access 
+            $profile->profileForAdminGenerate($id);
+
+            break;
         case 'profile':
             if (isset($_SESSION['id']) && isset($_GET['supp']) && isset($_GET['vehicule_id'])){
                 // supp favoris
@@ -176,9 +173,7 @@ if (!isset($_GET['action'])) {
                 $profile->profileGenerate($id);
                     
             }
-            
-                
-            
+
             
             break;
 
@@ -210,10 +205,10 @@ if (!isset($_GET['action'])) {
                 $page = $_GET['page'];
                 switch ($page) {
 
-                    case 'vehicule': /*********************************  **************************** */
+                    case 'vehicule': /************************************************************* */
                         if (isset($_GET['tache'])) {
                             $tache = $_GET['tache'];
-                            switch ($tache) {
+                            switch ($tache) { // génération des formulaires 
                                 case 'ajout' : 
                                     $id_marque = $_GET['id_marque'];
                                     $admin_ajout->ajoutGenerate($id_marque);
@@ -232,11 +227,9 @@ if (!isset($_GET['action'])) {
 
                             }
                         }
-                        else if (isset($_POST["submit"])) {
+                        else if (isset($_POST["submit"])) { // soit ajout ou modification
 
                             if ($_FILES['image']['error'] !== 4) 
-                            // aucun fichier selectionné 
-                            // update case only (input without required)
                             {
                                 $targetFolder = 'img/'; 
                                 $targetFileName = $targetFolder . basename($_FILES['image']['name']);
@@ -250,6 +243,8 @@ if (!isset($_GET['action'])) {
                                 $image = $targetFileName;
                             }
                             else {
+                                 // aucun fichier selectionné 
+                                 // le cas de modification avec image non changée (image input without required)
                                 $image = null ; 
                             }
                 
@@ -489,8 +484,6 @@ if (!isset($_GET['action'])) {
 
 
                             if ($_FILES['image']['error'] !== 4) 
-                            // aucun fichier selectionné 
-                            // update case only (input without required)
                             {
                                 $targetFolder = 'img/'; 
                                 $targetFileName = $targetFolder . basename($_FILES['image']['name']);
@@ -558,8 +551,6 @@ if (!isset($_GET['action'])) {
 
 
                             if ($_FILES['image']['error'] !== 4) 
-                            // aucun fichier selectionné 
-                            // update case only (input without required)
                             {
                                 $targetFolder = 'img/'; 
                                 $targetFileName = $targetFolder . basename($_FILES['image']['name']);
@@ -638,7 +629,7 @@ if (!isset($_GET['action'])) {
         }
         else 
         {
-            $acceuil->acceuilGenerate();
+            $acceuil->acceuilGenerate(); // access à la page admin par un non admin
         }
              
 

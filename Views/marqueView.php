@@ -7,7 +7,7 @@ class marqueView {
 
     private $acceuil_controller ;
     private $news_controller ; 
-    private $image_controller ; 
+  
     private $marque_controller;
     private $modele_controller;
     private $vehicule_controller;
@@ -17,7 +17,7 @@ class marqueView {
     public function __construct() {
         $this->acceuil_controller = new acceuilController();
         $this->news_controller = new newsController();
-        $this->image_controller = new image_controller();
+       
         $this->marque_controller = new marqueController();
         $this->modele_controller = new Modele_controller();
         $this->vehicule_controller = new Vehicule_controller();
@@ -60,8 +60,8 @@ class marqueView {
 
     public function principalVehicules($id){
 
-        // will be changed to only principal=True
-        $r = $this->vehicule_controller->get_vehicule_byMarqueId_controller($id); 
+       
+        $r = $this->vehicule_controller->get_principale_vehicule_byMarqueId($id); 
         foreach($r as $row){
 
             echo " <div class='marque'>";

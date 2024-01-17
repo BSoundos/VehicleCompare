@@ -175,8 +175,8 @@ VALUES
 INSERT INTO Conseil (titre, contenu, image_id)
 VALUES
   ('Conseils d''entretien', 'Découvrez comment entretenir votre véhicule pour garantir sa longévité.', 21),
-  ('Choisir le bon modèle', 'Guide pour choisir le modèle de véhicule qui correspond le mieux à vos besoins.', 22);
-
+  ('Choisir le bon modèle', 'Guide pour choisir le modèle de véhicule qui correspond le mieux à vos besoins.', 22),
+  ('Les Étapes Essentielles', 'test' , 38); 
 
 
 INSERT INTO Comparaison (vehicule1, vehicule2, nb) VALUES
@@ -204,6 +204,7 @@ VALUES
 
 
 
+
 INSERT INTO Marque (nom, pays_origine, siege_social, annee_creation, lien, image_id)
 VALUES
   ('Bentley', 'United Kingdom', 'Crewe, England', '1919', 'https://www.bentleymotors.com/', 29),
@@ -226,3 +227,4 @@ VALUES
     ('Excellent brand!', 4.8, 1, 1, 3, 'valide'),
     ('Average performance.', 3.0, 1, 2, 4, 'valide'),
     ('Smooth driving experience.', 4.6, 0, 3, 5, 'en attente');
+

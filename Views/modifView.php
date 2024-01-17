@@ -18,7 +18,6 @@ class modifView {
     private $vehicule_controller;
 
     private $version_controller ; 
-    private $image_controller ; 
 
     private $modeleController;
     private $marqueController;
@@ -35,7 +34,6 @@ class modifView {
         $this->acceuil_controller = new acceuilController();
         $this->admin_controller = new adminController();
         $this->vehicule_controller = new Vehicule_controller();
-        $this->image_controller = new image_controller();
         $this->version_controller = new Version_controller();
         $this->modeleController = new Modele_controller();
         $this->marqueController = new marqueController();
@@ -89,7 +87,7 @@ class modifView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
@@ -132,7 +130,7 @@ class modifView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
@@ -177,7 +175,7 @@ class modifView {
         echo "<button name='submit' type='submit'>Submit</button>
         </form></div>"; 
 
-        $this->acceuil_controller->footer();
+        
 
         echo "</div></body></html>";
     }
@@ -294,7 +292,7 @@ class modifView {
 
         
         
-         $this->acceuil_controller->footer();
+         
 
          echo "</div></body></html>";
 
