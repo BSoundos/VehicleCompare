@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `avis` (
   `statut` enum('valide','refuse','en attente') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `utilisateur_id` (`utilisateur_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `avis`
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `comparaison` (
   PRIMARY KEY (`id`),
   KEY `vehicule1` (`vehicule1`),
   KEY `vehicule2` (`vehicule2`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `comparaison`
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `conseil` (
   `image_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `image_id` (`image_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `conseil`
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `favoris` (
   PRIMARY KEY (`id`),
   KEY `vehicule_id` (`vehicule_id`),
   KEY `utilisateur_id` (`utilisateur_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `favoris`
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `id` int NOT NULL AUTO_INCREMENT,
   `lien` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `image`
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `marque` (
   `image_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `image_id` (`image_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `marque`
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `modele` (
   `marque_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `marque_id` (`marque_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `modele`
@@ -284,7 +284,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `image_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `image_id` (`image_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `news`
@@ -312,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `news_details` (
   PRIMARY KEY (`id`),
   KEY `image_id` (`image_id`),
   KEY `news_id` (`news_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `news_details`
@@ -337,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `parameters` (
   `param` int DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `image_id` (`image_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `parameters`
@@ -370,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `role` varchar(20) DEFAULT NULL,
   `statut` enum('valide','bloque','non valide') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `utilisateur`
@@ -410,7 +410,7 @@ CREATE TABLE IF NOT EXISTS `vehicule` (
   PRIMARY KEY (`id`),
   KEY `version_id` (`version_id`),
   KEY `fk_image_id` (`image_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `vehicule`
@@ -447,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   `modele_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `modele_id` (`modele_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `version`
