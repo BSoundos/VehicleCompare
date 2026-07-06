@@ -1,6 +1,6 @@
-# 🚗 Vehicle Comparison Website
+# 🚗 VehicleCompare
 
-A web application that allows users to browse, compare, and review vehicles and automotive brands. The platform includes a public-facing site with rich content features, as well as a complete admin dashboard for managing all data.
+VehicleCompare is a PHP-based web app that lets users compare vehicles side by side — specs, features, and pricing — to make a confident, informed choice before buying. Built with an MVC architecture (Controller/Model/Views) and a MySQL backend.
 
 ---
 
