@@ -1,6 +1,6 @@
 # 🚗 Vehicle Comparison Website
 
-A PHP web application that allows users to browse, compare, and review vehicles and automotive brands. The platform includes a public-facing site with rich content features, as well as a complete admin dashboard for managing all data.
+A web application that allows users to browse, compare, and review vehicles and automotive brands. The platform includes a public-facing site with rich content features, as well as a complete admin dashboard for managing all data.
 
 ---
 
@@ -40,34 +40,6 @@ A PHP web application that allows users to browse, compare, and review vehicles 
 | Server      | Apache / XAMPP / LAMP stack |
 
 ---
-
-## 🗂️ Project Structure
-
-```
-vehicle-comparison-website/
-├── index.php               # Front controller & router
-├── style.css               # Global stylesheet
-├── TDW.sql                 # Database dump (schema + seed data)
-├── img/                    # Vehicle, brand, news, and UI images
-├── Controller/             # All application controllers
-│   ├── acceuilController.php
-│   ├── comparateurController.php
-│   ├── vehiculeController.php
-│   ├── marqueController.php
-│   ├── avisController.php
-│   ├── newsController.php
-│   ├── loginController.php
-│   ├── profileController.php
-│   ├── conseilController.php
-│   ├── contactController.php
-│   ├── adminController.php
-│   ├── adminAjoutController.php
-│   ├── adminModifController.php
-│   ├── adminSuppController.php
-│   └── adminAutreController.php
-├── Model/                  # Data models (DB queries)
-└── Views/                  # HTML/PHP view templates
-```
 
 All routing is handled by a single `index.php` front controller using `?action=` GET parameters (e.g., `?action=comparateur`, `?action=marques&id=1`).
 
@@ -137,18 +109,7 @@ The seed data includes a default admin account:
 | Role     | `admin`             |
 | Email    | `admin@email.com`   |
 
----
 
-## 🔒 User Roles & Status
-
-**Roles:** `admin`, `client`
-
-**User statuses:**
-- `valide` — Active and can log in
-- `non valide` — Registered but awaiting admin approval
-- `bloque` — Blocked by an admin
-
-**Review statuses:** `valide`, `refuse`, `en attente`
 
 ---
 
